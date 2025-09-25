@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Person } from '../models/person.model';
 
 @Injectable({
@@ -8,13 +8,30 @@ import { Person } from '../models/person.model';
 })
 export class PeopleService {
   private readonly peopleEndpoint = 'https://swapi.dev/api/people/';
+  private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
+  private peopleLoaded = false;
 
   constructor(private http: HttpClient) {}
 
-  getPeople(): Observable<Person[]> {
-    return this.http
-      .get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.peopleEndpoint)
-      .pipe(map(res => res.results.map(p => this.mapPerson(p))));
+  getPeople(forceRefresh: boolean = false): Observable<Person[]> {
+    if (!this.peopleLoaded || forceRefresh) {
+      this.http
+        .get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.peopleEndpoint)
+        .pipe(
+          map(res => res.results.map(p => this.mapPerson(p))),
+          tap(people => {
+            this.peopleLoaded = true;
+            this.peopleSubject.next(people);
+          }),
+          catchError(() => {
+            this.peopleLoaded = false;
+            this.peopleSubject.next([]);
+            return of([]);
+          })
+        )
+        .subscribe();
+    }
+    return this.peopleSubject.asObservable();
   }
 
   private mapPerson(p: any): Person {

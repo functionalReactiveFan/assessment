@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Movie } from '../models/movie.model';
 
 @Injectable({
@@ -8,13 +8,30 @@ import { Movie } from '../models/movie.model';
 })
 export class MovieService {
   private readonly filmsEndpoint = 'https://swapi.dev/api/films/';
+  private readonly moviesSubject = new BehaviorSubject<Movie[]>([]);
+  private moviesLoaded = false;
 
   constructor(private http: HttpClient) { }
 
-  getMovies(): Observable<Movie[]> {
-    return this.http.get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.filmsEndpoint).pipe(
-      map(response => response.results.map(film => this.mapFilmToMovie(film)))
-    );
+  getMovies(forceRefresh: boolean = false): Observable<Movie[]> {
+    if (!this.moviesLoaded || forceRefresh) {
+      this.http
+        .get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.filmsEndpoint)
+        .pipe(
+          map(response => response.results.map(film => this.mapFilmToMovie(film))),
+          tap(movies => {
+            this.moviesLoaded = true;
+            this.moviesSubject.next(movies);
+          }),
+          catchError(() => {
+            this.moviesLoaded = false;
+            this.moviesSubject.next([]);
+            return of([]);
+          })
+        )
+        .subscribe();
+    }
+    return this.moviesSubject.asObservable();
   }
 
   private mapFilmToMovie(film: any): Movie {
