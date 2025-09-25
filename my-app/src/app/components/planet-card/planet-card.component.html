@@ -1,0 +1,16 @@
+<div class="planet-card" *ngIf="planet">
+  <img [src]="planet.imageUrl" [alt]="planet.imageAlt">
+  <div class="card-content">
+    <h2>{{ planet.name }}</h2>
+    <div class="details">
+      <p><strong>Klima:</strong> {{ planet.climate }}</p>
+      <p><strong>Gelände:</strong> {{ planet.terrain }}</p>
+      <p><strong>Bevölkerung:</strong> {{ planet.population }}</p>
+      <p><strong>Durchmesser:</strong> {{ planet.diameterKm }} km</p>
+      <p><strong>Schwerkraft:</strong> {{ planet.gravity }}</p>
+    </div>
+    <a href="#" class="more-info">Mehr Informationen....</a>
+  </div>
+</div>
+
+
