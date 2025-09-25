@@ -1,20 +1,19 @@
-.people-grid {
+.planet-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 
 @media (max-width: 992px) {
-  .people-grid {
+  .planet-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 576px) {
-  .people-grid {
+  .planet-grid {
     grid-template-columns: 1fr;
   }
 }
-
 
 

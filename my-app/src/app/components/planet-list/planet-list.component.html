@@ -1,0 +1,8 @@
+<div class="planet-grid">
+  <app-planet-card *ngFor="let p of planets" [planet]="p"></app-planet-card>
+  <ng-container *ngIf="!planets || planets.length === 0">
+    <p>Keine Planeten gefunden.</p>
+  </ng-container>
+</div>
+
+
