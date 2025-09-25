@@ -1,0 +1,8 @@
+<div class="people-grid">
+  <app-people-card *ngFor="let p of people" [person]="p"></app-people-card>
+  <ng-container *ngIf="!people || people.length === 0">
+    <p>Keine Personen gefunden.</p>
+  </ng-container>
+</div>
+
+
