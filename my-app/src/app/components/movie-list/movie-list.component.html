@@ -1,4 +1,8 @@
 <div class="movie-grid">
-  <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+  <app-movie-card *ngFor="let m of movies" [movie]="m"></app-movie-card>
+  <ng-container *ngIf="!movies || movies.length === 0">
+    <p>Keine Filme gefunden.</p>
+  </ng-container>
 </div>
+
 
