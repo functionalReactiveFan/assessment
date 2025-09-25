@@ -19,7 +19,7 @@ export class MovieService {
 
   private mapFilmToMovie(film: any): Movie {
     return {
-      imageUrl: film.url,
+      imageUrl: `https://placehold.co/400x300/000000/FFFFFF?text=${encodeURIComponent(film.title)}`,
       imageAlt: film.title,
       title: film.title,
       director: film.director,
