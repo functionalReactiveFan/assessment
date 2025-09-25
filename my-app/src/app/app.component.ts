@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { MoviesPageComponent } from './pages/movies-page/movies-page.component';
-import { DetailViewComponent } from "./components/detail-view";
+import { DetailViewComponent } from "./components/detail-view/detail.component";
 
 @Component({
   selector: 'app-root',

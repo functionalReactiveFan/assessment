@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterOutlet, RouterLinkActive, RouterLink],
   template: `
     <header class="app-header">
       <div class="container header-container">
@@ -19,11 +20,12 @@ import { CommonModule } from '@angular/common';
           <nav>
             <ul>
               <li><a href="#">Star Wars</a></li>
-              <li><a href="#" class="active">Filme</a></li>
-              <li><a href="#">Charaktere</a></li>
+              <li><a routerLink="/films-list" routerLinkActive="active">Filme</a></li>
+              <li><a routerLink="/films-detail" routerLinkActive="active">Charaktere</a></li>
               <li><a href="#">Planeten</a></li>
             </ul>
           </nav>
+
         </div>
         <div class="search-container">
           <input type="text" placeholder="Suche">
