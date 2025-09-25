@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Person } from '../models/person.model';
+import { fetchWithCache, LoadedRef } from './shared/fetch-cache';
 
 @Injectable({
   providedIn: 'root'
@@ -9,29 +10,19 @@ import { Person } from '../models/person.model';
 export class PeopleService {
   private readonly peopleEndpoint = 'https://swapi.dev/api/people/';
   private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
-  private peopleLoaded = false;
+  private peopleLoadedRef: LoadedRef = { value: false };
 
   constructor(private http: HttpClient) {}
 
   getPeople(forceRefresh: boolean = false): Observable<Person[]> {
-    if (!this.peopleLoaded || forceRefresh) {
-      this.http
-        .get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.peopleEndpoint)
-        .pipe(
-          map(res => res.results.map(p => this.mapPerson(p))),
-          tap(people => {
-            this.peopleLoaded = true;
-            this.peopleSubject.next(people);
-          }),
-          catchError(() => {
-            this.peopleLoaded = false;
-            this.peopleSubject.next([]);
-            return of([]);
-          })
-        )
-        .subscribe();
-    }
-    return this.peopleSubject.asObservable();
+    return fetchWithCache<Person>(
+      this.http,
+      this.peopleEndpoint,
+      p => this.mapPerson(p),
+      this.peopleSubject,
+      this.peopleLoadedRef,
+      forceRefresh
+    );
   }
 
   private mapPerson(p: any): Person {
