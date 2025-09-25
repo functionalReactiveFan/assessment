@@ -1,42 +1,30 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { Movie } from '../models/movie.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
+  private readonly filmsEndpoint = 'https://swapi.dev/api/films/';
 
-  private movies$ = new BehaviorSubject<Movie[]>([
-    {
-      imageUrl: 'https://placehold.co/400x300/000000/FFFFFF',
-      imageAlt: 'Close-up portrait of Queen Amidala in her ornate red and gold royal attire and white face makeup.',
-      title: 'Thumbnail label',
-      director: 'George Lucas',
-      producers: ['Gary Kurtz', 'Rick McCallum'],
-      releaseDate: '25.05.1977'
-    },
-    {
-      imageUrl: 'https://placehold.co/400x300/000000/FFFFFF',
-      imageAlt: 'Close-up shot of Kylo Ren\'s menacing silver and black helmet with red accents, against a dark background.',
-      title: 'Thumbnail label',
-      director: 'George Lucas',
-      producers: ['Gary Kurtz', 'Rick McCallum'],
-      releaseDate: '25.05.1977'
-    },
-    {
-      imageUrl: 'https://placehold.co/400x300/000000/FFFFFF',
-      imageAlt: 'Portrait of a thoughtful Obi-Wan Kenobi with a beard, wearing Jedi robes.',
-      title: 'Thumbnail label',
-      director: 'George Lucas',
-      producers: ['Gary Kurtz', 'Rick McCallum'],
-      releaseDate: '25.05.1977'
-    }
-  ]);
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getMovies(): Observable<Movie[]> {
-    return this.movies$.asObservable();
+    return this.http.get<{ count: number; next: string | null; previous: string | null; results: any[] }>(this.filmsEndpoint).pipe(
+      map(response => response.results.map(film => this.mapFilmToMovie(film)))
+    );
+  }
+
+  private mapFilmToMovie(film: any): Movie {
+    return {
+      imageUrl: film.url,
+      imageAlt: film.title,
+      title: film.title,
+      director: film.director,
+      producers: typeof film.producer === 'string' ? film.producer.split(',').map((p: string) => p.trim()) : [],
+      releaseDate: film.release_date
+    };
   }
 }
