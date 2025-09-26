@@ -1,0 +1,163 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.character-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.subtitle {
+  color: var(--secondary-text-color);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.divider {
+  width: 50px;
+  height: 2px;
+  background-color: var(--secondary-text-color);
+  margin: 8px auto 0;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--primary-text-color);
+  margin: 20px 0 0 0;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  width: 100%;
+  align-items: center;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-text-color);
+  margin-bottom: 1rem;
+}
+
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.details-list li {
+  color: var(--primary-text-color);
+}
+
+.details-list strong {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.homeworld-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.homeworld-section h2 {
+  margin: 0;
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background-color: var(--chip-bg-color);
+  color: var(--chip-text-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chip:hover {
+  background-color: #e9ecef;
+}
+
+.image-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.character-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pagination-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--dot-inactive-color);
+}
+
+.dot.active {
+  background-color: var(--dot-active-color);
+}
+
+@media (max-width: 992px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .image-column {
+    order: -1; /* Move image to the top on mobile */
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  :host {
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}

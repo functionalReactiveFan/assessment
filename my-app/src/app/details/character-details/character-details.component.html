@@ -1,0 +1,47 @@
+<div class="character-container" *ngIf="character$ | async as character">
+  <header class="header">
+    <p class="subtitle">Characterdeatils</p>
+    <div class="divider"></div>
+    <h1>{{ character.name }}</h1>
+  </header>
+
+  <main class="content-grid">
+    <div class="info-column">
+      <section class="details-section">
+        <h2>Details:</h2>
+        <ul class="details-list">
+          <li><strong>Größe:</strong> {{ character.details.height }}</li>
+          <li><strong>Gewicht:</strong> {{ character.details.weight }}</li>
+          <li><strong>Haarfarbe:</strong> {{ character.details.hair_color }}</li>
+          <li><strong>Augenfarbe:</strong> {{ character.details.eye_color }}</li>
+          <li><strong>Geburtsjahr:</strong> {{ character.details.birth_year }}</li>
+          <li><strong>Geschlecht:</strong> {{ character.details.gender }}</li>
+        </ul>
+      </section>
+
+      <section class="homeworld-section">
+        <h2>Heimatplanet:</h2>
+        <div class="chip planet-chip">Luke Skywalker</div>
+      </section>
+
+      <section class="films-section">
+        <h2>Filme:</h2>
+        <div class="chips-container">
+          <div class="chip film-chip" *ngFor="let film of character.films">{{ film }}</div>
+          <div class="chip film-chip">...</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="image-column">
+      <img [src]="character.imageUrl"
+           alt="A close-up portrait of a young man with light brown hair and blue eyes, with a serious expression, against a dark background."
+           class="character-image">
+      <div class="pagination-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </main>
+</div>
