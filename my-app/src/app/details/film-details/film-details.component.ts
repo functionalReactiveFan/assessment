@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -14,6 +14,7 @@ interface FilmDetails {
 
 interface Character {
   name: string;
+  url: string;
 }
 
 @Component({
@@ -59,7 +60,7 @@ export class FilmDetailsComponent {
     map(index => this.images[index])
   );
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService, private cdr: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute, private movieService: MovieService, private cdr: ChangeDetectorRef, private router: Router) {
     // Preload placeholder image
     this.images[0] = 'https://placehold.co/600x400';
 
@@ -77,7 +78,7 @@ export class FilmDetailsComponent {
       };
       this.synopsis = film?.opening_crawl || '';
       const chars = Array.isArray(film?.characters) ? film.characters : [];
-      this.characters = chars.map((u: string) => ({ name: this.formatCharacter(u) }));
+      this.characters = chars.map((u: string) => ({ name: this.formatCharacter(u), url: u }));
       // Update carousel placeholders to include title text
       this.images = [
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
@@ -103,7 +104,16 @@ export class FilmDetailsComponent {
     return this.characters.length > 3;
   }
 
-  private formatCharacter(url: string | null | undefined): string {
+  navigateToCharacter(url: string): void {
+    if (!url) return;
+    const match = url.match(/people\/(\d+)\/?$/);
+    const id = match ? match[1] : null;
+    if (id) {
+      this.router.navigate(['/character-detail', id]);
+    }
+  }
+
+  private formatCharacter(url: string): string {
     if (!url) return '';
     const match = url.match(/people\/(\d+)\/?$/);
     return match ? `Charakter ${match[1]}` : url;
