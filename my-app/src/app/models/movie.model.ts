@@ -5,4 +5,5 @@ export interface Movie {
   director: string;
   producers: string[];
   releaseDate: string;
+  url: string;
 }

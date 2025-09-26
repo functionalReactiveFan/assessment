@@ -25,6 +25,12 @@ export class MovieService {
     );
   }
 
+  // Fetch a single movie by id from SWAPI
+  getMovieById(id: number | string): Observable<any> {
+    const url = `${this.filmsEndpoint}${id}/`;
+    return this.http.get<any>(url);
+  }
+
   private mapFilmToMovie(film: any): Movie {
     return {
       imageUrl: `https://placehold.co/400x300/000000/FFFFFF?text=${encodeURIComponent(film.title)}`,
@@ -32,7 +38,8 @@ export class MovieService {
       title: film.title,
       director: film.director,
       producers: typeof film.producer === 'string' ? film.producer.split(',').map((p: string) => p.trim()) : [],
-      releaseDate: film.release_date
+      releaseDate: film.release_date,
+      url: film.url
     };
   }
 }

@@ -20,4 +20,15 @@ export class MoviesPageComponent implements OnInit {
   ngOnInit(): void {
     this.movies$ = this.movieService.getMovies();
   }
+
+  getMovieDetailHref(m: Movie): string {
+    const id = this.extractIdFromUrl(m.url);
+    return id ? `/films-detail/${id}` : '/films-detail/1';
+  }
+
+  private extractIdFromUrl(url: string): string | null {
+    if (!url) return null;
+    const match = url.match(/films\/([0-9]+)\/?$/);
+    return match ? match[1] : null;
+  }
 }

@@ -12,6 +12,7 @@
           { label: 'Produzenten', value: m.producers.join(', ') },
           { label: 'Erscheinungsdatum', value: m.releaseDate }
         ]"
+        [moreInfoHref]="getMovieDetailHref(m)"
       ></app-card>
       <ng-container *ngIf="!movies || movies.length === 0">
         <p>Keine Filme gefunden.</p>
