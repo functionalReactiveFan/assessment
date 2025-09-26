@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
 import { PeopleService } from '../../services/people.service';
 import { CardComponent } from '../../components/card/card.component';
+import { extractPeopleId } from '../../utils/swapi-url';
 
 @Component({
   selector: 'app-people-page',
@@ -22,14 +23,8 @@ export class PeoplePageComponent implements OnInit {
   }
 
   getPersonDetailHref(p: Person): string {
-    const id = this.extractIdFromUrl(p.url);
+    const id = extractPeopleId(p.url);
     return id ? `/character-detail/${id}` : '/character-detail/1';
-  }
-
-  private extractIdFromUrl(url: string): string | null {
-    if (!url) return null;
-    const match = url.match(/people\/(\d+)\/?$/);
-    return match ? match[1] : null;
   }
 }
 

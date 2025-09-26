@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { extractPeopleId } from '../../utils/swapi-url';
 
 interface FilmDetails {
   director: string;
@@ -105,17 +106,14 @@ export class FilmDetailsComponent {
   }
 
   navigateToCharacter(url: string): void {
-    if (!url) return;
-    const match = url.match(/people\/(\d+)\/?$/);
-    const id = match ? match[1] : null;
+    const id = extractPeopleId(url);
     if (id) {
       this.router.navigate(['/character-detail', id]);
     }
   }
 
   private formatCharacter(url: string): string {
-    if (!url) return '';
-    const match = url.match(/people\/(\d+)\/?$/);
-    return match ? `Charakter ${match[1]}` : url;
+    const id = extractPeopleId(url);
+    return id ? `Charakter ${id}` : (url || '');
   }
 }
