@@ -20,6 +20,17 @@ export class PeoplePageComponent implements OnInit {
   ngOnInit(): void {
     this.people$ = this.peopleService.getPeople();
   }
+
+  getPersonDetailHref(p: Person): string {
+    const id = this.extractIdFromUrl(p.url);
+    return id ? `/character-detail/${id}` : '/character-detail/1';
+  }
+
+  private extractIdFromUrl(url: string): string | null {
+    if (!url) return null;
+    const match = url.match(/people\/(\d+)\/?$/);
+    return match ? match[1] : null;
+  }
 }
 
 

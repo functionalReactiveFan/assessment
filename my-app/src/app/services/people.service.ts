@@ -25,6 +25,12 @@ export class PeopleService {
     );
   }
 
+  // Fetch a single person by id from SWAPI
+  getPersonById(id: number | string): Observable<any> {
+    const url = `${this.peopleEndpoint}${id}/`;
+    return this.http.get<any>(url);
+  }
+
   private mapPerson(p: any): Person {
     const displayName = typeof p.name === 'string' ? p.name : 'Unknown';
     return {
@@ -34,7 +40,8 @@ export class PeopleService {
       heightCm: p.height,
       massKg: p.mass,
       imageUrl: `https://placehold.co/400x300/1a1a1a/ffffff?text=${encodeURIComponent(displayName)}`,
-      imageAlt: displayName
+      imageAlt: displayName,
+      url: p.url
     };
   }
 }

@@ -1,8 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { Character } from "../../models/character.model";
 import { GeneralDetailsComponent } from "../general-details/general-details.component";
+import { ActivatedRoute } from '@angular/router';
+import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'app-character-details',
@@ -12,20 +15,31 @@ import { GeneralDetailsComponent } from "../general-details/general-details.comp
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterDetailsComponent {
-  private characterSubject = new BehaviorSubject<Character>({
-    name: 'Luke Skywalker',
-    details: {
-      height: '1,72m',
-      weight: '77kg',
-      hair_color: 'blond',
-      eye_color: 'blau',
-      birth_year: '19BBY',
-      gender: 'männlich',
-    },
-    homeworld: 'Tatooine',
-    films: ['Film 1', 'Film 1', 'Film 1', 'Film 1'],
-    imageUrl: 'https://placehold.co/500x350/20232A/FFFFFF?text=Image',
-  });
+  character$: Observable<Character>;
 
-  character$: Observable<Character> = this.characterSubject.asObservable();
+  constructor(private route: ActivatedRoute, private peopleService: PeopleService) {
+    this.character$ = this.route.paramMap.pipe(
+      map(params => params.get('id')),
+      switchMap((id) => this.peopleService.getPersonById(id || '1')),
+      map((p: any) => this.mapSwapiPersonToCharacter(p))
+    );
+  }
+
+  private mapSwapiPersonToCharacter(p: any): Character {
+    const name = typeof p?.name === 'string' ? p.name : 'Unknown';
+    return {
+      name,
+      details: {
+        height: p?.height ? `${p.height}cm` : 'Unknown',
+        weight: p?.mass ? `${p.mass}kg` : 'Unknown',
+        hair_color: p?.hair_color ?? 'Unknown',
+        eye_color: p?.eye_color ?? 'Unknown',
+        birth_year: p?.birth_year ?? 'Unknown',
+        gender: p?.gender ?? 'Unknown',
+      },
+      homeworld: p?.homeworld ?? 'Unknown',
+      films: Array.isArray(p?.films) ? p.films : [],
+      imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
+    };
+  }
 }

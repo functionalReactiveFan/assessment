@@ -12,6 +12,7 @@
           { label: 'Größe', value: p.heightCm + ' cm' },
           { label: 'Masse', value: p.massKg + ' kg' }
         ]"
+        [moreInfoHref]="getPersonDetailHref(p)"
       ></app-card>
       <ng-container *ngIf="!people || people.length === 0">
         <p>Keine Personen gefunden.</p>

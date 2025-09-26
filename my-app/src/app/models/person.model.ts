@@ -6,6 +6,7 @@ export interface Person {
   massKg: string;
   imageUrl: string;
   imageAlt: string;
+  url: string;
 }
 
 
