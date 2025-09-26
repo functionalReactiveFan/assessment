@@ -1,0 +1,41 @@
+<div class="character-container" *ngIf="title || details?.length">
+  <header class="header">
+    <p class="subtitle">{{ subtitle }}</p>
+    <div class="divider"></div>
+    <h1>{{ title }}</h1>
+  </header>
+
+  <main class="content-grid">
+    <div class="info-column">
+      <section class="details-section" *ngIf="details?.length">
+        <h2>Details:</h2>
+        <ul class="details-list">
+          <li *ngFor="let d of details">
+            <strong>{{ d.label }}:</strong> {{ d.value }}
+          </li>
+        </ul>
+      </section>
+
+      <section class="homeworld-section" *ngIf="planet">
+        <h2>Heimatplanet:</h2>
+        <div class="chip planet-chip">{{ planet }}</div>
+      </section>
+
+      <section class="films-section" *ngIf="films?.length">
+        <h2>Filme:</h2>
+        <div class="chips-container">
+          <div class="chip film-chip" *ngFor="let film of films">{{ film }}</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="image-column" *ngIf="imageUrl">
+      <img [src]="imageUrl"
+           alt="image"
+           class="character-image">
+      <div class="pagination-dots" *ngIf="dotsCount > 0">
+        <span class="dot" *ngFor="let i of [].constructor(dotsCount); let idx = index" [class.active]="idx === 0"></span>
+      </div>
+    </div>
+  </main>
+</div>

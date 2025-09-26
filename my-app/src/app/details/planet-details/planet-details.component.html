@@ -1,0 +1,15 @@
+<ng-container *ngIf="planet$ | async as planet">
+  <app-general-details
+    [title]="planet.name"
+    subtitle="Planetdetails"
+    [details]="[
+      { label: 'Klima', value: planet.climate },
+      { label: 'Terrain', value: planet.terrain },
+      { label: 'Population', value: planet.population },
+      { label: 'Durchmesser (km)', value: planet.diameterKm },
+      { label: 'Gravitation', value: planet.gravity }
+    ]"
+    [imageUrl]="planet.imageUrl"
+    [dotsCount]="3"
+  ></app-general-details>
+</ng-container>
