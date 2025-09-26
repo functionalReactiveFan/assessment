@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model';
 import { MovieService } from '../../services/movie.service';
 import { CardComponent } from '../../components/card/card.component';
+import { extractFilmId } from '../../utils/swapi-url';
 
 @Component({
   selector: 'app-movies-page',
@@ -22,13 +23,7 @@ export class MoviesPageComponent implements OnInit {
   }
 
   getMovieDetailHref(m: Movie): string {
-    const id = this.extractIdFromUrl(m.url);
+    const id = extractFilmId(m.url);
     return id ? `/films-detail/${id}` : '/films-detail/1';
-  }
-
-  private extractIdFromUrl(url: string): string | null {
-    if (!url) return null;
-    const match = url.match(/films\/([0-9]+)\/?$/);
-    return match ? match[1] : null;
   }
 }

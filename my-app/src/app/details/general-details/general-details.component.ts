@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } f
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
+import { extractFilmId } from '../../utils/swapi-url';
 
 export interface DetailItem {
   label: string;
@@ -77,16 +78,13 @@ export class GeneralDetailsComponent implements OnChanges {
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
   formatFilm(film: string): string {
-    if (!film) return '';
-    const match = film.match(/films\/(\d+)\/?$/);
-    return match ? `Film ${match[1]}` : film;
+    const id = extractFilmId(film);
+    return id ? `Film ${id}` : (film || '');
   }
 
   // Navigate to the film details route based on the film URL id
   navigateToFilm(film: string): void {
-    if (!film) return;
-    const match = film.match(/films\/(\d+)\/?$/);
-    const id = match ? match[1] : null;
+    const id = extractFilmId(film);
     if (id) {
       this.router.navigate(['/films-detail', id]);
     }
