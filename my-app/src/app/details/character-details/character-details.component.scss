@@ -1,9 +1,22 @@
 :host {
+  --background-color: #FFFFFF;
+  --primary-text-color: #0D1B2A;
+  --secondary-text-color: #6c757d;
+  --chip-bg-color: #f1f3f5;
+  --chip-text-color: #495057;
+  --dot-inactive-color: #d9d9d9;
+  --dot-active-color: var(--primary-text-color);
+
   display: block;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  box-sizing: border-box;
+
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
 }
 
 .character-container {
