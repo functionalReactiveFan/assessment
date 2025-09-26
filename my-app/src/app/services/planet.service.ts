@@ -38,6 +38,7 @@ export class PlanetService {
       population: p.population,
       diameterKm: p.diameter,
       gravity: p.gravity,
+      films: p.films,
       imageUrl: `https://placehold.co/400x300/14213d/ffffff?text=${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
       url: p.url

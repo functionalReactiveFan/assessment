@@ -1,4 +1,5 @@
 export interface Planet {
+  films: string[];
   name: string;
   climate: string;
   terrain: string;

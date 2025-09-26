@@ -35,6 +35,7 @@ export class PlanetDetailsComponent {
       population: p?.population ?? 'Unknown',
       diameterKm: p?.diameter ?? 'Unknown',
       gravity: p?.gravity ?? 'Unknown',
+      films: Array.isArray(p?.films) ? p.films : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
       imageAlt: name,
       url: p?.url ?? ''
