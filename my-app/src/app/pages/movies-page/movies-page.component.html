@@ -1,6 +1,23 @@
 <div class="container movies-page-container">
   <h1 class="page-title">Filme</h1>
-  <app-movie-list [movies]="movies$ | async"></app-movie-list>
+  <div class="movie-grid">
+    <ng-container *ngIf="movies$ | async as movies">
+      <app-card
+        *ngFor="let m of movies"
+        [imageUrl]="m.imageUrl"
+        [imageAlt]="m.imageAlt"
+        [title]="m.title"
+        [lines]="[
+          { label: 'Director', value: m.director },
+          { label: 'Produzenten', value: m.producers.join(', ') },
+          { label: 'Erscheinungsdatum', value: m.releaseDate }
+        ]"
+      ></app-card>
+      <ng-container *ngIf="!movies || movies.length === 0">
+        <p>Keine Filme gefunden.</p>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
 
 

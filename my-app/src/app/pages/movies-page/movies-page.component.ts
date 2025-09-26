@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model';
 import { MovieService } from '../../services/movie.service';
-import { MovieListComponent } from '../../components/movie-list/movie-list.component';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-movies-page',
   standalone: true,
-  imports: [CommonModule, MovieListComponent],
+  imports: [CommonModule, CardComponent],
   templateUrl: './movies-page.component.html',
   styleUrls: ['./movies-page.component.scss']
 })

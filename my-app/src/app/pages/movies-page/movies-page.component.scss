@@ -1,3 +1,7 @@
+
+
+
+
 .movies-page-container {
   padding-top: 64px;
   padding-bottom: 64px;
@@ -21,4 +25,20 @@
   }
 }
 
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
 
+@media (max-width: 992px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-grid {
+    grid-template-columns: 1fr;
+  }
+}

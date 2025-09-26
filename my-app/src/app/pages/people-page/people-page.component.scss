@@ -1,3 +1,4 @@
+
 .people-page-container { padding-top: 64px; padding-bottom: 64px; }
 .page-title { font-size: 3.5rem; font-weight: 700; color: #0A1931; text-align: center; margin-top: 0; margin-bottom: 64px; }
 @media (max-width: 768px) {
@@ -5,4 +6,6 @@
   .people-page-container { padding-top: 48px; padding-bottom: 48px; }
 }
 
-
+.people-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+@media (max-width: 992px) { .people-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 576px) { .people-grid { grid-template-columns: 1fr; } }

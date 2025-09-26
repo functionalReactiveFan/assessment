@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
 import { PeopleService } from '../../services/people.service';
-import { PeopleListComponent } from '../../components/people-list/people-list.component';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-people-page',
   standalone: true,
-  imports: [CommonModule, PeopleListComponent],
+  imports: [CommonModule, CardComponent],
   templateUrl: './people-page.component.html',
   styleUrls: ['./people-page.component.scss']
 })
