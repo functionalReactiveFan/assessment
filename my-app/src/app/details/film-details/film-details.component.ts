@@ -87,6 +87,10 @@ export class FilmDetailsComponent {
     this.currentImageIndexSubject.next(index);
   }
 
+  isMoreThanTree(): boolean {
+    return this.characters.length > 3;
+  }
+
   private formatCharacter(url: string | null | undefined): string {
     if (!url) return '';
     const match = url.match(/people\/(\d+)\/?$/);
