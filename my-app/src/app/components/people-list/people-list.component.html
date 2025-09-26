@@ -1,5 +1,15 @@
 <div class="people-grid">
-  <app-people-card *ngFor="let p of people" [person]="p"></app-people-card>
+  <app-card
+    *ngFor="let p of people"
+    [imageUrl]="p.imageUrl"
+    [imageAlt]="p.imageAlt"
+    [title]="p.name"
+    [lines]="[
+      { label: 'Geschlecht', value: p.gender },
+      { label: 'Größe', value: p.heightCm + ' cm' },
+      { label: 'Masse', value: p.massKg + ' kg' }
+    ]"
+  ></app-card>
   <ng-container *ngIf="!people || people.length === 0">
     <p>Keine Personen gefunden.</p>
   </ng-container>
