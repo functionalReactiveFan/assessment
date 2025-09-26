@@ -2,13 +2,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Character } from "../../models/character.model";
+import { GeneralDetailsComponent } from "../general-details/general-details.component";
 
 @Component({
   selector: 'app-character-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, GeneralDetailsComponent],
   templateUrl: './character-details.component.html',
-  styleUrls: ['./character-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterDetailsComponent {
