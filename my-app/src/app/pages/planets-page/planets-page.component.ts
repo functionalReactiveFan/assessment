@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Planet } from '../../models/planet.model';
 import { PlanetService } from '../../services/planet.service';
-import { PlanetListComponent } from '../../components/planet-list/planet-list.component';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-planets-page',
   standalone: true,
-  imports: [CommonModule, PlanetListComponent],
+  imports: [CommonModule, CardComponent],
   templateUrl: './planets-page.component.html',
   styleUrls: ['./planets-page.component.scss']
 })
