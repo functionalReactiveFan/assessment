@@ -22,6 +22,18 @@ export class GeneralDetailsComponent {
   @Input() films: string[] = [];
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
+  private maxCollapsedCount: number = 5;
+
+  showAllFilms: boolean = false;
+  get displayedFilms(): string[] {
+    return this.showAllFilms ? this.films : this.films.slice(0, this.maxCollapsedCount);
+  }
+  isMoreThanMax(): boolean {
+    return (this.films?.length || 0) > this.maxCollapsedCount;
+  }
+  toggleFilms(): void {
+    this.showAllFilms = !this.showAllFilms;
+  }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
   formatFilm(film: string | null | undefined): string {

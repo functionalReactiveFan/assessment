@@ -121,6 +121,12 @@ h2 {
   background-color: #e9ecef;
 }
 
+button.chip {
+  border: none;
+  outline: none;
+  appearance: none;
+}
+
 .image-column {
   display: flex;
   flex-direction: column;
