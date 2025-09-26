@@ -29,27 +29,30 @@
 
 .header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 4rem;
+  margin-top: 3rem;
 }
 
-.subtitle {
-  color: var(--secondary-text-color);
+.pre-title {
+  color: #6c757d;
   font-size: 1rem;
+  letter-spacing: 1px;
   margin: 0;
 }
 
-.divider {
-  width: 50px;
+.title-divider {
+  width: 40px;
   height: 2px;
-  background-color: var(--secondary-text-color);
-  margin: 8px auto 0;
+  background-color: #b0b0b0;
+  margin: 0.75rem auto;
 }
 
-h1 {
-  font-size: 3.5rem;
+.main-title {
+  font-size: 4.5rem;
   font-weight: 700;
-  color: var(--primary-text-color);
-  margin: 20px 0 0 0;
+  color: #1A2B48;
+  margin: 0.5rem 0;
+  line-height: 1.1;
 }
 
 .content-grid {
@@ -170,8 +173,8 @@ button.chip {
     order: -1; /* Move image to the top on mobile */
   }
 
-  h1 {
-    font-size: 2.5rem;
+  .main-title {
+    font-size: 3.5rem;
   }
 }
 
@@ -179,7 +182,7 @@ button.chip {
   :host {
     padding: 1rem;
   }
-  h1 {
-    font-size: 2rem;
+  .main-title {
+    font-size: 2.5rem;
   }
 }
