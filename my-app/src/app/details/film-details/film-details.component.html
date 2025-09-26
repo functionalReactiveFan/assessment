@@ -23,8 +23,8 @@
           <div *ngFor="let character of displayedCharacters" class="character-chip">
             {{ character.name }}
           </div>
-          <!-- Ellipsis chip toggles between collapsed/expanded views when more than 3 characters exist -->
-          <button *ngIf="isMoreThanTree()"
+          <!-- Ellipsis chip by click using expanded view when more than 3 characters exist -->
+          <button *ngIf="isMoreThanTree() && !showAllCharacters"
                   class="character-chip"
                   type="button"
                   (click)="toggleCharacters()"
