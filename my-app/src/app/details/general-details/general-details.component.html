@@ -39,12 +39,15 @@
       </section>
     </div>
 
-    <div class="image-column" *ngIf="imageUrl">
-      <img [src]="imageUrl"
+    <div class="image-column" *ngIf="images?.length">
+      <img [src]="currentImage$ | async"
            alt="image"
            class="character-image">
-      <div class="pagination-dots" *ngIf="dotsCount > 0">
-        <span class="dot" *ngFor="let i of [].constructor(dotsCount); let idx = index" [class.active]="idx === 0"></span>
+      <div class="pagination-dots" *ngIf="images.length > 1">
+        <span class="dot"
+              *ngFor="let img of images; let i = index"
+              [class.active]="(currentImageIndex$ | async) === i"
+              (click)="selectImage(i)"></span>
       </div>
     </div>
   </main>

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { BehaviorSubject, map } from 'rxjs';
 
 export interface DetailItem {
   label: string;
@@ -14,7 +15,7 @@ export interface DetailItem {
   styleUrls: ['./general-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeneralDetailsComponent {
+export class GeneralDetailsComponent implements OnChanges {
   @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];
@@ -24,6 +25,7 @@ export class GeneralDetailsComponent {
   @Input() dotsCount: number = 3;
   private maxCollapsedCount: number = 5;
 
+  // Films chips collapse/expand
   showAllFilms: boolean = false;
   get displayedFilms(): string[] {
     return this.showAllFilms ? this.films : this.films.slice(0, this.maxCollapsedCount);
@@ -33,6 +35,41 @@ export class GeneralDetailsComponent {
   }
   toggleFilms(): void {
     this.showAllFilms = !this.showAllFilms;
+  }
+
+  // Image carousel state
+  images: string[] = [];
+  private currentImageIndexSubject = new BehaviorSubject<number>(0);
+  currentImageIndex$ = this.currentImageIndexSubject.asObservable();
+  currentImage$ = this.currentImageIndex$.pipe(map(idx => this.images[idx]));
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Build images array whenever inputs change
+    const count = Math.max(1, Math.floor(this.dotsCount || 1));
+    const titleText = this.title || 'Image';
+
+    const images: string[] = [];
+
+    // Use provided imageUrl as the first image if available
+    if (this.imageUrl) {
+      images.push(this.imageUrl);
+    } else {
+      images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' 1')}`);
+    }
+
+    // Fill remaining images with placeholders based on title
+    for (let i = images.length; i < count; i++) {
+      images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' ' + (i + 1))}`);
+    }
+
+    this.images = images;
+    this.currentImageIndexSubject.next(0);
+  }
+
+  selectImage(index: number): void {
+    if (index >= 0 && index < this.images.length) {
+      this.currentImageIndexSubject.next(index);
+    }
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
