@@ -20,6 +20,17 @@ export class PlanetsPageComponent implements OnInit {
   ngOnInit(): void {
     this.planets$ = this.planetService.getPlanets();
   }
+
+  getPlanetDetailHref(p: Planet): string {
+    const id = this.extractIdFromUrl(p.url);
+    return id ? `/planet-detail/${id}` : '/planet-detail/1';
+  }
+
+  private extractIdFromUrl(url: string): string | null {
+    if (!url) return null;
+    const match = url.match(/planets\/(\d+)\/?$/);
+    return match ? match[1] : null;
+  }
 }
 
 

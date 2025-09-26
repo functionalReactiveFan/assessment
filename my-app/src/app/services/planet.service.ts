@@ -23,6 +23,12 @@ export class PlanetService {
     );
   }
 
+  // Fetch a single planet by id from SWAPI
+  getPlanetById(id: number | string): Observable<any> {
+    const url = `${this.planetsEndpoint}${id}/`;
+    return this.http.get<any>(url);
+  }
+
   private mapPlanet(p: any): Planet {
     const displayName = typeof p.name === 'string' ? p.name : 'Unknown';
     return {
@@ -33,7 +39,8 @@ export class PlanetService {
       diameterKm: p.diameter,
       gravity: p.gravity,
       imageUrl: `https://placehold.co/400x300/14213d/ffffff?text=${encodeURIComponent(displayName)}`,
-      imageAlt: displayName
+      imageAlt: displayName,
+      url: p.url
     };
   }
 }

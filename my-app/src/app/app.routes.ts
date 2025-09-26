@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'people-list', component: PeoplePageComponent },
   { path: 'character-detail/:id', component: CharacterDetailsComponent },
   { path: 'planets-list', component: PlanetsPageComponent },
-  { path: 'planet-detail', component: PlanetDetailsComponent },
+  { path: 'planet-detail/:id', component: PlanetDetailsComponent },
   { path: '', redirectTo: 'films-list', pathMatch: 'full' },
   { path: '**', redirectTo: 'films-list' }
 ];

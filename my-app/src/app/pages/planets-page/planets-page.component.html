@@ -12,6 +12,7 @@
           { label: 'Gelände', value: p.terrain },
           { label: 'Durchmesser', value: p.diameterKm + ' km' }
         ]"
+        [moreInfoHref]="getPlanetDetailHref(p)"
       ></app-card>
       <ng-container *ngIf="!planets || planets.length === 0">
         <p>Keine Planeten gefunden.</p>

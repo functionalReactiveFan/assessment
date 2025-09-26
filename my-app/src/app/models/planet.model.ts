@@ -7,6 +7,7 @@ export interface Planet {
   gravity: string;
   imageUrl: string;
   imageAlt: string;
+  url: string;
 }
 
 
