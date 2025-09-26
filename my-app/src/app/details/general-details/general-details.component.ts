@@ -22,4 +22,11 @@ export class GeneralDetailsComponent {
   @Input() films: string[] = [];
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
+
+  // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
+  formatFilm(film: string | null | undefined): string {
+    if (!film) return '';
+    const match = film.match(/films\/(\d+)\/?$/);
+    return match ? `Film ${match[1]}` : film;
+  }
 }

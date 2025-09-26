@@ -24,7 +24,7 @@
       <section class="films-section" *ngIf="films?.length">
         <h2>Filme:</h2>
         <div class="chips-container">
-          <div class="chip film-chip" *ngFor="let film of films">{{ film }}</div>
+          <div class="chip film-chip" *ngFor="let film of films">{{ formatFilm(film) }}</div>
         </div>
       </section>
     </div>
