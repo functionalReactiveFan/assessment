@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { BehaviorSubject, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface DetailItem {
   label: string;
@@ -24,6 +25,8 @@ export class GeneralDetailsComponent implements OnChanges {
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
   private maxCollapsedCount: number = 5;
+
+  constructor(private router: Router) {}
 
   // Films chips collapse/expand
   showAllFilms: boolean = false;
@@ -73,9 +76,19 @@ export class GeneralDetailsComponent implements OnChanges {
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
-  formatFilm(film: string | null | undefined): string {
+  formatFilm(film: string): string {
     if (!film) return '';
     const match = film.match(/films\/(\d+)\/?$/);
     return match ? `Film ${match[1]}` : film;
+  }
+
+  // Navigate to the film details route based on the film URL id
+  navigateToFilm(film: string): void {
+    if (!film) return;
+    const match = film.match(/films\/(\d+)\/?$/);
+    const id = match ? match[1] : null;
+    if (id) {
+      this.router.navigate(['/films-detail', id]);
+    }
   }
 }
