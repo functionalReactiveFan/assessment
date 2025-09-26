@@ -11,7 +11,7 @@
         <h3>Details:</h3>
         <p class="details-item"><strong>Director:</strong> {{ filmDetails.director }}</p>
         <p class="details-item"><strong>Produzenten:</strong> {{ filmDetails.producers }}</p>
-        <p class="details-item"><strong>Erscheinungsdatum:</strong> {{ filmDetails.releaseDate }}</p>
+        <p class="details-item"><strong>Erscheinungsdatum:</strong> {{ filmDetails.releaseDate | date:'dd.MM.yyyy' }}</p>
       </section>
 
       <p class="synopsis">{{ synopsis }}</p>
