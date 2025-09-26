@@ -40,6 +40,12 @@ export class FilmDetailsComponent {
 
   characters: Character[] = [];
 
+  // Toggle state for showing all characters vs first three
+  showAllCharacters: boolean = false;
+  get displayedCharacters(): Character[] {
+    return this.showAllCharacters ? this.characters : this.characters.slice(0, 3);
+  }
+
   images: string[] = [
     'https://placehold.co/600x400/000000/FFFFFF?text=Scene+1',
     'https://placehold.co/600x400/000000/FFFFFF?text=Scene+2',
@@ -85,6 +91,12 @@ export class FilmDetailsComponent {
 
   selectImage(index: number): void {
     this.currentImageIndexSubject.next(index);
+  }
+
+  toggleCharacters(): void {
+    this.showAllCharacters = !this.showAllCharacters;
+    // With OnPush, events already trigger change detection; this is mostly for clarity.
+    this.cdr.markForCheck();
   }
 
   isMoreThanTree(): boolean {

@@ -19,12 +19,19 @@
       <section class="characters-section">
         <h3>Charaktere:</h3>
         <div class="characters-list">
-          <!-- Show up to 3 characters -->
-          <div *ngFor="let character of characters | slice:0:3" class="character-chip">
+          <!-- Render either first 3 or all characters depending on toggle state -->
+          <div *ngFor="let character of displayedCharacters" class="character-chip">
             {{ character.name }}
           </div>
-          <!-- If more than 3 characters, show an ellipsis as the 4th chip -->
-          <div *ngIf="isMoreThanTree()" class="character-chip">...</div>
+          <!-- Ellipsis chip toggles between collapsed/expanded views when more than 3 characters exist -->
+          <button *ngIf="isMoreThanTree()"
+                  class="character-chip"
+                  type="button"
+                  (click)="toggleCharacters()"
+                  [attr.aria-expanded]="showAllCharacters"
+                  title="Toggle characters">
+            ...
+          </button>
         </div>
       </section>
     </div>
