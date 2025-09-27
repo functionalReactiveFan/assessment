@@ -124,7 +124,6 @@ input:focus, select:focus {
 
 .select-wrapper::after {
   content: '\f0dc'; /* fa-sort */
-  font-family: 'Font Awesome 6 Free';
   font-weight: 900;
   position: absolute;
   right: 16px;
@@ -136,7 +135,6 @@ input:focus, select:focus {
 
 select {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   cursor: pointer;
 }
