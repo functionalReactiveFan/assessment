@@ -26,7 +26,7 @@ export class AddFilmComponent implements OnInit {
       director: ['', Validators.required],
       releaseDate: [''],
       description: [''],
-      producent: ['George Lucas']
+      producent: ['lucas']
     });
   }
 

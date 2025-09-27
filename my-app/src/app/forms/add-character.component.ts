@@ -13,7 +13,6 @@ export class AddCharacterComponent implements OnInit {
   characterForm!: FormGroup;
 
   eyeColorOptions = [
-    { value: 'gelb', label: 'Gelb' },
     { value: 'blau', label: 'Blau' },
     { value: 'grün', label: 'Grün' },
     { value: 'braun', label: 'Braun' },
@@ -33,9 +32,9 @@ export class AddCharacterComponent implements OnInit {
       size: [''],
       weight: [''],
       hairColor: [''],
-      eyeColor: ['gelb'],
+      eyeColor: ['blau'],
       birthYear: [''],
-      gender: ['gelb']
+      gender: ['weiblich']
     });
   }
 
