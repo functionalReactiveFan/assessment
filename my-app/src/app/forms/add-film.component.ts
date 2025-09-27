@@ -13,59 +13,47 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     </div>
     <main class="main-container">
       <div class="form-card">
-        <h2 class="form-title">Charakter hinzufügen</h2>
+        <h2 class="form-title">Film hinzufügen</h2>
         <form [formGroup]="characterForm" (ngSubmit)="onSubmit()">
 
           <div class="form-group full-width">
-            <label for="name">Name</label>
-            <input type="text" id="name" formControlName="name" placeholder="Name eingeben">
+            <label for="title">Title</label>
+            <input type="text" id="title" formControlName="title" placeholder="Title eingeben">
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="size">Größe</label>
-              <input type="text" id="size" formControlName="size" placeholder="Meter">
-            </div>
-            <div class="form-group">
-              <label for="weight">Gweicht</label>
-              <input type="text" id="weight" formControlName="weight" placeholder="Kg">
-            </div>
+          <div class="form-group full-width">
+            <label for="director">Director</label>
+            <input type="text" id="director" formControlName="director" placeholder="Adresszusatz eingeben">
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="hairColor">Haarfarbe</label>
-              <input type="text" id="hairColor" formControlName="hairColor" placeholder="Haarfarbe eingeben">
-            </div>
-            <div class="form-group">
-              <label for="eyeColor">Augenfarbe</label>
-              <div class="select-wrapper">
-                <select id="eyeColor" formControlName="eyeColor">
-                  <option *ngFor="let color of eyeColorOptions" [value]="color.value">{{ color.label }}</option>
-                </select>
-              </div>
+          <div class="form-group">
+            <label for="producent">Producent</label>
+            <div class="select-wrapper">
+              <select id="producent" formControlName="producent">
+                <option *ngFor="let producent of producentOptions" [value]="producent.value">{{ producent.label }}</option>
+              </select>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="birthYear">Geburtsjahr</label>
-              <input type="text" id="birthYear" formControlName="birthYear" placeholder="YYYY">
+              <label for="releaseDate">Erscheinungsdatum</label>
+              <input type="text" id="releaseDate" formControlName="releaseDate" placeholder="YYYY">
             </div>
-            <div class="form-group">
-              <label for="gender">Geschlecht</label>
-              <div class="select-wrapper">
-                <select id="gender" formControlName="gender">
-                  <option *ngFor="let gender of genderOptions" [value]="gender.value">{{ gender.label }}</option>
-                </select>
-              </div>
-            </div>
+            <div class="form-group"></div>
+            <div class="form-group"></div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="description">Beschreibung</label>
+            <textarea type="description" id="description" formControlName="description" placeholder="Beschreibung"></textarea>
           </div>
 
           <div class="button-group">
             <button type="button" class="btn btn-cancel">Abbrechen</button>
-            <button type="submit" class="btn btn-submit">Charakter hinzufügen</button>
+            <button type="submit" class="btn btn-submit">Film hinzufügen</button>
           </div>
+
         </form>
       </div>
     </main>
@@ -269,33 +257,24 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     `
   ]
 })
-export class AddCharacterComponent implements OnInit {
+export class AddFilmComponent implements OnInit {
   characterForm!: FormGroup;
 
-  eyeColorOptions = [
-    { value: 'gelb', label: 'Gelb' },
-    { value: 'blau', label: 'Blau' },
-    { value: 'grün', label: 'Grün' },
-    { value: 'braun', label: 'Braun' },
-  ];
-
-  genderOptions = [
-    { value: 'männlich', label: 'Männlich' },
-    { value: 'weiblich', label: 'Weiblich' },
-    { value: 'divers', label: 'Divers' },
+  producentOptions = [
+    { value: 'lucas', label: 'George Lucas' },
+    { value: 'spielberg', label: 'Steven Spielberg' },
+    { value: 'besson', label: 'Luc Besson' }
   ];
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.characterForm = this.fb.group({
-      name: ['', Validators.required],
-      size: [''],
-      weight: [''],
-      hairColor: [''],
-      eyeColor: ['gelb'],
-      birthYear: [''],
-      gender: ['gelb']
+      title: ['', Validators.required],
+      director: ['', Validators.required],
+      releaseDate: [''],
+      description: [''],
+      producent: ['George Lucas']
     });
   }
 
