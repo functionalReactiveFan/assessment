@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { GeneralDetailsComponent } from '../general-details/general-details.component';
+import { DetailsComponent } from '../../components/details/details.component';
 import { Planet } from '../../models/planet.model';
 
 import { ActivatedRoute } from '@angular/router';
@@ -11,7 +11,7 @@ import { PlanetService } from '../../services/planet.service';
 @Component({
   selector: 'app-planet-details',
   standalone: true,
-  imports: [CommonModule, GeneralDetailsComponent],
+  imports: [CommonModule, DetailsComponent],
   templateUrl: './planet-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

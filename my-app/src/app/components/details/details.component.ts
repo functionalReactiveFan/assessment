@@ -10,14 +10,14 @@ export interface DetailItem {
 }
 
 @Component({
-  selector: 'app-general-details',
+  selector: 'app-details',
   standalone: true,
   imports: [CommonModule, NgIf, NgForOf],
-  templateUrl: './general-details.component.html',
-  styleUrls: ['./general-details.component.scss'],
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeneralDetailsComponent implements OnChanges {
+export class DetailsComponent implements OnChanges {
   @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];

@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Character } from "../../models/character.model";
-import { GeneralDetailsComponent } from "../general-details/general-details.component";
+import { DetailsComponent } from "../../components/details/details.component";
 import { ActivatedRoute } from '@angular/router';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'app-character-details',
   standalone: true,
-  imports: [CommonModule, GeneralDetailsComponent],
+  imports: [CommonModule, DetailsComponent],
   templateUrl: './character-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

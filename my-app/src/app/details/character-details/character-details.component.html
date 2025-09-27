@@ -1,5 +1,5 @@
 <ng-container *ngIf="character$ | async as character">
-  <app-general-details
+  <app-details
     [title]="character.name"
     subtitle="Characterdeatils"
     [details]="[
@@ -14,5 +14,5 @@
     [films]="character.films"
     [imageUrl]="character.imageUrl"
     [dotsCount]="3"
-  ></app-general-details>
+  ></app-details>
 </ng-container>
