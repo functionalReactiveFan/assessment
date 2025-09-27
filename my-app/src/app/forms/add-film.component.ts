@@ -46,7 +46,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
           <div class="form-group full-width">
             <label for="description">Beschreibung</label>
-            <textarea type="description" id="description" formControlName="description" placeholder="Beschreibung"></textarea>
+            <textarea id="description" formControlName="description" placeholder="Beschreibung" rows="5"></textarea>
           </div>
 
           <div class="button-group">
@@ -161,7 +161,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
         margin-bottom: 8px;
       }
 
-      input, select {
+      input, select, textarea {
         width: 100%;
         padding: 12px 16px;
         border: 1px solid #E0E6EE;
@@ -172,11 +172,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
       }
 
-      input::placeholder {
+      input::placeholder, textarea::placeholder {
         color: #B0B9C8;
       }
 
-      input:focus, select:focus {
+      input:focus, select:focus, textarea:focus {
         outline: none;
         border-color: #3B82F6;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
