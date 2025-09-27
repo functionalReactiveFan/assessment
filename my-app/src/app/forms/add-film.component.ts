@@ -123,6 +123,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         width: 100%;
         max-width: 500px;
+        margin-top: 70px;
       }
 
       .form-title {
