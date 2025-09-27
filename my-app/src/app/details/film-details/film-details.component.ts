@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MovieService } from '../../services/movie.service';
-import { ChangeDetectorRef } from '@angular/core';
-import { extractPeopleId } from '../../utils/swapi-url';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MovieService} from '../../services/movie.service';
+import {extractPeopleId} from '../../utils/swapi-url';
+import {PeopleService} from "../../services/people.service";
 
 interface FilmDetails {
   director: string;
@@ -61,15 +61,20 @@ export class FilmDetailsComponent {
     map(index => this.images[index])
   );
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService, private cdr: ChangeDetectorRef, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private peopleService: PeopleService,
+    private cdr: ChangeDetectorRef,
+    private router: Router) {
     // Preload placeholder image
     this.images[0] = 'https://placehold.co/600x400';
 
     // Load film by id from route
     this.route.paramMap.pipe(
       map(params => params.get('id')),
-      switchMap(id => this.movieService.getMovieById(id || '1'))
-    ).subscribe(film => {
+      switchMap(id => combineLatest(this.movieService.getMovieById(id || '1'), this.peopleService.getPeople()))
+    ).subscribe(([film, people]) => {
       this.title = film?.title || 'Unbekannter Film';
       this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';
       this.filmDetails = {
@@ -79,8 +84,8 @@ export class FilmDetailsComponent {
       };
       this.synopsis = film?.opening_crawl || '';
       const chars = Array.isArray(film?.characters) ? film.characters : [];
-      this.characters = chars.map((u: string) => ({ name: this.formatCharacter(u), url: u }));
-      // Update carousel placeholders to include title text
+      this.characters = people.filter(p => chars.includes(p.url));
+      // carousel placeholders
       this.images = [
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
