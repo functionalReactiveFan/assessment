@@ -24,22 +24,16 @@
       <section class="films-section" *ngIf="films?.length">
         <h2>Filme:</h2>
         <div class="chips-container">
-          <!-- Render either first N or all films depending on toggle state -->
           <div class="chip film-chip"
                *ngFor="let film of displayedFilms"
-               (click)="navigateToFilm(film)"
-               role="button"
-               tabindex="0"
-               [attr.aria-label]="'Öffne ' + formatFilm(film)">
+               (click)="navigateToFilm(film)">
             {{ formatFilm(film) }}
           </div>
-          <!-- Ellipsis chip: visible only when more than maxCollapsedCount and currently collapsed -->
+          <!-- Chip with dots visible only when more than maxCollapsedCount and by click on it popup will be opened-->
           <button *ngIf="isMoreThanMax() && !showAllFilms"
                   class="chip film-chip"
                   type="button"
-                  (click)="openAddFilmPopup()"
-                  [attr.aria-expanded]="showAllFilms"
-                  title="Weitere Filme anzeigen">
+                  (click)="openAddFilmPopup()">
             ...
           </button>
         </div>
