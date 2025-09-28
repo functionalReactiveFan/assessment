@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./add-film.component.scss']
 })
 export class AddFilmComponent implements OnInit {
-  characterForm!: FormGroup;
+  filmForm!: FormGroup;
 
   producentOptions = [
     { value: 'lucas', label: 'George Lucas' },
@@ -21,9 +21,9 @@ export class AddFilmComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.characterForm = this.fb.group({
-      title: ['', Validators.required],
-      director: ['', Validators.required],
+    this.filmForm = this.fb.group({
+      title: [''],
+      director: [''],
       releaseDate: [''],
       description: [''],
       producent: ['lucas']
@@ -31,8 +31,8 @@ export class AddFilmComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.characterForm.valid) {
-      console.log('Form Submitted!', this.characterForm.value);
+    if (this.filmForm.valid) {
+      console.log('Form Submitted!', this.filmForm.value);
     }
   }
 }

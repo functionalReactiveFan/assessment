@@ -7,6 +7,7 @@ import { CharacterDetailsComponent } from "./details/character-details/character
 import { PlanetDetailsComponent } from "./details/planet-details/planet-details.component";
 import { AddCharacterComponent } from "./forms/add-character.component";
 import { AddFilmComponent } from "./forms/add-film.component";
+import { AddPlanetComponent } from "./forms/add-planet.component";
 
 export const routes: Routes = [
   { path: 'films-list', component: MoviesPageComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'planet-detail/:id', component: PlanetDetailsComponent },
   { path: 'add-char', component: AddCharacterComponent },
   { path: 'add-film', component: AddFilmComponent },
+  { path: 'add-planet', component: AddPlanetComponent },
   { path: '', redirectTo: 'films-list', pathMatch: 'full' },
   { path: '**', redirectTo: 'films-list' }
 ];
