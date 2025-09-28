@@ -19,7 +19,6 @@
       <section class="characters-section">
         <h3>Charaktere:</h3>
         <div class="characters-list">
-          <!-- Render either first 3 or all characters depending on toggle state -->
           <div *ngFor="let character of displayedCharacters"
                class="character-chip"
                (click)="navigateToCharacter(character.url)"
@@ -28,13 +27,13 @@
                [attr.aria-label]="'Öffne ' + character.name">
             {{ character.name }}
           </div>
-          <!-- Ellipsis chip by click using expanded view when more than 3 characters exist -->
+          <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
           <button *ngIf="isMoreThanTree() && !showAllCharacters"
                   class="character-chip"
                   type="button"
-                  (click)="toggleCharacters()"
-                  [attr.aria-expanded]="showAllCharacters"
-                  title="Toggle characters">
+                  (click)="openAddCharacterModal()"
+                  [attr.aria-expanded]="showAddCharacterModal"
+                  title="Weitere Aktionen">
             ...
           </button>
         </div>
@@ -54,4 +53,11 @@
       </div>
     </div>
   </main>
+
+  <!-- Add Character Modal -->
+  <div class="modal-backdrop" *ngIf="showAddCharacterModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <app-add-character></app-add-character>
+    </div>
+  </div>
 </div>

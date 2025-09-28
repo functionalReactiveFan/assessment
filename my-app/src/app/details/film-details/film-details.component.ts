@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MovieService} from '../../services/movie.service';
 import {extractPeopleId} from '../../utils/swapi-url';
 import {PeopleService} from "../../services/people.service";
+import { AddCharacterComponent } from '../../forms/add-character.component';
 
 interface FilmDetails {
   director: string;
@@ -21,7 +22,7 @@ interface Character {
 @Component({
   selector: 'app-film-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AddCharacterComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']
@@ -44,6 +45,8 @@ export class FilmDetailsComponent {
 
   // Toggle state for showing all characters vs first three
   showAllCharacters: boolean = false;
+  // Controls visibility of Add Character modal
+  showAddCharacterModal: boolean = false;
   get displayedCharacters(): Character[] {
     return this.showAllCharacters ? this.characters : this.characters.slice(0, 3);
   }
@@ -103,6 +106,16 @@ export class FilmDetailsComponent {
   toggleCharacters(): void {
     this.showAllCharacters = !this.showAllCharacters;
     // With OnPush, events already trigger change detection; this is mostly for clarity.
+    this.cdr.markForCheck();
+  }
+
+  openAddCharacterModal(): void {
+    this.showAddCharacterModal = true;
+    this.cdr.markForCheck();
+  }
+
+  closeAddCharacterModal(): void {
+    this.showAddCharacterModal = false;
     this.cdr.markForCheck();
   }
 

@@ -6,43 +6,9 @@
   display: block;
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
   font-family: 'Inter', sans-serif;
   background-color: #FBFDFE;
   color: #101D2E;
-}
-
-.background-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.background-blur {
-  position: absolute;
-  filter: blur(120px);
-  opacity: 0.6;
-}
-
-.blur-left {
-  width: 400px;
-  height: 400px;
-  left: 5%;
-  top: 20%;
-  background: #E0F7FA;
-}
-
-.blur-right {
-  width: 500px;
-  height: 500px;
-  right: -150px;
-  bottom: 5%;
-  background: url('https://placehold.co/500x500/FBC02D/FBC02D') no-repeat center center;
-  background-size: cover;
 }
 
 .main-container {
