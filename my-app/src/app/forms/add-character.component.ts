@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class AddCharacterComponent implements OnInit {
   characterForm!: FormGroup;
+
+  @Output() close = new EventEmitter<void>();
 
   eyeColorOptions = [
     { value: 'blau', label: 'Blau' },
@@ -28,7 +30,7 @@ export class AddCharacterComponent implements OnInit {
 
   ngOnInit(): void {
     this.characterForm = this.fb.group({
-      name: ['', Validators.required],
+      name: [''],
       size: [''],
       weight: [''],
       hairColor: [''],
@@ -42,5 +44,10 @@ export class AddCharacterComponent implements OnInit {
     if (this.characterForm.valid) {
       console.log('Form Submitted!', this.characterForm.value);
     }
+    this.close.emit();
+  }
+
+  onCancel(): void {
+    this.close.emit();
   }
 }

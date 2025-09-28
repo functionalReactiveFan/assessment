@@ -57,7 +57,7 @@
   <!-- Add Character Modal -->
   <div class="modal-backdrop" *ngIf="showAddCharacterModal" role="dialog" aria-modal="true">
     <div class="modal-content">
-      <app-add-character></app-add-character>
+      <app-add-character (close)="closeAddCharacterModal()"></app-add-character>
     </div>
   </div>
 </div>
