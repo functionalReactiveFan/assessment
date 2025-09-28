@@ -89,14 +89,14 @@ input:focus, select:focus {
 }
 
 .select-wrapper::after {
-  content: '\f0dc'; /* fa-sort */
+  content: '\f0dc';
   font-family: 'Font Awesome 5 Free', serif;
   font-weight: 900;
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #90A4AE;
+  color: #101D2E;
   pointer-events: none;
 }
 
