@@ -47,13 +47,13 @@
     </div>
 
     <div class="image-column" *ngIf="images?.length">
-      <img [src]="currentImage$ | async"
+      <img [src]="currentImage"
            alt="image"
            class="character-image">
       <div class="pagination-dots" *ngIf="images.length > 1">
         <span class="dot"
               *ngFor="let img of images; let i = index"
-              [class.active]="(currentImageIndex$ | async) === i"
+              [class.active]="currentImageIndex === i"
               (click)="selectImage(i)"></span>
       </div>
     </div>

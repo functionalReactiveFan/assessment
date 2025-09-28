@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BehaviorSubject, combineLatest} from 'rxjs';
+import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MovieService} from '../../services/movie.service';
@@ -57,12 +57,11 @@ export class FilmDetailsComponent {
     'https://placehold.co/600x400/000000/FFFFFF?text=Scene+3'
   ];
 
-  private currentImageIndexSubject = new BehaviorSubject<number>(0);
-  currentImageIndex$ = this.currentImageIndexSubject.asObservable();
-
-  currentImage$ = this.currentImageIndex$.pipe(
-    map(index => this.images[index])
-  );
+  // Simplified carousel state without BehaviorSubject
+  currentImageIndex: number = 0;
+  get currentImage(): string {
+    return this.images[this.currentImageIndex];
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -94,13 +93,15 @@ export class FilmDetailsComponent {
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 3')}`
       ];
-      this.currentImageIndexSubject.next(0);
+      this.currentImageIndex = 0;
       this.cdr.markForCheck();
     });
   }
 
   selectImage(index: number): void {
-    this.currentImageIndexSubject.next(index);
+    if (index >= 0 && index < this.images.length) {
+      this.currentImageIndex = index;
+    }
   }
 
   openAddCharacterModal(): void {

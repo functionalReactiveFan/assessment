@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
-import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { extractFilmId } from '../../utils/swapi-url';
 import {AddFilmComponent} from "../../forms/add-film.component";
@@ -39,11 +38,12 @@ export class DetailsComponent implements OnChanges {
   isMoreThanMax(): boolean {
     return (this.films?.length || 0) > this.maxCollapsedCount;
   }
-  // Image carousel state
+  // Image carousel state (simplified without BehaviorSubject)
   images: string[] = [];
-  private currentImageIndexSubject = new BehaviorSubject<number>(0);
-  currentImageIndex$ = this.currentImageIndexSubject.asObservable();
-  currentImage$ = this.currentImageIndex$.pipe(map(idx => this.images[idx]));
+  currentImageIndex: number = 0;
+  get currentImage(): string {
+    return this.images[this.currentImageIndex];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // Build images array whenever inputs change
@@ -65,12 +65,12 @@ export class DetailsComponent implements OnChanges {
     }
 
     this.images = images;
-    this.currentImageIndexSubject.next(0);
+    this.currentImageIndex = 0;
   }
 
   selectImage(index: number): void {
     if (index >= 0 && index < this.images.length) {
-      this.currentImageIndexSubject.next(index);
+      this.currentImageIndex = index;
     }
   }
 

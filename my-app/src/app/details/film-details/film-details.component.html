@@ -41,12 +41,12 @@
     </div>
     <div class="right-column">
       <div class="image-carousel">
-        <img [src]="currentImage$ | async" alt="Close-up portrait of Queen Amidala in her ornate red and gold royal attire and traditional white face makeup with red markings." class="carousel-image">
+        <img [src]="currentImage" alt="no image" class="carousel-image">
         <div class="pagination">
           <span
             *ngFor="let image of images; let i = index"
             class="dot"
-            [class.active]="(currentImageIndex$ | async) === i"
+            [class.active]="currentImageIndex === i"
             (click)="selectImage(i)">
           </span>
         </div>
