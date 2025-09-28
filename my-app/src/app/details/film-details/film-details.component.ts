@@ -103,12 +103,6 @@ export class FilmDetailsComponent {
     this.currentImageIndexSubject.next(index);
   }
 
-  toggleCharacters(): void {
-    this.showAllCharacters = !this.showAllCharacters;
-    // With OnPush, events already trigger change detection; this is mostly for clarity.
-    this.cdr.markForCheck();
-  }
-
   openAddCharacterModal(): void {
     this.showAddCharacterModal = true;
     this.cdr.markForCheck();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./add-film-or-planet.component.scss']
 })
 export class AddFilmComponent implements OnInit {
+  @Output() close = new EventEmitter<void>();
+
   filmForm!: FormGroup;
 
   producentOptions = [
@@ -34,5 +36,10 @@ export class AddFilmComponent implements OnInit {
     if (this.filmForm.valid) {
       console.log('Form Submitted!', this.filmForm.value);
     }
+    this.close.emit();
+  }
+
+  onCancel(): void {
+    this.close.emit();
   }
 }

@@ -10,9 +10,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./add-character.component.scss']
 })
 export class AddCharacterComponent implements OnInit {
-  characterForm!: FormGroup;
-
   @Output() close = new EventEmitter<void>();
+
+  characterForm!: FormGroup;
 
   eyeColorOptions = [
     { value: 'blau', label: 'Blau' },

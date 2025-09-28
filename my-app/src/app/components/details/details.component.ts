@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { extractFilmId } from '../../utils/swapi-url';
+import {AddFilmComponent} from "../../forms/add-film.component";
 
 export interface DetailItem {
   label: string;
@@ -25,6 +26,7 @@ export class DetailsComponent implements OnChanges {
   @Input() films: string[] = [];
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
+  @Output() openAddFilmModal = new EventEmitter();
   private maxCollapsedCount: number = 5;
 
   constructor(private router: Router) {}
@@ -37,10 +39,6 @@ export class DetailsComponent implements OnChanges {
   isMoreThanMax(): boolean {
     return (this.films?.length || 0) > this.maxCollapsedCount;
   }
-  toggleFilms(): void {
-    this.showAllFilms = !this.showAllFilms;
-  }
-
   // Image carousel state
   images: string[] = [];
   private currentImageIndexSubject = new BehaviorSubject<number>(0);
@@ -74,6 +72,10 @@ export class DetailsComponent implements OnChanges {
     if (index >= 0 && index < this.images.length) {
       this.currentImageIndexSubject.next(index);
     }
+  }
+
+  openAddFilmPopup() {
+    this.openAddFilmModal.emit(true);
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"

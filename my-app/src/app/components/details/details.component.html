@@ -37,7 +37,7 @@
           <button *ngIf="isMoreThanMax() && !showAllFilms"
                   class="chip film-chip"
                   type="button"
-                  (click)="toggleFilms()"
+                  (click)="openAddFilmPopup()"
                   [attr.aria-expanded]="showAllFilms"
                   title="Weitere Filme anzeigen">
             ...

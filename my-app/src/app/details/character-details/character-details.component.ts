@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {Component, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -6,18 +6,27 @@ import { Character } from "../../models/character.model";
 import { DetailsComponent } from "../../components/details/details.component";
 import { ActivatedRoute } from '@angular/router';
 import { PeopleService } from '../../services/people.service';
+import { AddCharacterComponent } from "../../forms/add-character.component";
+import {AddFilmComponent} from "../../forms/add-film.component";
 
 @Component({
   selector: 'app-character-details',
   standalone: true,
-  imports: [CommonModule, DetailsComponent],
+  imports: [CommonModule, DetailsComponent, AddFilmComponent],
   templateUrl: './character-details.component.html',
+  styleUrls: ['./character-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterDetailsComponent {
   character$: Observable<Character>;
 
-  constructor(private route: ActivatedRoute, private peopleService: PeopleService) {
+  showAddFilmModal: boolean = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private peopleService: PeopleService,
+    private cdr: ChangeDetectorRef) {
+
     this.character$ = this.route.paramMap.pipe(
       map(params => params.get('id')),
       switchMap((id) => this.peopleService.getPersonById(id || '1')),
@@ -41,5 +50,14 @@ export class CharacterDetailsComponent {
       films: Array.isArray(p?.films) ? p.films : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
     };
+  }
+
+  closeAddFilmModal(): void {
+    this.showAddFilmModal = false;
+    this.cdr.markForCheck();
+  }
+
+  openAddFilmPopup() {
+    this.showAddFilmModal = true;
   }
 }
