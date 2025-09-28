@@ -38,6 +38,15 @@
           </button>
         </div>
       </section>
+
+      <section class="planets-section">
+        <h2>Planeten:</h2>
+        <button class="chip film-chip"
+                type="button"
+                (click)="openAddPlanetPopup()">
+          ...
+        </button>
+      </section>
     </div>
 
     <div class="image-column" *ngIf="images?.length">
@@ -56,6 +65,11 @@
   <div class="modal-backdrop" *ngIf="showAddFilmModal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <app-add-film class="modal-form" (close)="closeAddFilmModal()"></app-add-film>
+    </div>
+  </div>
+  <div class="modal-backdrop" *ngIf="showAddPlanetModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <app-add-planet class="modal-form" (close)="closeAddPlanetModal()"></app-add-planet>
     </div>
   </div>
 </div>

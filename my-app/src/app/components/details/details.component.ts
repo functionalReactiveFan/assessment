@@ -3,6 +3,7 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { extractFilmId } from '../../utils/swapi-url';
 import {AddFilmComponent} from "../../forms/add-film.component";
+import {AddPlanetComponent} from "../../forms/add-planet.component";
 
 export interface DetailItem {
   label: string;
@@ -12,7 +13,7 @@ export interface DetailItem {
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, NgIf, NgForOf, AddFilmComponent],
+  imports: [CommonModule, NgIf, NgForOf, AddFilmComponent, AddPlanetComponent],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,6 +27,7 @@ export class DetailsComponent implements OnChanges {
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
   showAddFilmModal: boolean = false;
+  showAddPlanetModal: boolean = false;
   private maxCollapsedCount: number = 5;
 
   constructor(private router: Router) {}
@@ -74,13 +76,22 @@ export class DetailsComponent implements OnChanges {
     }
   }
 
-  openAddFilmPopup() {
+  openAddFilmPopup(): void {
     this.showAddFilmModal = true;
+  }
+
+  openAddPlanetPopup(): void {
+    this.showAddPlanetModal = true;
   }
 
   closeAddFilmModal(): void {
     this.showAddFilmModal = false;
-    this.router.navigate(['/films']);
+    this.router.navigate(['/films-list']);
+  }
+
+  closeAddPlanetModal(): void {
+    this.showAddPlanetModal = false;
+    this.router.navigate(['/planets-list']);
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
