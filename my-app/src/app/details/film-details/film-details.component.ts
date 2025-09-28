@@ -130,8 +130,4 @@ export class FilmDetailsComponent {
     }
   }
 
-  private formatCharacter(url: string): string {
-    const id = extractPeopleId(url);
-    return id ? `Charakter ${id}` : (url || '');
-  }
 }
