@@ -14,12 +14,5 @@
     [films]="character.films"
     [imageUrl]="character.imageUrl"
     [dotsCount]="3"
-    (openAddFilmModal)="openAddFilmPopup()"
   ></app-details>
-  <!-- Add Film Modal -->
-  <div class="modal-backdrop" *ngIf="showAddFilmModal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-      <app-add-film (close)="closeAddFilmModal()"></app-add-film>
-    </div>
-  </div>
 </ng-container>

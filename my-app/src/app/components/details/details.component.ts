@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export interface DetailItem {
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, NgIf, NgForOf],
+  imports: [CommonModule, NgIf, NgForOf, AddFilmComponent],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,7 +26,7 @@ export class DetailsComponent implements OnChanges {
   @Input() films: string[] = [];
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
-  @Output() openAddFilmModal = new EventEmitter();
+  showAddFilmModal: boolean = false;
   private maxCollapsedCount: number = 5;
 
   constructor(private router: Router) {}
@@ -75,7 +75,11 @@ export class DetailsComponent implements OnChanges {
   }
 
   openAddFilmPopup() {
-    this.openAddFilmModal.emit(true);
+    this.showAddFilmModal = true;
+  }
+
+  closeAddFilmModal(): void {
+    this.showAddFilmModal = false;
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
