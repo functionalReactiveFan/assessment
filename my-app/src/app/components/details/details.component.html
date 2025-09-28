@@ -30,7 +30,7 @@
             {{ formatFilm(film) }}
           </div>
           <!-- Chip with dots visible only when more than maxCollapsedCount and by click on it popup will be opened-->
-          <button *ngIf="isMoreThanMax() && !showAllFilms"
+          <button *ngIf="isMoreThanMax()"
                   class="chip film-chip"
                   type="button"
                   (click)="openAddFilmPopup()">

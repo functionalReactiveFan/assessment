@@ -18,15 +18,15 @@
 
       <section class="characters-section">
         <h3>Charaktere:</h3>
-        <div class="characters-list">
+        <div class="list">
           <div *ngFor="let character of displayedCharacters"
-               class="character-chip"
+               class="tag-chip"
                (click)="navigateToCharacter(character.url)">
             {{ character.name }}
           </div>
           <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
-          <button *ngIf="isMoreThanTree() && !showAllCharacters"
-                  class="character-chip"
+          <button *ngIf="isMoreThanTree()"
+                  class="tag-chip"
                   type="button"
                   (click)="openAddCharacterModal()">
             ...
@@ -36,11 +36,28 @@
 
       <section class="planets-section">
         <h2>Planeten:</h2>
-        <button class="character-chip"
+        <button class="tag-chip"
                 type="button"
                 (click)="openAddPlanetPopup()">
           ...
         </button>
+      </section>
+
+      <section class="starships-section">
+        <h3>Raumschiffe:</h3>
+        <div class="list">
+          <div *ngFor="let starship of displayedCharacters"
+               class="tag-chip">
+            {{ starship.name }}
+          </div>
+          <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
+          <button *ngIf="isMoreThanTree()"
+                  class="tag-chip"
+                  type="button"
+                  (click)="openAddCharacterModal()">
+            ...
+          </button>
+        </div>
       </section>
     </div>
     <div class="right-column">

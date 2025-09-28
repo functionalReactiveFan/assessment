@@ -32,17 +32,16 @@ export class DetailsComponent implements OnChanges {
 
   constructor(private router: Router) {}
 
-  // Films chips collapse/expand
-  showAllFilms: boolean = false;
   get displayedFilms(): string[] {
-    return this.showAllFilms ? this.films : this.films.slice(0, this.maxCollapsedCount);
+    return this.films.slice(0, this.maxCollapsedCount);
   }
   isMoreThanMax(): boolean {
     return (this.films?.length || 0) > this.maxCollapsedCount;
   }
-  // Image carousel state (simplified without BehaviorSubject)
+
   images: string[] = [];
   currentImageIndex: number = 0;
+
   get currentImage(): string {
     return this.images[this.currentImageIndex];
   }

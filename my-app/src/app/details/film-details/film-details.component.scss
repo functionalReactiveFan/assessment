@@ -84,13 +84,13 @@
   margin-top: 3rem;
 }
 
-.characters-list {
+.list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-.character-chip {
+.tag-chip {
   background-color: #f1f3f5;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -100,7 +100,7 @@
   transition: background-color 0.2s;
 }
 
-.character-chip:hover {
+.tag-chip:hover {
   background-color: #e9ecef;
 }
 
@@ -172,7 +172,7 @@
   }
 }
 
-button.character-chip {
+button.tag-chip {
   border: none;
   outline: none;
   appearance: none;

@@ -44,13 +44,11 @@ export class FilmDetailsComponent {
 
   characters: Character[] = [];
 
-  // Toggle state for showing all characters vs first three
-  showAllCharacters: boolean = false;
   // Controls visibility of modals
   showAddCharacterModal: boolean = false;
   showAddPlanetModal: boolean = false;
   get displayedCharacters(): Character[] {
-    return this.showAllCharacters ? this.characters : this.characters.slice(0, 3);
+    return this.characters.slice(0, 3);
   }
 
   images: string[] = [
