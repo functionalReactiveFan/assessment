@@ -7,6 +7,7 @@ import {MovieService} from '../../services/movie.service';
 import {extractPeopleId} from '../../utils/swapi-url';
 import {PeopleService} from "../../services/people.service";
 import { AddCharacterComponent } from '../../forms/add-character.component';
+import {AddPlanetComponent} from "../../forms/add-planet.component";
 
 interface FilmDetails {
   director: string;
@@ -22,7 +23,7 @@ interface Character {
 @Component({
   selector: 'app-film-details',
   standalone: true,
-  imports: [CommonModule, AddCharacterComponent],
+  imports: [CommonModule, AddCharacterComponent, AddPlanetComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']
@@ -45,8 +46,9 @@ export class FilmDetailsComponent {
 
   // Toggle state for showing all characters vs first three
   showAllCharacters: boolean = false;
-  // Controls visibility of Add Character modal
+  // Controls visibility of modals
   showAddCharacterModal: boolean = false;
+  showAddPlanetModal: boolean = false;
   get displayedCharacters(): Character[] {
     return this.showAllCharacters ? this.characters : this.characters.slice(0, 3);
   }
@@ -57,7 +59,6 @@ export class FilmDetailsComponent {
     'https://placehold.co/600x400/000000/FFFFFF?text=Scene+3'
   ];
 
-  // Simplified carousel state without BehaviorSubject
   currentImageIndex: number = 0;
   get currentImage(): string {
     return this.images[this.currentImageIndex];
@@ -87,7 +88,7 @@ export class FilmDetailsComponent {
       this.synopsis = film?.opening_crawl || '';
       const chars = Array.isArray(film?.characters) ? film.characters : [];
       this.characters = people.filter(p => chars.includes(p.url));
-      // carousel placeholders
+      // Since SWAPI does not provide images, we can emulate carousel placeholders
       this.images = [
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
@@ -111,6 +112,15 @@ export class FilmDetailsComponent {
   closeAddCharacterModal(): void {
     this.showAddCharacterModal = false;
     this.router.navigate(['/people-list']);
+  }
+
+  openAddPlanetPopup(): void {
+    this.showAddPlanetModal = true;
+  }
+
+  closeAddPlanetModal(): void {
+    this.showAddPlanetModal = false;
+    this.router.navigate(['/planets-list']);
   }
 
   isMoreThanTree(): boolean {

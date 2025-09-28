@@ -33,6 +33,15 @@
           </button>
         </div>
       </section>
+
+      <section class="planets-section">
+        <h2>Planeten:</h2>
+        <button class="character-chip"
+                type="button"
+                (click)="openAddPlanetPopup()">
+          ...
+        </button>
+      </section>
     </div>
     <div class="right-column">
       <div class="image-carousel">
@@ -53,6 +62,12 @@
   <div class="modal-backdrop" *ngIf="showAddCharacterModal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <app-add-character (close)="closeAddCharacterModal()"></app-add-character>
+    </div>
+  </div>
+  <!-- Add Planet Modal -->
+  <div class="modal-backdrop" *ngIf="showAddPlanetModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <app-add-planet class="modal-form" (close)="closeAddPlanetModal()"></app-add-planet>
     </div>
   </div>
 </div>
