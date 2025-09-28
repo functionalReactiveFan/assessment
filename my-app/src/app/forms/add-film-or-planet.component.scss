@@ -124,7 +124,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 .select-wrapper::after {
-  content: '\f0dc'; /* fa-sort */
+  content: '\f0dc';
+  font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   position: absolute;
   right: 16px;
