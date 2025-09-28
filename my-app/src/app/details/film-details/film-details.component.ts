@@ -105,12 +105,11 @@ export class FilmDetailsComponent {
 
   openAddCharacterModal(): void {
     this.showAddCharacterModal = true;
-    this.cdr.markForCheck();
   }
 
   closeAddCharacterModal(): void {
     this.showAddCharacterModal = false;
-    this.cdr.markForCheck();
+    this.router.navigate(['/people-list']);
   }
 
   isMoreThanTree(): boolean {

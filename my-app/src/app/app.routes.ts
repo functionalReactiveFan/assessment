@@ -5,7 +5,6 @@ import { PeoplePageComponent } from "./pages/people-page/people-page.component";
 import { PlanetsPageComponent } from "./pages/planets-page/planets-page.component";
 import { CharacterDetailsComponent } from "./details/character-details/character-details.component";
 import { PlanetDetailsComponent } from "./details/planet-details/planet-details.component";
-import { AddFilmComponent } from "./forms/add-film.component";
 import { AddPlanetComponent } from "./forms/add-planet.component";
 
 export const routes: Routes = [
@@ -15,7 +14,6 @@ export const routes: Routes = [
   { path: 'character-detail/:id', component: CharacterDetailsComponent },
   { path: 'planets-list', component: PlanetsPageComponent },
   { path: 'planet-detail/:id', component: PlanetDetailsComponent },
-  { path: 'add-film', component: AddFilmComponent },
   { path: 'add-planet', component: AddPlanetComponent },
   { path: '', redirectTo: 'films-list', pathMatch: 'full' },
   { path: '**', redirectTo: 'films-list' }

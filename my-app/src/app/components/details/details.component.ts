@@ -80,6 +80,7 @@ export class DetailsComponent implements OnChanges {
 
   closeAddFilmModal(): void {
     this.showAddFilmModal = false;
+    this.router.navigate(['/films']);
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
