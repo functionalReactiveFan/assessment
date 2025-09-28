@@ -90,7 +90,7 @@ input:focus, select:focus {
 
 .select-wrapper::after {
   content: '\f0dc'; /* fa-sort */
-  font-family: 'Font Awesome 5 Free';
+  font-family: 'Font Awesome 5 Free', serif;
   font-weight: 900;
   position: absolute;
   right: 16px;
