@@ -21,19 +21,14 @@
         <div class="characters-list">
           <div *ngFor="let character of displayedCharacters"
                class="character-chip"
-               (click)="navigateToCharacter(character.url)"
-               role="button"
-               tabindex="0"
-               [attr.aria-label]="'Öffne ' + character.name">
+               (click)="navigateToCharacter(character.url)">
             {{ character.name }}
           </div>
           <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
           <button *ngIf="isMoreThanTree() && !showAllCharacters"
                   class="character-chip"
                   type="button"
-                  (click)="openAddCharacterModal()"
-                  [attr.aria-expanded]="showAddCharacterModal"
-                  title="Weitere Aktionen">
+                  (click)="openAddCharacterModal()">
             ...
           </button>
         </div>
@@ -41,7 +36,7 @@
     </div>
     <div class="right-column">
       <div class="image-carousel">
-        <img [src]="currentImage" alt="no image" class="carousel-image">
+        <img [src]="currentImage" alt="Image" class="carousel-image">
         <div class="pagination">
           <span
             *ngFor="let image of images; let i = index"
