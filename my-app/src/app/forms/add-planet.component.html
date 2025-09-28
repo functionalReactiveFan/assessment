@@ -1,54 +1,50 @@
-    <div class="background-container">
-      <div class="background-blur blur-left"></div>
-      <div class="background-blur blur-right"></div>
-    </div>
-    <main class="main-container">
-      <div class="form-card">
-        <h2 class="form-title">Planet hinzufügen</h2>
-        <form [formGroup]="planetForm" (ngSubmit)="onSubmit()">
+<main class="main-container">
+  <div class="form-card">
+    <h2 class="form-title">Planet hinzufügen</h2>
+    <form [formGroup]="planetForm" (ngSubmit)="onSubmit()">
 
-          <div class="form-group full-width">
-            <label for="name">Name</label>
-            <input type="text" id="name" formControlName="name" placeholder="Name eingeben">
-          </div>
-
-          <div class="form-group">
-            <label for="type">Type</label>
-            <div class="select-wrapper">
-              <select id="type" formControlName="type">
-                <option *ngFor="let type of typeOptions" [value]="type.value">{{ type.label }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="createdBy">Created by</label>
-            <div class="select-wrapper">
-              <select id="createdBy" formControlName="createdBy">
-                <option *ngFor="let createdBy of createdByOptions" [value]="createdBy.value">{{ createdBy.label }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="genre">Genre</label>
-              <input type="text" id="genre" formControlName="genre" placeholder="Scince fiction">
-            </div>
-            <div class="form-group"></div>
-            <div class="form-group"></div>
-          </div>
-
-          <div class="form-group full-width">
-            <label for="races">Race(s)</label>
-            <textarea id="races" formControlName="races" placeholder="Namen mit Semikolon trennen" rows="5"></textarea>
-          </div>
-
-          <div class="button-group">
-            <button type="button" class="btn btn-cancel">Abbrechen</button>
-            <button type="submit" class="btn btn-submit">Planet hinzufügen</button>
-          </div>
-
-        </form>
+      <div class="form-group full-width">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" placeholder="Name eingeben">
       </div>
-    </main>
+
+      <div class="form-group">
+        <label for="type">Type</label>
+        <div class="select-wrapper">
+          <select id="type" formControlName="type">
+            <option *ngFor="let type of typeOptions" [value]="type.value">{{ type.label }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="createdBy">Created by</label>
+        <div class="select-wrapper">
+          <select id="createdBy" formControlName="createdBy">
+            <option *ngFor="let createdBy of createdByOptions" [value]="createdBy.value">{{ createdBy.label }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="genre">Genre</label>
+          <input type="text" id="genre" formControlName="genre" placeholder="Scince fiction">
+        </div>
+        <div class="form-group"></div>
+        <div class="form-group"></div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="races">Race(s)</label>
+        <textarea id="races" formControlName="races" placeholder="Namen mit Semikolon trennen" rows="5"></textarea>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-cancel">Abbrechen</button>
+        <button type="submit" class="btn btn-submit">Planet hinzufügen</button>
+      </div>
+
+    </form>
+  </div>
+</main>

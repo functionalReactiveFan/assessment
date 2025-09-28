@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-film',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-film.component.html',
-  styleUrls: ['./add-film.component.scss']
+  styleUrls: ['./add-film-or-planet.component.scss']
 })
 export class AddFilmComponent implements OnInit {
   filmForm!: FormGroup;

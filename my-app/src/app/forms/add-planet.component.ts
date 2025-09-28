@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-planet.component.html',
-  styleUrls: ['./add-planet.component.scss']
+  styleUrls: ['./add-film-or-planet.component.scss']
 })
 export class AddPlanetComponent implements OnInit {
   planetForm!: FormGroup;
