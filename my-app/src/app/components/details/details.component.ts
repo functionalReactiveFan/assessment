@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { extractId, FILMS_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
@@ -24,7 +32,7 @@ export interface DetailItem {
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailsComponent implements OnChanges {
+export class DetailsComponent implements OnChanges, OnInit {
   @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];
@@ -49,35 +57,39 @@ export class DetailsComponent implements OnChanges {
   renderedVehicles: string[] = [];
 
   constructor(private router: Router, private apis: ApisService, private cdr: ChangeDetectorRef) {
+
+  }
+
+  ngOnInit(): void {
     combineLatest(
       this.apis.getPlanets(),
       this.apis.getVehicles(),
       this.apis.getPeople(),
       this.apis.getStarships())
-    .subscribe(([planets, vehicles, people, starships])=> {
-      const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
-      const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
-      const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
-      this.allCharacters = people
-        .filter((character: Person) => this.peopleUrls.includes(character.url));
-      this.renderedCharacters = this.allCharacters.slice(0, 3);
-      console.log('this.starshipsUrls',this.starshipsUrls);  // fix this maybe use other hook
-      console.log('starshipsBuffer', starshipsBuffer);
-      this.allStarships = starshipsBuffer
-        .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
-        .map((starship: Starship) => starship.name);
-      console.log('this.allStarships',this.allStarships);
-      this.renderedStarships = this.allStarships.slice(0, 3);
-      console.log('this.renderedStarships',this.renderedStarships);
-      this.allVehicles = vehiclesBuffer
-        .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
-        .map((vehicle: Vehicle) => vehicle.name);
-      this.renderedVehicles = this.allVehicles.slice(0, 3);
-      this.allPlanets = planetsBuffer
-        .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
-      this.renderedPlanets = this.allPlanets.slice(0, 2);
-      this.cdr.markForCheck();
-    })
+      .subscribe(([planets, vehicles, people, starships])=> {
+        const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
+        const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
+        const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+        this.allCharacters = people
+          .filter((character: Person) => this.peopleUrls.includes(character.url));
+        this.renderedCharacters = this.allCharacters.slice(0, 3);
+        console.log('this.starshipsUrls',this.starshipsUrls);  // fix this maybe use other hook
+        console.log('starshipsBuffer', starshipsBuffer);
+        this.allStarships = starshipsBuffer
+          .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
+          .map((starship: Starship) => starship.name);
+        console.log('this.allStarships',this.allStarships);
+        this.renderedStarships = this.allStarships.slice(0, 3);
+        console.log('this.renderedStarships',this.renderedStarships);
+        this.allVehicles = vehiclesBuffer
+          .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
+          .map((vehicle: Vehicle) => vehicle.name);
+        this.renderedVehicles = this.allVehicles.slice(0, 3);
+        this.allPlanets = planetsBuffer
+          .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
+        this.renderedPlanets = this.allPlanets.slice(0, 2);
+        this.cdr.markForCheck();
+      });
   }
 
   get displayedFilmsUrls(): string[] {
