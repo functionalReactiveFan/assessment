@@ -11,7 +11,6 @@ import {Starship} from "../../models/starship.model";
 import {Person} from "../../models/person.model";
 import {Vehicle} from "../../models/vehicle.model";
 import {Planet} from "../../models/planet.model";
-import {HeaderComponent} from "../../components/header/header.component";
 
 interface FilmDetails {
   director: string;
