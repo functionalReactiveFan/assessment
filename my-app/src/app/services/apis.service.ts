@@ -12,11 +12,13 @@ export class ApisService {
   private readonly peopleEndpoint = 'https://swapi.dev/api/people/';
   private readonly planetsEndpoint = 'https://swapi.dev/api/planets/';
   private readonly starshipsEndpoint = 'https://swapi.dev/api/starships/';
+  private readonly vehiclesEndpoint = 'https://swapi.dev/api/vehicles/';
 
   private readonly moviesSubject = new BehaviorSubject<Movie[]>([]);
   private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
   private readonly planetsSubject = new BehaviorSubject<Planet[]>([]);
   private readonly starshipsSubject = new BehaviorSubject<string[]>([]);
+  private readonly vehiclesSubject = new BehaviorSubject<string[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -99,6 +101,23 @@ export class ApisService {
         tap((starships: string[]) => this.starshipsSubject.next(starships)),
         catchError(() => {
           this.starshipsSubject.next([]);
+          return of([]);
+        }))
+  }
+
+  // Starships
+  getVehicles(): Observable<string[]> {
+    const cachedVehicles: string[] = this.vehiclesSubject.getValue();
+    if (cachedVehicles.length > 0) {
+      return this.vehiclesSubject.asObservable();
+    }
+    return this.http
+      .get<any>(this.vehiclesEndpoint)
+      .pipe(
+        map(({ results })=> results.map((item: any) => item.name)),
+        tap((starships: string[]) => this.vehiclesSubject.next(starships)),
+        catchError(() => {
+          this.vehiclesSubject.next([]);
           return of([]);
         }))
   }
