@@ -30,10 +30,10 @@ export class ApisService {
       return this.moviesSubject.asObservable();
     }
     return this.http
-      .get(this.filmsEndpoint)
+      .get<any>(this.filmsEndpoint)
       .pipe(
-        map((response: any)=> response.results.map((item: any) => this.mapMovie(item))),
-        tap(items => this.moviesSubject.next(items)),
+        map(({ results })=> results.map((item: any) => this.mapMovie(item))),
+        tap((movies: Movie[]) => this.moviesSubject.next(movies)),
         catchError(() => {
           this.moviesSubject.next([]);
           return of([]);
