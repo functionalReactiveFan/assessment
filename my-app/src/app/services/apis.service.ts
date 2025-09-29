@@ -5,7 +5,6 @@ import {BehaviorSubject, catchError, map, Observable, of, tap} from 'rxjs';
 import { Movie } from '../models/movie.model';
 import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
-import {fetchWithCache} from "./shared/fetch-cache";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -84,9 +83,6 @@ export class ApisService {
     const url = `${this.planetsEndpoint}${id}/`;
     return this.http.get<any>(url);
   }
-
-
-
 
   // Mappers
   private mapMovie(film: any): Movie {
