@@ -10,5 +10,8 @@ export interface Character {
   };
   homeworld: string;
   films: string[];
+  planets: string[];
+  starships: string[];
+  vehicles: string[];
   imageUrl: string;
 }

@@ -42,6 +42,9 @@ export class CharacterDetailsComponent {
       },
       homeworld: p?.homeworld ?? '',
       films: Array.isArray(p?.films) ? p.films : [],
+      planets: Array.isArray(p?.planets) ? p.planets : [],
+      starships: Array.isArray(p?.starships) ? p.starships : [],
+      vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
     };
   }
