@@ -7,6 +7,8 @@ import {ApisService} from '../../services/apis.service';
 import {extractPeopleId} from '../../utils/swapi-url';
 import { AddCharacterComponent } from '../../forms/add-character.component';
 import {AddPlanetComponent} from "../../forms/add-planet.component";
+import {Starship} from "../../models/starship.model";
+import {Person} from "../../models/person.model";
 
 interface FilmDetails {
   director: string;
@@ -41,14 +43,13 @@ export class FilmDetailsComponent {
 
   synopsis: string = '';
 
-  characters: Character[] = [];
+  renderedCharacters: Character[] = [];
+  renderedStarships: string[] = [];
+  renderedVehicles: string[] = [];
 
   // Controls visibility of modals
   showAddCharacterModal: boolean = false;
   showAddPlanetModal: boolean = false;
-  get displayedCharacters(): Character[] {
-    return this.characters.slice(0, 3);
-  }
 
   images: string[] = [
     'https://placehold.co/600x400/000000/FFFFFF?text=Scene+1',
@@ -72,8 +73,12 @@ export class FilmDetailsComponent {
     // Load film by id from route
     this.route.paramMap.pipe(
       map(params => params.get('id')),
-      switchMap(id => combineLatest(this.apis.getMovieById(id || '1'), this.apis.getPeople()))
-    ).subscribe(([film, people]) => {
+      switchMap(id =>
+        combineLatest(
+          this.apis.getMovieById(id || '1'),
+          this.apis.getPeople(),
+          this.apis.getStarships()))
+    ).subscribe(([film, people, starships]) => {
       this.title = film?.title || 'Unbekannter Film';
       this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';
       this.filmDetails = {
@@ -82,8 +87,13 @@ export class FilmDetailsComponent {
         releaseDate: film?.release_date || ''
       };
       this.synopsis = film?.opening_crawl || '';
-      const chars = Array.isArray(film?.characters) ? film.characters : [];
-      this.characters = people.filter(p => chars.includes(p.url));
+      const characters = Array.isArray(film?.characters) ? film.characters : [];
+      this.renderedCharacters = people.filter((character: Person) => characters.includes(character.url)).slice(0, 3);
+      const ships: Starship[] = Array.isArray(starships) ? starships : [];
+      this.renderedStarships = ships
+        .filter((starship: Starship) => film?.starships?.includes(starship.url))
+        .map((starship: Starship) => starship.name);
+
       // Since SWAPI does not provide images, we can emulate carousel placeholders
       this.images = [
         `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
@@ -119,8 +129,16 @@ export class FilmDetailsComponent {
     this.router.navigate(['/planets-list']);
   }
 
-  isMoreThanTree(): boolean {
-    return this.characters.length > 3;
+  isMoreThanTreeCharacters(): boolean {
+    return this.renderedCharacters.length > 3;
+  }
+
+  isMoreThanTreeStarships(): boolean {
+    return this.renderedStarships.length > 3;
+  }
+
+  isMoreThanTreeVehicles(): boolean {
+    return this.renderedVehicles.length > 3;
   }
 
   navigateToCharacter(url: string): void {

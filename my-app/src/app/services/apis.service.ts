@@ -5,6 +5,8 @@ import {BehaviorSubject, catchError, map, Observable, of, tap} from 'rxjs';
 import { Movie } from '../models/movie.model';
 import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
+import {Starship} from "../models/starship.model";
+import {Vehicle} from "../models/vehicle.model";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -17,8 +19,8 @@ export class ApisService {
   private readonly moviesSubject = new BehaviorSubject<Movie[]>([]);
   private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
   private readonly planetsSubject = new BehaviorSubject<Planet[]>([]);
-  private readonly starshipsSubject = new BehaviorSubject<string[]>([]);
-  private readonly vehiclesSubject = new BehaviorSubject<string[]>([]);
+  private readonly starshipsSubject = new BehaviorSubject<Starship[]>([]);
+  private readonly vehiclesSubject = new BehaviorSubject<Vehicle[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -89,33 +91,33 @@ export class ApisService {
   }
 
   // Starships
-  getStarships(): Observable<string[]> {
-    const cachedStarships: string[] = this.starshipsSubject.getValue();
+  getStarships(): Observable<Starship[]> {
+    const cachedStarships: Starship[] = this.starshipsSubject.getValue();
     if (cachedStarships.length > 0) {
       return this.starshipsSubject.asObservable();
     }
     return this.http
       .get<any>(this.starshipsEndpoint)
       .pipe(
-        map(({ results })=> results.map((item: any) => item.name)),
-        tap((starships: string[]) => this.starshipsSubject.next(starships)),
+        map(({ results })=> results.map((item: any) => this.mapStarship(item))),
+        tap((starships: Starship[]) => this.starshipsSubject.next(starships)),
         catchError(() => {
           this.starshipsSubject.next([]);
           return of([]);
         }))
   }
 
-  // Starships
-  getVehicles(): Observable<string[]> {
-    const cachedVehicles: string[] = this.vehiclesSubject.getValue();
+  // Vehicles
+  getVehicles(): Observable<Vehicle[]> {
+    const cachedVehicles: Vehicle[] = this.vehiclesSubject.getValue();
     if (cachedVehicles.length > 0) {
       return this.vehiclesSubject.asObservable();
     }
     return this.http
       .get<any>(this.vehiclesEndpoint)
       .pipe(
-        map(({ results })=> results.map((item: any) => item.name)),
-        tap((starships: string[]) => this.vehiclesSubject.next(starships)),
+        map(({ results })=> results.map((item: any) => this.mapVehicle(item))),
+        tap((vehicles: Vehicle[]) => this.vehiclesSubject.next(vehicles)),
         catchError(() => {
           this.vehiclesSubject.next([]);
           return of([]);
@@ -162,6 +164,20 @@ export class ApisService {
       imageUrl: `https://placehold.co/400x300/14213d/ffffff?text=${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
       url: p.url
+    };
+  }
+
+  private mapStarship(s: any): Starship {
+    return {
+      name: s.name,
+      url: s.url
+    };
+  }
+
+  private mapVehicle(v: any): Vehicle {
+    return {
+      name: v.name,
+      url: v.url
     };
   }
 }
