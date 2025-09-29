@@ -42,7 +42,7 @@
                (click)="navigateToPlanet(planet.url)">
             {{ planet.name }}
           </div>
-          <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
+          <!-- Dots will be rendered if more than 2 characters exist and by clicking on them the add character modal will be opened-->
           <button *ngIf="isMoreThanTwoPlanets()"
                   class="tag-chip"
                   type="button"

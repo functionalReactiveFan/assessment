@@ -1,11 +1,15 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import {extractId, FILMS_ID_REGEX} from '../../utils/swapi-url';
-import {AddFilmComponent} from "../../forms/add-film.component";
-import {AddPlanetComponent} from "../../forms/add-planet.component";
-import {combineLatest} from "rxjs";
-import {ApisService} from "../../services/apis.service";
+import { extractId, FILMS_ID_REGEX } from '../../utils/swapi-url';
+import { AddFilmComponent } from "../../forms/add-film.component";
+import { AddPlanetComponent } from "../../forms/add-planet.component";
+import { combineLatest } from "rxjs";
+import { ApisService } from "../../services/apis.service";
+import { Planet } from "../../models/planet.model";
+import { Starship } from "../../models/starship.model";
+import { Person } from "../../models/person.model";
+import { Vehicle } from "../../models/vehicle.model";
 
 export interface DetailItem {
   label: string;
@@ -36,6 +40,15 @@ export class DetailsComponent implements OnChanges {
   showAddPlanetModal: boolean = false;
   private maxCollapsedCount: number = 5;
 
+  allCharacters: Person[] = [];
+  renderedCharacters: Person[] = [];
+  allPlanets: Planet[] = [];
+  renderedPlanets: Planet[] = [];
+  allStarships: string[] = [];
+  renderedStarships: string[] = [];
+  allVehicles: string[] = [];
+  renderedVehicles: string[] = [];
+
   constructor(private router: Router, private apis: ApisService) {
     combineLatest(
       this.apis.getPlanets(),
@@ -43,7 +56,23 @@ export class DetailsComponent implements OnChanges {
       this.apis.getPeople(),
       this.apis.getStarships())
     .subscribe(([planets, vehicles, people, starships])=> {
-
+      const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
+      const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
+      const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+      this.allCharacters = people
+        .filter((character: Person) => this.peopleUrls.includes(character.url));
+      this.renderedCharacters = this.allCharacters.slice(0, 3);
+      this.allStarships = starshipsBuffer
+        .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
+        .map((starship: Starship) => starship.name);
+      this.renderedStarships = this.allStarships.slice(0, 3);
+      this.allVehicles = vehiclesBuffer
+        .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
+        .map((vehicle: Vehicle) => vehicle.name);
+      this.renderedVehicles = this.allVehicles.slice(0, 3);
+      this.allPlanets = planetsBuffer
+        .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
+      this.renderedPlanets = this.allPlanets.slice(0, 2);
     })
   }
 
@@ -68,14 +97,14 @@ export class DetailsComponent implements OnChanges {
 
     const images: string[] = [];
 
-    // Use provided imageUrl as the first image if available
+    // Use provided imageUrl
     if (this.imageUrl) {
       images.push(this.imageUrl);
     } else {
       images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' 1')}`);
     }
 
-    // Fill remaining images with placeholders based on title
+    // Fill remaining images with placeholders based on the title
     for (let i = images.length; i < count; i++) {
       images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' ' + (i + 1))}`);
     }
