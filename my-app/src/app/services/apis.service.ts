@@ -5,7 +5,7 @@ import {BehaviorSubject, catchError, map, Observable, of, tap} from 'rxjs';
 import { Movie } from '../models/movie.model';
 import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
-import { fetchWithCache } from './shared/fetch-cache';
+import {fetchWithCache} from "./shared/fetch-cache";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -16,10 +16,6 @@ export class ApisService {
   private readonly moviesSubject = new BehaviorSubject<Movie[]>([]);
   private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
   private readonly planetsSubject = new BehaviorSubject<Planet[]>([]);
-
-  private moviesLoaded: boolean = false;
-  private peopleLoaded: boolean = false;
-  private planetsLoaded: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -46,14 +42,20 @@ export class ApisService {
   }
 
   // People
-  getPeople(forceRefresh: boolean = false): Observable<Person[]> {
-    return fetchWithCache<Person>(
-      this.http,
-      this.peopleEndpoint,
-      p => this.mapPerson(p),
-      this.peopleSubject,
-      forceRefresh
-    );
+  getPeople(): Observable<Person[]> {
+    const cachedPeople: Person[] = this.peopleSubject.getValue();
+    if (cachedPeople.length > 0) {
+      return this.peopleSubject.asObservable();
+    }
+    return this.http
+      .get<any>(this.peopleEndpoint)
+      .pipe(
+        map(({ results })=> results.map((item: any) => this.mapPerson(item))),
+        tap((people: Person[]) => this.peopleSubject.next(people)),
+        catchError(() => {
+          this.peopleSubject.next([]);
+          return of([]);
+        }))
   }
 
   getPersonById(id: number | string): Observable<any> {
@@ -77,16 +79,7 @@ export class ApisService {
     return this.http.get<any>(url);
   }
 
-  // Starships
-  getStarships(forceRefresh: boolean = false): Observable<any[]> {
-    return fetchWithCache<any>(
-      this.http,
-      this.planetsEndpoint,
-      p => this.mapPlanet(p),
-      this.planetsSubject,
-      forceRefresh
-    );
-  }
+
 
 
   // Mappers
