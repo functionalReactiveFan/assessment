@@ -59,8 +59,8 @@
 
       <section class="starships-section" *ngIf="starshipsUrls?.length">
         <h2>Raumschiffe:</h2>
-        <div class="">
-          <div class=""
+        <div class="chips-container">
+          <div class="chip"
                *ngFor="let starship of displayedStarships">
             {{starship}}
           </div>

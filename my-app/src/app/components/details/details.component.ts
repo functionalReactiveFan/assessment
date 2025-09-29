@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { extractId, FILMS_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
@@ -48,7 +48,7 @@ export class DetailsComponent implements OnChanges {
   allVehicles: string[] = [];
   renderedVehicles: string[] = [];
 
-  constructor(private router: Router, private apis: ApisService) {
+  constructor(private router: Router, private apis: ApisService, private cdr: ChangeDetectorRef) {
     combineLatest(
       this.apis.getPlanets(),
       this.apis.getVehicles(),
@@ -76,6 +76,7 @@ export class DetailsComponent implements OnChanges {
       this.allPlanets = planetsBuffer
         .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
       this.renderedPlanets = this.allPlanets.slice(0, 2);
+      this.cdr.markForCheck();
     })
   }
 
@@ -84,7 +85,7 @@ export class DetailsComponent implements OnChanges {
   }
 
   get displayedStarships(): string[] {
-    return this.renderedStarships
+    return this.allStarships.slice(0, 3)
   }
 
   isFilmsMoreThanMax(): boolean {
