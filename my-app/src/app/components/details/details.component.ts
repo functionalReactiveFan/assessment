@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { extractId, FILMS_ID_REGEX } from '../../utils/swapi-url';
+import { extractId, FILMS_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
 import { AddFilmComponent } from "../../forms/add-film.component";
 import { AddPlanetComponent } from "../../forms/add-planet.component";
 import { combineLatest } from "rxjs";
@@ -38,7 +38,6 @@ export class DetailsComponent implements OnChanges {
   @Input() dotsCount: number = 3;
   showAddFilmModal: boolean = false;
   showAddPlanetModal: boolean = false;
-  private maxCollapsedCount: number = 5;
 
   allCharacters: Person[] = [];
   renderedCharacters: Person[] = [];
@@ -76,11 +75,24 @@ export class DetailsComponent implements OnChanges {
     })
   }
 
-  get displayedFilms(): string[] {
-    return this.filmsUrls.slice(0, this.maxCollapsedCount);
+  get displayedFilmsUrls(): string[] {
+    return this.filmsUrls.slice(0, 5);
   }
-  isMoreThanMax(): boolean {
-    return (this.filmsUrls?.length || 0) > this.maxCollapsedCount;
+
+  isFilmsMoreThanMax(): boolean {
+    return this.filmsUrls.length > 5;
+  }
+
+  isPlanetsMoreThanMax(): boolean {
+    return this.planetsUrls.length > 2;
+  }
+
+  isStarshipsMoreThanMax(): boolean {
+    return this.starshipsUrls.length > 3;
+  }
+
+  isVehiclesMoreThanMax(): boolean {
+    return this.vehiclesUrls.length > 3;
   }
 
   images: string[] = [];
@@ -116,6 +128,13 @@ export class DetailsComponent implements OnChanges {
   selectImage(index: number): void {
     if (index >= 0 && index < this.images.length) {
       this.currentImageIndex = index;
+    }
+  }
+
+  navigateToPlanet(url: string): void {
+    const id = extractId(url, PLANETS_ID_REGEX);
+    if (id) {
+      this.router.navigate(['/planet-detail', id]);
     }
   }
 

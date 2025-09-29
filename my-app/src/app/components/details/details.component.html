@@ -24,14 +24,14 @@
       <section class="films-section" *ngIf="filmsUrls?.length">
         <h2>Filme:</h2>
         <div class="chips-container">
-          <div class="chip film-chip"
-               *ngFor="let film of displayedFilms"
-               (click)="navigateToFilm(film)">
-            {{ formatFilm(film) }}
+          <div class="chip"
+               *ngFor="let filmUrl of displayedFilmsUrls"
+               (click)="navigateToFilm(filmUrl)">
+            {{ formatFilm(filmUrl) }}
           </div>
           <!-- Chip with dots visible only when more than maxCollapsedCount and by click on it popup will be opened-->
-          <button *ngIf="isMoreThanMax()"
-                  class="chip film-chip"
+          <button *ngIf="isFilmsMoreThanMax()"
+                  class="chip"
                   type="button"
                   (click)="openAddFilmPopup()">
             ...
@@ -39,7 +39,53 @@
         </div>
       </section>
 
+      <section class="planets-section" *ngIf="planetsUrls?.length">
+        <h2>Planeten:</h2>
+        <div class="chips-container">
+          <div class="chip"
+               *ngFor="let planet of renderedPlanets"
+               (click)="navigateToPlanet(planet.url)">
+            {{ planet.name }}
+          </div>
+          <!-- Chip with dots visible only when more than maxCollapsedCount and by click on it popup will be opened-->
+          <button *ngIf="isPlanetsMoreThanMax()"
+                  class="chip"
+                  type="button"
+                  (click)="openAddPlanetPopup()">
+            ...
+          </button>
+        </div>
+      </section>
 
+      <section class="starships-section" *ngIf="starshipsUrls?.length">
+        <h2>Raumschiffe:</h2>
+        <div class="chips-container">
+          <div class="chip"
+               *ngFor="let starship of renderedStarships">
+            {{ starship }}
+          </div>
+          <button *ngIf="isStarshipsMoreThanMax()"
+                  class="chip"
+                  type="button">
+            ...
+          </button>
+        </div>
+      </section>
+
+      <section class="vehicles-section" *ngIf="vehiclesUrls?.length">
+        <h2>Fahrzeuge:</h2>
+        <div class="chips-container">
+          <div class="chip"
+               *ngFor="let vehicle of renderedVehicles">
+            {{ vehicle }}
+          </div>
+          <button *ngIf="isVehiclesMoreThanMax()"
+                  class="chip"
+                  type="button">
+            ...
+          </button>
+        </div>
+      </section>
     </div>
 
     <div class="image-column" *ngIf="images?.length">

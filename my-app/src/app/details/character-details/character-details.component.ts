@@ -24,23 +24,23 @@ export class CharacterDetailsComponent {
     this.character$ = this.route.paramMap.pipe(
       map(params => params.get('id')),
       switchMap((id) => this.apis.getPersonById(id || '1')),
-      map((p: any) => this.mapSwapiPersonToCharacter(p))
+      map((p: any) => this.mapCharacter(p))
     );
   }
 
-  private mapSwapiPersonToCharacter(p: any): Character {
-    const name = typeof p?.name === 'string' ? p.name : 'Unknown';
+  private mapCharacter(p: any): Character {
+    const name= p?.name ?? '';
     return {
       name,
       details: {
-        height: p?.height ? `${p.height}cm` : 'Unknown',
-        weight: p?.mass ? `${p.mass}kg` : 'Unknown',
-        hair_color: p?.hair_color ?? 'Unknown',
-        eye_color: p?.eye_color ?? 'Unknown',
-        birth_year: p?.birth_year ?? 'Unknown',
-        gender: p?.gender ?? 'Unknown',
+        height: p?.height ? `${p.height}cm` : '',
+        weight: p?.mass ? `${p.mass}kg` : '',
+        hair_color: p?.hair_color ?? '',
+        eye_color: p?.eye_color ?? '',
+        birth_year: p?.birth_year ?? '',
+        gender: p?.gender ?? '',
       },
-      homeworld: p?.homeworld ?? 'Unknown',
+      homeworld: p?.homeworld ?? '',
       films: Array.isArray(p?.films) ? p.films : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
     };
