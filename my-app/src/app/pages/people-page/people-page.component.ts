@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
-import { PeopleService } from '../../services/people.service';
+import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
 import { extractPeopleId } from '../../utils/swapi-url';
 
@@ -16,10 +16,10 @@ import { extractPeopleId } from '../../utils/swapi-url';
 export class PeoplePageComponent implements OnInit {
   people$!: Observable<Person[]>;
 
-  constructor(private peopleService: PeopleService) {}
+  constructor(private apis: ApisService) {}
 
   ngOnInit(): void {
-    this.people$ = this.peopleService.getPeople();
+    this.people$ = this.apis.getPeople();
   }
 
   getPersonDetailHref(p: Person): string {

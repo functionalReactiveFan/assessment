@@ -3,9 +3,8 @@ import {CommonModule} from '@angular/common';
 import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MovieService} from '../../services/movie.service';
+import {ApisService} from '../../services/apis.service';
 import {extractPeopleId} from '../../utils/swapi-url';
-import {PeopleService} from "../../services/people.service";
 import { AddCharacterComponent } from '../../forms/add-character.component';
 import {AddPlanetComponent} from "../../forms/add-planet.component";
 
@@ -64,8 +63,7 @@ export class FilmDetailsComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private movieService: MovieService,
-    private peopleService: PeopleService,
+    private apis: ApisService,
     private cdr: ChangeDetectorRef,
     private router: Router) {
     // Preload placeholder image
@@ -74,7 +72,7 @@ export class FilmDetailsComponent {
     // Load film by id from route
     this.route.paramMap.pipe(
       map(params => params.get('id')),
-      switchMap(id => combineLatest(this.movieService.getMovieById(id || '1'), this.peopleService.getPeople()))
+      switchMap(id => combineLatest(this.apis.getMovieById(id || '1'), this.apis.getPeople()))
     ).subscribe(([film, people]) => {
       this.title = film?.title || 'Unbekannter Film';
       this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';

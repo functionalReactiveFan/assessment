@@ -6,7 +6,7 @@ import { Planet } from '../../models/planet.model';
 
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
-import { PlanetService } from '../../services/planet.service';
+import { ApisService } from '../../services/apis.service';
 
 @Component({
   selector: 'app-planet-details',
@@ -18,10 +18,10 @@ import { PlanetService } from '../../services/planet.service';
 export class PlanetDetailsComponent {
   planet$: Observable<Planet>;
 
-  constructor(private route: ActivatedRoute, private planetService: PlanetService) {
+  constructor(private route: ActivatedRoute, private apis: ApisService) {
     this.planet$ = this.route.paramMap.pipe(
       map(params => params.get('id')),
-      switchMap((id) => this.planetService.getPlanetById(id || '1')),
+      switchMap((id) => this.apis.getPlanetById(id || '1')),
       map((p: any) => this.mapSwapiPlanetToPlanet(p))
     );
   }

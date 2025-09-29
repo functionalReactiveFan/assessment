@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Planet } from '../../models/planet.model';
-import { PlanetService } from '../../services/planet.service';
+import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
 
 @Component({
@@ -15,10 +15,10 @@ import { CardComponent } from '../../components/card/card.component';
 export class PlanetsPageComponent implements OnInit {
   planets$!: Observable<Planet[]>;
 
-  constructor(private planetService: PlanetService) {}
+  constructor(private apis: ApisService) {}
 
   ngOnInit(): void {
-    this.planets$ = this.planetService.getPlanets();
+    this.planets$ = this.apis.getPlanets();
   }
 
   getPlanetDetailHref(p: Planet): string {

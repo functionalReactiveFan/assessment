@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model';
-import { MovieService } from '../../services/movie.service';
+import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
 import { extractFilmId } from '../../utils/swapi-url';
 
@@ -16,10 +16,10 @@ import { extractFilmId } from '../../utils/swapi-url';
 export class MoviesPageComponent implements OnInit {
   movies$!: Observable<Movie[]>;
 
-  constructor(private movieService: MovieService) {}
+  constructor(private apis: ApisService) {}
 
   ngOnInit(): void {
-    this.movies$ = this.movieService.getMovies();
+    this.movies$ = this.apis.getMovies();
   }
 
   getMovieDetailHref(m: Movie): string {
