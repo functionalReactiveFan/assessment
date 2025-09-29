@@ -10,7 +10,6 @@ import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
 import { Person } from "../../models/person.model";
 import { Vehicle } from "../../models/vehicle.model";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 export interface DetailItem {
   label: string;
