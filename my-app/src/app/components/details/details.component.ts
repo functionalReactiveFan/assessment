@@ -41,7 +41,8 @@ export class DetailsComponent implements OnChanges {
       this.apis.getPlanets(),
       this.apis.getVehicles(),
       this.apis.getPeople(),
-      this.apis.getStarships()).subscribe(([planets, vehicles, people, starships]) => {
+      this.apis.getStarships())
+    .subscribe(([planets, vehicles, people, starships])=> {
 
     })
   }

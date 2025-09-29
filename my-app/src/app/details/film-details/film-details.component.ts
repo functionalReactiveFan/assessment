@@ -98,13 +98,13 @@ export class FilmDetailsComponent {
         releaseDate: film?.release_date || ''
       };
       this.synopsis = film?.opening_crawl || '';
-      const characters = Array.isArray(film?.characters) ? film.characters : [];
-      this.allCharacters = people
-        .filter((character: Person) => characters.includes(character.url));
-      this.renderedCharacters = this.allCharacters.slice(0, 3);
+      const charactersBuffer = Array.isArray(film?.characters) ? film.characters : [];
       const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
       const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
       const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+      this.allCharacters = people
+        .filter((character: Person) => charactersBuffer.includes(character.url));
+      this.renderedCharacters = this.allCharacters.slice(0, 3);
       this.allStarships = starshipsBuffer
         .filter((starship: Starship) => film?.starships?.includes(starship.url))
         .map((starship: Starship) => starship.name);
