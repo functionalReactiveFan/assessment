@@ -10,6 +10,7 @@ import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
 import { Person } from "../../models/person.model";
 import { Vehicle } from "../../models/vehicle.model";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 export interface DetailItem {
   label: string;
@@ -61,10 +62,14 @@ export class DetailsComponent implements OnChanges {
       this.allCharacters = people
         .filter((character: Person) => this.peopleUrls.includes(character.url));
       this.renderedCharacters = this.allCharacters.slice(0, 3);
+      console.log('this.starshipsUrls',this.starshipsUrls);  // fix this maybe use other hook
+      console.log('starshipsBuffer', starshipsBuffer);
       this.allStarships = starshipsBuffer
         .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
         .map((starship: Starship) => starship.name);
+      console.log('this.allStarships',this.allStarships);
       this.renderedStarships = this.allStarships.slice(0, 3);
+      console.log('this.renderedStarships',this.renderedStarships);
       this.allVehicles = vehiclesBuffer
         .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
         .map((vehicle: Vehicle) => vehicle.name);
@@ -77,6 +82,10 @@ export class DetailsComponent implements OnChanges {
 
   get displayedFilmsUrls(): string[] {
     return this.filmsUrls.slice(0, 5);
+  }
+
+  get displayedStarships(): string[] {
+    return this.renderedStarships
   }
 
   isFilmsMoreThanMax(): boolean {

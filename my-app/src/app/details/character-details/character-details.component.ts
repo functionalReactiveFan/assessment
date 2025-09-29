@@ -30,6 +30,7 @@ export class CharacterDetailsComponent {
 
   private mapCharacter(p: any): Character {
     const name= p?.name ?? '';
+    console.log('p?.starships', p?.starships)
     return {
       name,
       details: {

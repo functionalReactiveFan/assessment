@@ -59,10 +59,10 @@
 
       <section class="starships-section" *ngIf="starshipsUrls?.length">
         <h2>Raumschiffe:</h2>
-        <div class="chips-container">
-          <div class="chip"
-               *ngFor="let starship of renderedStarships">
-            {{ starship }}
+        <div class="">
+          <div class=""
+               *ngFor="let starship of displayedStarships">
+            {{starship}}
           </div>
           <button *ngIf="isStarshipsMoreThanMax()"
                   class="chip"
