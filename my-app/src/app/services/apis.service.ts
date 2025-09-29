@@ -64,14 +64,20 @@ export class ApisService {
   }
 
   // Planets
-  getPlanets(forceRefresh: boolean = false): Observable<Planet[]> {
-    return fetchWithCache<Planet>(
-      this.http,
-      this.planetsEndpoint,
-      p => this.mapPlanet(p),
-      this.planetsSubject,
-      forceRefresh
-    );
+  getPlanets(): Observable<Planet[]> {
+    const cachedPlanets: Planet[] = this.planetsSubject.getValue();
+    if (cachedPlanets.length > 0) {
+      return this.planetsSubject.asObservable();
+    }
+    return this.http
+      .get<any>(this.planetsEndpoint)
+      .pipe(
+        map(({ results })=> results.map((item: any) => this.mapPlanet(item))),
+        tap((planets: Planet[]) => this.planetsSubject.next(planets)),
+        catchError(() => {
+          this.planetsSubject.next([]);
+          return of([]);
+        }))
   }
 
   getPlanetById(id: number | string): Observable<any> {
