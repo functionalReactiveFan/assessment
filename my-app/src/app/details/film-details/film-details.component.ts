@@ -4,7 +4,7 @@ import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
-import {extractPeopleId} from '../../utils/swapi-url';
+import {extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from '../../utils/swapi-url';
 import { AddCharacterComponent } from '../../forms/add-character.component';
 import {AddPlanetComponent} from "../../forms/add-planet.component";
 import {Starship} from "../../models/starship.model";
@@ -90,10 +90,10 @@ export class FilmDetailsComponent {
             this.apis.getStarships())
           ))
         .subscribe(([film, planets, vehicles, people, starships]) => {
-      this.title = film?.title || 'Unbekannter Film';
+      this.title = film?.title || '';
       this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';
       this.filmDetails = {
-        director: film?.director || 'Unbekannt',
+        director: film?.director || '',
         producers: typeof film?.producer === 'string' ? film.producer : '',
         releaseDate: film?.release_date || ''
       };
@@ -169,9 +169,16 @@ export class FilmDetailsComponent {
   }
 
   navigateToCharacter(url: string): void {
-    const id = extractPeopleId(url);
+    const id = extractId(url, PEOPLE_ID_REGEX);
     if (id) {
       this.router.navigate(['/character-detail', id]);
+    }
+  }
+
+  navigateToPlanet(url: string): void {
+    const id = extractId(url, PLANETS_ID_REGEX);
+    if (id) {
+      this.router.navigate(['/planet-detail', id]);
     }
   }
 

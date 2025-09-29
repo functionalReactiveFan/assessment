@@ -21,7 +21,7 @@
         <div class="chip planet-chip">{{ planet }}</div>
       </section>
 
-      <section class="films-section" *ngIf="films?.length">
+      <section class="films-section" *ngIf="filmsUrls?.length">
         <h2>Filme:</h2>
         <div class="chips-container">
           <div class="chip film-chip"
@@ -39,14 +39,7 @@
         </div>
       </section>
 
-      <section class="planets-section">
-        <h2>Planeten:</h2>
-        <button class="chip film-chip"
-                type="button"
-                (click)="openAddPlanetPopup()">
-          ...
-        </button>
-      </section>
+
     </div>
 
     <div class="image-column" *ngIf="images?.length">

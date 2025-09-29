@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
 import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
-import { extractPeopleId } from '../../utils/swapi-url';
+import { extractId, PEOPLE_ID_REGEX } from '../../utils/swapi-url';
 
 @Component({
   selector: 'app-people-page',
@@ -23,7 +23,7 @@ export class PeoplePageComponent implements OnInit {
   }
 
   getPersonDetailHref(p: Person): string {
-    const id = extractPeopleId(p.url);
+    const id = extractId(p.url, PEOPLE_ID_REGEX);
     return id ? `/character-detail/${id}` : '/character-detail/1';
   }
 }

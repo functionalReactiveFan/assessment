@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Planet } from '../../models/planet.model';
 import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
+import {extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from "../../utils/swapi-url";
 
 @Component({
   selector: 'app-planets-page',
@@ -22,14 +23,8 @@ export class PlanetsPageComponent implements OnInit {
   }
 
   getPlanetDetailHref(p: Planet): string {
-    const id = this.extractIdFromUrl(p.url);
+    const id = extractId(p.url, PLANETS_ID_REGEX);
     return id ? `/planet-detail/${id}` : '/planet-detail/1';
-  }
-
-  private extractIdFromUrl(url: string): string | null {
-    if (!url) return null;
-    const match = url.match(/planets\/(\d+)\/?$/);
-    return match ? match[1] : null;
   }
 }
 

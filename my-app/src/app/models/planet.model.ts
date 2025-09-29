@@ -1,5 +1,8 @@
 export interface Planet {
   films: string[];
+  people: string[];
+  starships: string[];
+  vehicles: string[];
   name: string;
   climate: string;
   terrain: string;

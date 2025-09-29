@@ -1,9 +1,11 @@
 import {ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { extractFilmId } from '../../utils/swapi-url';
+import {extractId, FILMS_ID_REGEX} from '../../utils/swapi-url';
 import {AddFilmComponent} from "../../forms/add-film.component";
 import {AddPlanetComponent} from "../../forms/add-planet.component";
+import {combineLatest} from "rxjs";
+import {ApisService} from "../../services/apis.service";
 
 export interface DetailItem {
   label: string;
@@ -23,20 +25,32 @@ export class DetailsComponent implements OnChanges {
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];
   @Input() planet?: string;
-  @Input() films: string[] = [];
+  @Input() filmsUrls: string[] = [];
+  @Input() planetsUrls: string[] = [];
+  @Input() peopleUrls: string[] = [];
+  @Input() starshipsUrls: string[] = [];
+  @Input() vehiclesUrls: string[] = [];
   @Input() imageUrl: string = '';
   @Input() dotsCount: number = 3;
   showAddFilmModal: boolean = false;
   showAddPlanetModal: boolean = false;
   private maxCollapsedCount: number = 5;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private apis: ApisService) {
+    combineLatest(
+      this.apis.getPlanets(),
+      this.apis.getVehicles(),
+      this.apis.getPeople(),
+      this.apis.getStarships()).subscribe(([planets, vehicles, people, starships]) => {
+
+    })
+  }
 
   get displayedFilms(): string[] {
-    return this.films.slice(0, this.maxCollapsedCount);
+    return this.filmsUrls.slice(0, this.maxCollapsedCount);
   }
   isMoreThanMax(): boolean {
-    return (this.films?.length || 0) > this.maxCollapsedCount;
+    return (this.filmsUrls?.length || 0) > this.maxCollapsedCount;
   }
 
   images: string[] = [];
@@ -94,14 +108,14 @@ export class DetailsComponent implements OnChanges {
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
-  formatFilm(film: string): string {
-    const id = extractFilmId(film);
-    return id ? `Film ${id}` : (film || '');
+  formatFilm(filmUrl: string): string {
+    const id = extractId(filmUrl, FILMS_ID_REGEX);
+    return id ? `Film ${id}` : (filmUrl || '');
   }
 
   // Navigate to the film details route based on the film URL id
   navigateToFilm(film: string): void {
-    const id = extractFilmId(film);
+    const id = extractId(film, FILMS_ID_REGEX);
     if (id) {
       this.router.navigate(['/films-detail', id]);
     }

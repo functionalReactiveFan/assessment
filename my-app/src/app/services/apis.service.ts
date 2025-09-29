@@ -138,7 +138,7 @@ export class ApisService {
   }
 
   private mapPerson(p: any): Person {
-    const displayName = typeof p.name === 'string' ? p.name : 'Unknown';
+    const displayName = p?.name ?? '';
     return {
       name: displayName,
       gender: p.gender,
@@ -161,6 +161,9 @@ export class ApisService {
       diameterKm: p.diameter,
       gravity: p.gravity,
       films: p.films,
+      people: p.residents,
+      starships: p.starships,
+      vehicles: p.vehicles,
       imageUrl: `https://placehold.co/400x300/14213d/ffffff?text=${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
       url: p.url

@@ -39,7 +39,7 @@
         <div class="list">
           <div *ngFor="let planet of renderedPlanets"
                class="tag-chip"
-               (click)="navigateToCharacter(planet.url)">
+               (click)="navigateToPlanet(planet.url)">
             {{ planet.name }}
           </div>
           <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->

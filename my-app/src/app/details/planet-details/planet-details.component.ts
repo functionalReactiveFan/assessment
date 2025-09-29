@@ -5,7 +5,7 @@ import { DetailsComponent } from '../../components/details/details.component';
 import { Planet } from '../../models/planet.model';
 
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import {combineLatest, map, switchMap} from 'rxjs/operators';
 import { ApisService } from '../../services/apis.service';
 
 @Component({
@@ -22,20 +22,23 @@ export class PlanetDetailsComponent {
     this.planet$ = this.route.paramMap.pipe(
       map(params => params.get('id')),
       switchMap((id) => this.apis.getPlanetById(id || '1')),
-      map((p: any) => this.mapSwapiPlanetToPlanet(p))
+      map((p: any) => this.mapPlanet(p))
     );
   }
 
-  private mapSwapiPlanetToPlanet(p: any): Planet {
-    const name = typeof p?.name === 'string' ? p.name : 'Unknown';
+  private mapPlanet(p: any): Planet {
+    const name= p?.name ?? '';
     return {
       name,
-      climate: p?.climate ?? 'Unknown',
-      terrain: p?.terrain ?? 'Unknown',
-      population: p?.population ?? 'Unknown',
-      diameterKm: p?.diameter ?? 'Unknown',
-      gravity: p?.gravity ?? 'Unknown',
+      climate: p?.climate ?? '',
+      terrain: p?.terrain ?? '',
+      population: p?.population ?? '',
+      diameterKm: p?.diameter ?? '',
+      gravity: p?.gravity ?? '',
       films: Array.isArray(p?.films) ? p.films : [],
+      people: Array.isArray(p?.people) ? p.people : [],
+      starships: Array.isArray(p?.starships) ? p.starships : [],
+      vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,
       imageAlt: name,
       url: p?.url ?? ''
