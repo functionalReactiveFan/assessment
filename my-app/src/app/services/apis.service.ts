@@ -7,7 +7,6 @@ import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
 import {Starship} from "../models/starship.model";
 import {Vehicle} from "../models/vehicle.model";
-import {Character} from "../models/character.model";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
