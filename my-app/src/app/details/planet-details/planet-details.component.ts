@@ -5,7 +5,7 @@ import { DetailsComponent } from '../../components/details/details.component';
 import { Planet } from '../../models/planet.model';
 
 import { ActivatedRoute } from '@angular/router';
-import {combineLatest, map, switchMap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import { ApisService } from '../../services/apis.service';
 
 @Component({

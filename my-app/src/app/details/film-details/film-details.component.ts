@@ -27,7 +27,7 @@ interface Character {
 @Component({
   selector: 'app-film-details',
   standalone: true,
-  imports: [CommonModule, AddCharacterComponent, AddPlanetComponent, HeaderComponent],
+  imports: [CommonModule, AddCharacterComponent, AddPlanetComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']

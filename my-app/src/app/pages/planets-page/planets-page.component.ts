@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Planet } from '../../models/planet.model';
 import { ApisService } from '../../services/apis.service';
 import { CardComponent } from '../../components/card/card.component';
-import {extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from "../../utils/swapi-url";
+import {extractId, PLANETS_ID_REGEX} from "../../utils/swapi-url";
 
 @Component({
   selector: 'app-planets-page',
