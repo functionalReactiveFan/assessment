@@ -7,6 +7,7 @@ import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
 import {Starship} from "../models/starship.model";
 import {Vehicle} from "../models/vehicle.model";
+import {Character} from "../models/character.model";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -145,6 +146,10 @@ export class ApisService {
       birthYear: p.birth_year,
       heightCm: p.height,
       massKg: p.mass,
+      films: p.films,
+      planets: p.planets,
+      starships: p.starships,
+      vehicles: p.vehicles,
       imageUrl: `https://placehold.co/400x300/1a1a1a/ffffff?text=${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
       url: p.url
