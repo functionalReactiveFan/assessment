@@ -115,7 +115,7 @@ export class FilmDetailsComponent {
       this.renderedVehicles = this.allVehicles.slice(0, 3);
       this.allPlanets = planetsBuffer
         .filter((planet: Planet) => film?.planets?.includes(planet.url));
-      this.renderedPlanets = this.allPlanets.slice(0, 3);
+      this.renderedPlanets = this.allPlanets.slice(0, 2);
 
       // Since SWAPI does not provide images, we can emulate carousel placeholders
       this.images = [
