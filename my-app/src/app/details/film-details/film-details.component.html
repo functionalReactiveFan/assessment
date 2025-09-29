@@ -16,8 +16,8 @@
 
       <p class="synopsis">{{ synopsis }}</p>
 
-      <section class="characters-section">
-        <h3>Charaktere:</h3>
+      <section class="characters-section" *ngIf="renderedCharacters?.length">
+        <h2>Charaktere:</h2>
         <div class="list">
           <div *ngFor="let character of renderedCharacters"
                class="tag-chip"
@@ -34,23 +34,47 @@
         </div>
       </section>
 
-      <section class="planets-section">
+      <section class="planets-section" *ngIf="renderedPlanets?.length">
         <h2>Planeten:</h2>
-        <button class="tag-chip"
-                type="button"
-                (click)="openAddPlanetPopup()">
-          ...
-        </button>
+        <div class="list">
+          <div *ngFor="let planet of renderedPlanets"
+               class="tag-chip"
+               (click)="navigateToCharacter(planet.url)">
+            {{ planet.name }}
+          </div>
+          <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
+          <button *ngIf="isMoreThanTwoPlanets()"
+                  class="tag-chip"
+                  type="button"
+                  (click)="openAddPlanetPopup()">
+            ...
+          </button>
+        </div>
       </section>
 
-      <section class="starships-section">
-        <h3>Raumschiffe:</h3>
+      <section class="starships-section" *ngIf="renderedStarships?.length">
+        <h2>Raumschiffe:</h2>
         <div class="list">
           <div *ngFor="let starship of renderedStarships"
                class="tag-chip">
             {{ starship }}
           </div>
           <button *ngIf="isMoreThanTreeStarships()"
+                  class="tag-chip"
+                  type="button">
+            ...
+          </button>
+        </div>
+      </section>
+
+      <section class="vehicles-section" *ngIf="renderedVehicles?.length">
+        <h2>Fahrzeuge:</h2>
+        <div class="list">
+          <div *ngFor="let vehicle of renderedVehicles"
+               class="tag-chip">
+            {{ vehicle }}
+          </div>
+          <button *ngIf="isMoreThanTreeVehicles()"
                   class="tag-chip"
                   type="button">
             ...

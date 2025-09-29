@@ -9,6 +9,9 @@ import { AddCharacterComponent } from '../../forms/add-character.component';
 import {AddPlanetComponent} from "../../forms/add-planet.component";
 import {Starship} from "../../models/starship.model";
 import {Person} from "../../models/person.model";
+import {Vehicle} from "../../models/vehicle.model";
+import {Planet} from "../../models/planet.model";
+import {HeaderComponent} from "../../components/header/header.component";
 
 interface FilmDetails {
   director: string;
@@ -24,7 +27,7 @@ interface Character {
 @Component({
   selector: 'app-film-details',
   standalone: true,
-  imports: [CommonModule, AddCharacterComponent, AddPlanetComponent],
+  imports: [CommonModule, AddCharacterComponent, AddPlanetComponent, HeaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']
@@ -43,8 +46,13 @@ export class FilmDetailsComponent {
 
   synopsis: string = '';
 
+  allCharacters: Character[] = [];
   renderedCharacters: Character[] = [];
+  allPlanets: Planet[] = [];
+  renderedPlanets: Planet[] = [];
+  allStarships: string[] = [];
   renderedStarships: string[] = [];
+  allVehicles: string[] = [];
   renderedVehicles: string[] = [];
 
   // Controls visibility of modals
@@ -70,15 +78,18 @@ export class FilmDetailsComponent {
     // Preload placeholder image
     this.images[0] = 'https://placehold.co/600x400';
 
-    // Load film by id from route
-    this.route.paramMap.pipe(
-      map(params => params.get('id')),
-      switchMap(id =>
-        combineLatest(
-          this.apis.getMovieById(id || '1'),
-          this.apis.getPeople(),
-          this.apis.getStarships()))
-    ).subscribe(([film, people, starships]) => {
+    this.route.paramMap
+      .pipe(
+        map(params => params.get('id')),
+        switchMap(id =>
+          combineLatest(
+            this.apis.getMovieById(id || '1'),
+            this.apis.getPlanets(),
+            this.apis.getVehicles(),
+            this.apis.getPeople(),
+            this.apis.getStarships())
+          ))
+        .subscribe(([film, planets, vehicles, people, starships]) => {
       this.title = film?.title || 'Unbekannter Film';
       this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';
       this.filmDetails = {
@@ -88,11 +99,23 @@ export class FilmDetailsComponent {
       };
       this.synopsis = film?.opening_crawl || '';
       const characters = Array.isArray(film?.characters) ? film.characters : [];
-      this.renderedCharacters = people.filter((character: Person) => characters.includes(character.url)).slice(0, 3);
-      const ships: Starship[] = Array.isArray(starships) ? starships : [];
-      this.renderedStarships = ships
+      this.allCharacters = people
+        .filter((character: Person) => characters.includes(character.url));
+      this.renderedCharacters = this.allCharacters.slice(0, 3);
+      const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
+      const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
+      const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+      this.allStarships = starshipsBuffer
         .filter((starship: Starship) => film?.starships?.includes(starship.url))
         .map((starship: Starship) => starship.name);
+      this.renderedStarships = this.allStarships.slice(0, 3);
+      this.allVehicles = vehiclesBuffer
+        .filter((vehicle: Vehicle) => film?.vehicles?.includes(vehicle.url))
+        .map((vehicle: Vehicle) => vehicle.name);
+      this.renderedVehicles = this.allVehicles.slice(0, 3);
+      this.allPlanets = planetsBuffer
+        .filter((planet: Planet) => film?.planets?.includes(planet.url));
+      this.renderedPlanets = this.allPlanets.slice(0, 3);
 
       // Since SWAPI does not provide images, we can emulate carousel placeholders
       this.images = [
@@ -130,15 +153,19 @@ export class FilmDetailsComponent {
   }
 
   isMoreThanTreeCharacters(): boolean {
-    return this.renderedCharacters.length > 3;
+    return this.allCharacters.length > 3;
   }
 
   isMoreThanTreeStarships(): boolean {
-    return this.renderedStarships.length > 3;
+    return this.allStarships.length > 3;
   }
 
   isMoreThanTreeVehicles(): boolean {
-    return this.renderedVehicles.length > 3;
+    return this.allVehicles.length > 3;
+  }
+
+  isMoreThanTwoPlanets(): boolean {
+    return this.allPlanets.length > 2;
   }
 
   navigateToCharacter(url: string): void {
