@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, catchError, map, Observable, of, tap} from 'rxjs';
 
 import { Movie } from '../models/movie.model';
 import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
-import { fetchWithCache, LoadedRef } from './shared/fetch-cache';
+import { fetchWithCache } from './shared/fetch-cache';
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -17,22 +17,27 @@ export class ApisService {
   private readonly peopleSubject = new BehaviorSubject<Person[]>([]);
   private readonly planetsSubject = new BehaviorSubject<Planet[]>([]);
 
-  private moviesLoadedRef: LoadedRef = { value: false };
-  private peopleLoadedRef: LoadedRef = { value: false };
-  private planetsLoadedRef: LoadedRef = { value: false };
+  private moviesLoaded: boolean = false;
+  private peopleLoaded: boolean = false;
+  private planetsLoaded: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   // Movies
-  getMovies(forceRefresh: boolean = false): Observable<Movie[]> {
-    return fetchWithCache<Movie>(
-      this.http,
-      this.filmsEndpoint,
-      film => this.mapMovie(film),
-      this.moviesSubject,
-      this.moviesLoadedRef,
-      forceRefresh
-    );
+  getMovies(): Observable<Movie[]> {
+    const cachedMovies: Movie[] = this.moviesSubject.getValue();
+    if (cachedMovies.length > 0) {
+      return this.moviesSubject.asObservable();
+    }
+    return this.http
+      .get(this.filmsEndpoint)
+      .pipe(
+        map((response: any)=> response.results.map((item: any) => this.mapMovie(item))),
+        tap(items => this.moviesSubject.next(items)),
+        catchError(() => {
+          this.moviesSubject.next([]);
+          return of([]);
+        }))
   }
 
   getMovieById(id: number | string): Observable<any> {
@@ -47,7 +52,6 @@ export class ApisService {
       this.peopleEndpoint,
       p => this.mapPerson(p),
       this.peopleSubject,
-      this.peopleLoadedRef,
       forceRefresh
     );
   }
@@ -64,7 +68,6 @@ export class ApisService {
       this.planetsEndpoint,
       p => this.mapPlanet(p),
       this.planetsSubject,
-      this.planetsLoadedRef,
       forceRefresh
     );
   }
@@ -81,7 +84,6 @@ export class ApisService {
       this.planetsEndpoint,
       p => this.mapPlanet(p),
       this.planetsSubject,
-      this.planetsLoadedRef,
       forceRefresh
     );
   }

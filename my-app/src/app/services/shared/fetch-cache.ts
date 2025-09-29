@@ -1,27 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 
-export interface LoadedRef { value: boolean; }
-
 export function fetchWithCache<T>(
   http: HttpClient,
   endpoint: string,
-  mapper: (item: any) => T,
-  subject: BehaviorSubject<T[]>,
-  loadedRef: LoadedRef,
+  mapper: (item: any) => any,
+  subject: BehaviorSubject<any[]>,
+  loaded: boolean,
   forceRefresh: boolean = false
-): Observable<T[]> {
-  if (!loadedRef.value || forceRefresh) {
+): Observable<any[]> {
+  if (!loaded || forceRefresh) {
     http
-      .get<{ count: number; next: string | null; previous: string | null; results: any[] }>(endpoint)
+      .get<any>(endpoint)
       .pipe(
-        map(response => response.results.map(item => mapper(item))),
+        map(response => response.results.map((item: any) => mapper(item))),
         tap(items => {
-          loadedRef.value = true;
+          loaded = true;
           subject.next(items);
         }),
         catchError(() => {
-          loadedRef.value = false;
+          loaded = false;
           subject.next([]);
           return of([]);
         })
