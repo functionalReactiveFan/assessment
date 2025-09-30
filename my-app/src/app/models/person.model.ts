@@ -1,6 +1,8 @@
 export interface Person {
   name: string;
   gender: string;
+  hairColor: string;
+  eyeColor: string;
   birthYear: string;
   heightCm: string;
   films: string[];

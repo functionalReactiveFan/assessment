@@ -171,6 +171,8 @@ export class ApisService {
     return {
       name: displayName,
       gender: p?.gender ?? '',
+      hairColor: p?.hair_color ?? '',
+      eyeColor: p?.eye_color ?? '',
       birthYear: p?.birth_year ?? '',
       heightCm: p?.height ?? '',
       massKg: p?.mass ?? '',

@@ -24,8 +24,8 @@
                (click)="navigateToCharacter(character.url)">
             {{ character.name }}
           </div>
-          <!-- Dots will be rendered if more than 3 characters exist and by clicking on them the add character modal will be opened-->
-          <button *ngIf="isMoreThanTreeCharacters()"
+          <!-- Dots will be rendered if more than max characters exist and by clicking on them the add character modal will be opened-->
+          <button *ngIf="isMoreThanMaxCharacters()"
                   class="tag-chip"
                   type="button"
                   (click)="openAddCharacterModal()">
@@ -42,8 +42,8 @@
                (click)="navigateToPlanet(planet.url)">
             {{ planet.name }}
           </div>
-          <!-- Dots will be rendered if more than 2 characters exist and by clicking on them the add character modal will be opened-->
-          <button *ngIf="isMoreThanTwoPlanets()"
+          <!-- Dots will be rendered if more than max characters exist and by clicking on them the add character modal will be opened-->
+          <button *ngIf="isMoreThanMaxPlanets()"
                   class="tag-chip"
                   type="button"
                   (click)="openAddPlanetPopup()">
@@ -59,7 +59,7 @@
                class="tag-chip">
             {{ starship }}
           </div>
-          <button *ngIf="isMoreThanTreeStarships()"
+          <button *ngIf="isMoreThanMaxStarships()"
                   class="tag-chip"
                   type="button">
             ...
@@ -74,7 +74,7 @@
                class="tag-chip">
             {{ vehicle }}
           </div>
-          <button *ngIf="isMoreThanTreeVehicles()"
+          <button *ngIf="isMoreThanMaxVehicles()"
                   class="tag-chip"
                   type="button">
             ...

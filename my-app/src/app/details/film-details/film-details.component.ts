@@ -3,7 +3,13 @@ import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
-import {extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from '../../utils/helpers';
+import {
+  extractId,
+  MAX_CHARACTERS_CHIPS, MAX_PLANETS_CHIPS,
+  MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS,
+  PEOPLE_ID_REGEX,
+  PLANETS_ID_REGEX
+} from '../../utils/helpers';
 import {Starship} from "../../models/starship.model";
 import {Person} from "../../models/person.model";
 import {Vehicle} from "../../models/vehicle.model";
@@ -96,18 +102,18 @@ export class FilmDetailsComponent {
 
         this.allCharacters = people
           .filter((character: Person) => charactersBuffer.includes(character.url));
-        this.renderedCharacters = this.allCharacters.slice(0, 3);
+        this.renderedCharacters = this.allCharacters.slice(0, MAX_CHARACTERS_CHIPS);
         this.allStarships = starshipsBuffer
           .filter((starship: Starship) => film?.starships?.includes(starship.url))
           .map((starship: Starship) => starship.name);
-        this.renderedStarships = this.allStarships.slice(0, 3);
+        this.renderedStarships = this.allStarships.slice(0, MAX_STARSHIPS_CHIPS);
         this.allVehicles = vehiclesBuffer
           .filter((vehicle: Vehicle) => film?.vehicles?.includes(vehicle.url))
           .map((vehicle: Vehicle) => vehicle.name);
-        this.renderedVehicles = this.allVehicles.slice(0, 3);
+        this.renderedVehicles = this.allVehicles.slice(0, MAX_VEHICLES_CHIPS);
         this.allPlanets = planetsBuffer
           .filter((planet: Planet) => film?.planets?.includes(planet.url));
-        this.renderedPlanets = this.allPlanets.slice(0, 2);
+        this.renderedPlanets = this.allPlanets.slice(0, MAX_PLANETS_CHIPS);
 
         // Since SWAPI does not provide images, we can emulate carousel placeholders
         this.images = [
@@ -146,20 +152,20 @@ export class FilmDetailsComponent {
     this.router.navigate(['/planets']);
   }
 
-  isMoreThanTreeCharacters(): boolean {
-    return this.allCharacters.length > 3;
+  isMoreThanMaxCharacters(): boolean {
+    return this.allCharacters.length > MAX_CHARACTERS_CHIPS;
   }
 
-  isMoreThanTreeStarships(): boolean {
-    return this.allStarships.length > 3;
+  isMoreThanMaxStarships(): boolean {
+    return this.allStarships.length > MAX_STARSHIPS_CHIPS;
   }
 
-  isMoreThanTreeVehicles(): boolean {
-    return this.allVehicles.length > 3;
+  isMoreThanMaxVehicles(): boolean {
+    return this.allVehicles.length > MAX_VEHICLES_CHIPS;
   }
 
-  isMoreThanTwoPlanets(): boolean {
-    return this.allPlanets.length > 2;
+  isMoreThanMaxPlanets(): boolean {
+    return this.allPlanets.length > MAX_PLANETS_CHIPS;
   }
 
   navigateToCharacter(url: string): void {

@@ -6,8 +6,8 @@
     [details]="[
       { label: 'Größe', value: person.heightCm ? (person.heightCm + 'cm') : '' },
       { label: 'Gewicht', value: person.massKg ? (person.massKg + 'kg') : '' },
-      { label: 'Haarfarbe', value: '' },
-      { label: 'Augenfarbe', value: '' },
+      { label: 'Haarfarbe', value: person.hairColor },
+      { label: 'Augenfarbe', value: person.eyeColor },
       { label: 'Geburtsjahr', value: person.birthYear },
       { label: 'Geschlecht', value: person.gender }
     ]"
