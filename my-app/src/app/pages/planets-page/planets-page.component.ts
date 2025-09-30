@@ -20,7 +20,7 @@ export class PlanetsPageComponent implements OnInit {
 
   getPlanetDetailHref(p: Planet): string {
     const id = extractId(p.url, PLANETS_ID_REGEX);
-    return id ? `/planet-detail/${id}` : '/planet-detail/1';
+    return id ? `/planets/${id}` : '/planets/1';
   }
 }
 

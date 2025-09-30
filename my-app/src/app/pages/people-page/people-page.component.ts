@@ -20,7 +20,7 @@ export class PeoplePageComponent implements OnInit {
 
   getPersonDetailHref(p: Person): string {
     const id = extractId(p.url, PEOPLE_ID_REGEX);
-    return id ? `/character-detail/${id}` : '/character-detail/1';
+    return id ? `/people/${id}` : '/people/1';
   }
 }
 

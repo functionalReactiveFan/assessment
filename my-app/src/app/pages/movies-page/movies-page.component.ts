@@ -20,6 +20,6 @@ export class MoviesPageComponent implements OnInit {
 
   getMovieDetailHref(m: Movie): string {
     const id = extractId(m.url, FILMS_ID_REGEX);
-    return id ? `/films-detail/${id}` : '/films-detail/1';
+    return id ? `/films/${id}` : '/films/1';
   }
 }

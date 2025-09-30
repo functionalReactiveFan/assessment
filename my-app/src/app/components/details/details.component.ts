@@ -161,14 +161,14 @@ export class DetailsComponent implements OnChanges, OnInit {
   navigateToPlanet(url: string): void {
     const id = extractId(url, PLANETS_ID_REGEX);
     if (id) {
-      this.router.navigate(['/planet-detail', id]);
+      this.router.navigate(['/planets', id]);
     }
   }
 
   navigateToCharacter(url: string): void {
     const id = extractId(url, PEOPLE_ID_REGEX);
     if (id) {
-      this.router.navigate(['/character-detail', id]);
+      this.router.navigate(['/people', id]);
     }
   }
 
@@ -189,12 +189,12 @@ export class DetailsComponent implements OnChanges, OnInit {
 
   closeAddFilmModal(): void {
     this.showAddFilmModal = false;
-    this.router.navigate(['/films-list']);
+    this.router.navigate(['/films']);
   }
 
   closeAddPlanetModal(): void {
     this.showAddPlanetModal = false;
-    this.router.navigate(['/planets-list']);
+    this.router.navigate(['/planets']);
   }
 
   // Convert a SWAPI film URL like "https://swapi.dev/api/films/1/" to a readable label like "Film 1"
@@ -207,7 +207,7 @@ export class DetailsComponent implements OnChanges, OnInit {
   navigateToFilm(film: string): void {
     const id = extractId(film, FILMS_ID_REGEX);
     if (id) {
-      this.router.navigate(['/films-detail', id]);
+      this.router.navigate(['/films', id]);
     }
   }
 }

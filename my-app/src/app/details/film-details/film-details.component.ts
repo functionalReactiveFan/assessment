@@ -134,7 +134,7 @@ export class FilmDetailsComponent {
 
   closeAddCharacterModal(): void {
     this.showAddCharacterModal = false;
-    this.router.navigate(['/people-list']);
+    this.router.navigate(['/people']);
   }
 
   openAddPlanetPopup(): void {
@@ -143,7 +143,7 @@ export class FilmDetailsComponent {
 
   closeAddPlanetModal(): void {
     this.showAddPlanetModal = false;
-    this.router.navigate(['/planets-list']);
+    this.router.navigate(['/planets']);
   }
 
   isMoreThanTreeCharacters(): boolean {
@@ -165,14 +165,14 @@ export class FilmDetailsComponent {
   navigateToCharacter(url: string): void {
     const id = extractId(url, PEOPLE_ID_REGEX);
     if (id) {
-      this.router.navigate(['/character-detail', id]);
+      this.router.navigate(['/people', id]);
     }
   }
 
   navigateToPlanet(url: string): void {
     const id = extractId(url, PLANETS_ID_REGEX);
     if (id) {
-      this.router.navigate(['/planet-detail', id]);
+      this.router.navigate(['/planets', id]);
     }
   }
 
