@@ -21,6 +21,8 @@ export class ApisService {
   private readonly starshipsSubject = new BehaviorSubject<Starship[]>([]);
   private readonly vehiclesSubject = new BehaviorSubject<Vehicle[]>([]);
 
+  private readonly imagesPlaceholder = 'https://placehold.co/400x300/000000/FFFFFF?text='
+
   constructor(private http: HttpClient) {}
 
   // Movies
@@ -147,15 +149,16 @@ export class ApisService {
   // Mappers
   private mapMovie(film: any): Movie {
     return {
-      imageUrl: `https://placehold.co/400x300/000000/FFFFFF?text=${encodeURIComponent(film.title)}`,
-      imageAlt: film.title,
-      title: film.title,
-      director: film.director,
+      // SWAPI does not provide images, so we'll use images placeholder
+      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(film.title)}`,
+      imageAlt: film?.title ?? '',
+      title: film?.title ?? '',
+      director: film?.director ?? '',
       producers: typeof film.producer === 'string' ? film.producer.split(',').map((p: string) => p.trim()) : [],
-      releaseDate: film.release_date,
-      url: film.url,
-      episodeId: film.episode_id,
-      openingCrawl: film.opening_crawl,
+      releaseDate: film?.release_date ?? '',
+      url: film?.url ?? '',
+      episodeId: film?.episode_id ?? '',
+      openingCrawl: film?.opening_crawl ?? '',
       characters: Array.isArray(film.characters) ? film.characters : [],
       planets: Array.isArray(film.planets) ? film.planets : [],
       starships: Array.isArray(film.starships) ? film.starships : [],
@@ -176,42 +179,42 @@ export class ApisService {
       starships: Array.isArray(p?.starships) ? p.starships : [],
       vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
       homeworld: p?.homeworld ?? '',
-      imageUrl: `https://placehold.co/400x300/1a1a1a/ffffff?text=${encodeURIComponent(displayName)}`,
+      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
       url: p?.url ?? ''
     };
   }
 
   private mapPlanet(p: any): Planet {
-    const displayName = typeof p.name === 'string' ? p.name : 'Unknown';
+    const displayName= p?.name ?? '';
     return {
       name: displayName,
-      climate: p.climate,
-      terrain: p.terrain,
-      population: p.population,
-      diameterKm: p.diameter,
-      gravity: p.gravity,
-      films: p.films,
-      people: p.residents,
-      starships: p.starships,
-      vehicles: p.vehicles,
-      imageUrl: `https://placehold.co/400x300/14213d/ffffff?text=${encodeURIComponent(displayName)}`,
+      climate: p?.climate ?? '',
+      terrain: p?.terrain ?? '',
+      population: p?.population ?? '',
+      diameterKm: p?.diameter ?? '',
+      gravity: p?.gravity ?? '',
+      films: Array.isArray(p?.films) ? p.films : [],
+      people: Array.isArray(p?.residents) ? p.films : [],
+      starships: Array.isArray(p?.starships) ? p.starships : [],
+      vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
+      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
-      url: p.url
+      url: p?.url
     };
   }
 
   private mapStarship(s: any): Starship {
     return {
-      name: s.name,
-      url: s.url
+      name: s?.name ?? '',
+      url: s?.url ?? ''
     };
   }
 
   private mapVehicle(v: any): Vehicle {
     return {
-      name: v.name,
-      url: v.url
+      name: v?.name ?? '',
+      url: v?.url ?? ''
     };
   }
 }
