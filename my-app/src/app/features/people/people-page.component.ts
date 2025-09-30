@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
 import { ApisService } from '../../services/apis.service';
-import { extractId, PEOPLE_ID_REGEX } from '../../utils/swapi-url';
+import { extractId, PEOPLE_ID_REGEX } from '../../utils/helpers';
 
 @Component({
   selector: 'app-people-page',

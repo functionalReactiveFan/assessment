@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model';
 import { ApisService } from '../../services/apis.service';
-import { extractId, FILMS_ID_REGEX } from '../../utils/swapi-url';
+import { extractId, FILMS_ID_REGEX } from '../../utils/helpers';
 
 @Component({
   selector: 'app-movies-page',

@@ -8,7 +8,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX, FILMS_ID_REGEX } from '../../utils/swapi-url';
+import { extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX, FILMS_ID_REGEX } from '../../utils/helpers';
 import { combineLatest } from "rxjs";
 import { ApisService } from "../../services/apis.service";
 import { Planet } from "../../models/planet.model";
