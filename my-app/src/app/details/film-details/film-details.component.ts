@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
 import {
   createMockImage,
-  extractId, IMAGE_PLACEHOLDER,
+  extractId,
   MAX_CHARACTERS_CHIPS, MAX_PLANETS_CHIPS,
   MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS,
   PEOPLE_ID_REGEX,
