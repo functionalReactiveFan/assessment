@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, catchError, map, Observable, of, tap} from 'rxjs';
-
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Movie } from '../models/movie.model';
 import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
-import {Starship} from "../models/starship.model";
-import {Vehicle} from "../models/vehicle.model";
+import { Starship } from "../models/starship.model";
+import { Vehicle } from "../models/vehicle.model";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -41,11 +40,16 @@ export class ApisService {
         }))
   }
 
-  getMovieById(id: number | string): Observable<Movie> {
+  getMovieById(id: string): Observable<Movie> {
     const url = `${this.filmsEndpoint}${id}/`;
-    return this.http.get<any>(url).pipe(
-      map((film: any) => this.mapMovie(film))
-    );
+    const cachedMovies: Movie[] = this.moviesSubject.getValue();
+    if (cachedMovies.length > 0) {
+      const cachedMovie = cachedMovies.find((movie: Movie) => movie.url === url);
+      if (cachedMovie) {
+        return of(cachedMovie);
+      }
+    }
+    return this.http.get<any>(url).pipe(map((film: any) => this.mapMovie(film)));
   }
 
   // People
