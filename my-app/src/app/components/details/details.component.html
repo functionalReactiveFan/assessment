@@ -16,9 +16,9 @@
         </ul>
       </section>
 
-      <section class="homeworld-section" *ngIf="renderedHomeworld">
+      <section class="homeworld-section" *ngIf="renderedHomeworld?.name">
         <h2>Heimatplanet:</h2>
-        <div class="chip">{{ renderedHomeworld }}</div>
+        <div class="chip" (click)="redirectTo(mode, renderedHomeworld?.url)">{{ renderedHomeworld?.name }}</div>
       </section>
 
       <section class="films-section" *ngIf="filmsUrls?.length">

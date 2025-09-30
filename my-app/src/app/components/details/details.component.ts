@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { extractId, FILMS_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
+import {extractId, FILMS_ID_REGEX, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from '../../utils/swapi-url';
 import { AddFilmComponent } from "../../forms/add-film.component";
 import { AddPlanetComponent } from "../../forms/add-planet.component";
 import { combineLatest } from "rxjs";
@@ -18,7 +18,7 @@ import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
 import { Person } from "../../models/person.model";
 import { Vehicle } from "../../models/vehicle.model";
-import {Character} from "../../models/character.model";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 export interface DetailItem {
   label: string;
@@ -38,7 +38,7 @@ export class DetailsComponent implements OnChanges, OnInit {
   @Input() mode: string = '';
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];
-  @Input() homeworld?: string = '';
+  @Input() homeworld: string = '';
   @Input() filmsUrls: string[] = [];
   @Input() planetsUrls: string[] = [];
   @Input() peopleUrls: string[] = [];
@@ -57,7 +57,7 @@ export class DetailsComponent implements OnChanges, OnInit {
   renderedStarships: string[] = [];
   allVehicles: string[] = [];
   renderedVehicles: string[] = [];
-  renderedHomeworld: string | undefined = '';
+  renderedHomeworld: any = {};
 
   constructor(
     private router: Router,
@@ -87,13 +87,16 @@ export class DetailsComponent implements OnChanges, OnInit {
           .map((vehicle: Vehicle) => vehicle.name);
         this.renderedVehicles = this.allVehicles.slice(0, 3);
 
-        this.allPlanets = planetsBuffer
-          .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
+
         this.renderedPlanets = this.allPlanets.slice(0, 2);
         // For planet, we need to get the homeworld as a first resident from people / residents list
         this.renderedHomeworld = this.mode === 'planet'
-          ? peopleBuffer.find((resident: Person) => resident.url === this.peopleUrls[0])?.name
-          : planetsBuffer.find((planet: Planet) => planet.url === this.homeworld)?.name;
+          ? peopleBuffer.find((resident: Person) => resident.url === this.peopleUrls[0])
+          : planetsBuffer.find((planet: Planet) => planet.url === this.homeworld);
+
+        // this.allPlanets = this.mode === 'character'
+        //   ? [this.renderedHomeworld]
+        //   : planetsBuffer.filter((planet: Planet) => this.planetsUrls.includes(planet.url));
         this.cdr.markForCheck();
       });
   }
@@ -163,6 +166,20 @@ export class DetailsComponent implements OnChanges, OnInit {
     if (id) {
       this.router.navigate(['/planet-detail', id]);
     }
+  }
+
+  navigateToCharacter(url: string): void {
+    const id = extractId(url, PEOPLE_ID_REGEX);
+    if (id) {
+      this.router.navigate(['/character-detail', id]);
+    }
+  }
+
+  redirectTo(mode: string, url: string): void {
+    // If the mode is 'planet', we need to navigate to the character detail page
+    if (mode === 'planet') this.navigateToCharacter(url);
+    // If the mode is 'character', we need to navigate to the planet detail page
+    if (mode === 'character') this.navigateToPlanet(url);
   }
 
   openAddFilmPopup(): void {
