@@ -61,7 +61,7 @@
         <h2>Raumschiffe:</h2>
         <div class="chips-container">
           <div class="chip"
-               *ngFor="let starship of displayedStarships">
+               *ngFor="let starship of renderedStarships">
             {{starship}}
           </div>
           <button *ngIf="isStarshipsMoreThanMax()"

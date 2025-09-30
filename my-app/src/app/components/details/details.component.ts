@@ -8,7 +8,14 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX, FILMS_ID_REGEX } from '../../utils/helpers';
+import {
+  extractId,
+  PEOPLE_ID_REGEX,
+  PLANETS_ID_REGEX,
+  FILMS_ID_REGEX,
+  MAX_CHARACTERS_CHIPS,
+  MAX_FILMS_CHIPS, MAX_PLANETS_CHIPS, MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS
+} from '../../utils/helpers';
 import { combineLatest } from "rxjs";
 import { ApisService } from "../../services/apis.service";
 import { Planet } from "../../models/planet.model";
@@ -72,26 +79,26 @@ export class DetailsComponent implements OnChanges, OnInit {
 
         this.allCharacters = peopleBuffer
           .filter((character: Person) => this.peopleUrls?.includes(character.url));
-        this.renderedCharacters = this.allCharacters.slice(0, 3);
+        this.renderedCharacters = this.allCharacters.slice(0, MAX_CHARACTERS_CHIPS);
         this.allStarships = starshipsBuffer
           .filter((starship: Starship) => this.starshipsUrls?.includes(starship.url))
           .map((starship: Starship) => starship.name);
-        this.renderedStarships = this.allStarships.slice(0, 3);
+        this.renderedStarships = this.allStarships.slice(0, MAX_STARSHIPS_CHIPS);
         this.allVehicles = vehiclesBuffer
           .filter((vehicle: Vehicle) => this.vehiclesUrls?.includes(vehicle.url))
           .map((vehicle: Vehicle) => vehicle.name);
-        this.renderedVehicles = this.allVehicles?.slice(0, 3);
+        this.renderedVehicles = this.allVehicles?.slice(0, MAX_VEHICLES_CHIPS);
 
-        // For planet, we need to get the homeworld as a first resident from people / residents list, cause SWAPI does not provide all info
+        // For planet, we need to get the homeworld as a first person from the people list, cause SWAPI does not provide all info
         this.renderedHomeworld = this.mode === 'planet'
-          ? peopleBuffer.find((resident: Person) => resident.url === this.peopleUrls[0])
+          ? peopleBuffer.find((person: Person) => person.url === this.peopleUrls[0])
           : planetsBuffer.find((planet: Planet) => planet.url === this.homeworld);
 
-        // For character, we need to get the planets as a homeworld data, cause SWAPI does not provide all info
+        // For character, we need to get the planets as from homeworld data, cause SWAPI does not provide all info
         this.allPlanets = this.mode === 'character'
           ? [this.renderedHomeworld]
           : planetsBuffer.filter((planet: Planet) => this.planetsUrls.includes(planet.url));
-        this.renderedPlanets = this.allPlanets.slice(0, 2);
+        this.renderedPlanets = this.allPlanets.slice(0, MAX_PLANETS_CHIPS);
 
         // To make sure that result data being rendered
         this.cdr.markForCheck();
@@ -99,27 +106,23 @@ export class DetailsComponent implements OnChanges, OnInit {
   }
 
   get displayedFilmsUrls(): string[] {
-    return this.filmsUrls.slice(0, 5);
-  }
-
-  get displayedStarships(): string[] {
-    return this.allStarships.slice(0, 3)
+    return this.filmsUrls.slice(0, MAX_FILMS_CHIPS);
   }
 
   isFilmsMoreThanMax(): boolean {
-    return this.filmsUrls.length > 5;
+    return this.filmsUrls.length > MAX_FILMS_CHIPS;
   }
 
   isPlanetsMoreThanMax(): boolean {
-    return this.planetsUrls.length > 2;
+    return this.planetsUrls.length > MAX_PLANETS_CHIPS;
   }
 
   isStarshipsMoreThanMax(): boolean {
-    return this.starshipsUrls.length > 3;
+    return this.starshipsUrls.length > MAX_STARSHIPS_CHIPS;
   }
 
   isVehiclesMoreThanMax(): boolean {
-    return this.vehiclesUrls.length > 3;
+    return this.vehiclesUrls.length > MAX_VEHICLES_CHIPS;
   }
 
   images: string[] = [];
