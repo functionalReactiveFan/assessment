@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import {extractId, FILMS_ID_REGEX, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from '../../utils/swapi-url';
+import { extractId, FILMS_ID_REGEX, PEOPLE_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
 import { AddFilmComponent } from "../../forms/add-film.component";
 import { AddPlanetComponent } from "../../forms/add-planet.component";
 import { combineLatest } from "rxjs";
@@ -18,7 +18,6 @@ import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
 import { Person } from "../../models/person.model";
 import { Vehicle } from "../../models/vehicle.model";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
 
 export interface DetailItem {
   label: string;
