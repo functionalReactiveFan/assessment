@@ -8,8 +8,6 @@ import { extractId, PEOPLE_ID_REGEX } from '../../utils/swapi-url';
 
 @Component({
   selector: 'app-people-page',
-  standalone: true,
-  imports: [CommonModule, CardComponent],
   templateUrl: './people-page.component.html',
   styleUrls: ['./people-page.component.scss']
 })

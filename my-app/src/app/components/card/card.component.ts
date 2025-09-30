@@ -8,8 +8,6 @@ export interface CardDetailLine {
 
 @Component({
   selector: 'app-card',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })

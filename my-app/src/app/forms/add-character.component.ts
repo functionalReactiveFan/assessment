@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-character',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-character.component.html',
   styleUrls: ['./add-character.component.scss']
 })

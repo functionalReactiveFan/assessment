@@ -8,8 +8,6 @@ import {extractId, PLANETS_ID_REGEX} from "../../utils/swapi-url";
 
 @Component({
   selector: 'app-planets-page',
-  standalone: true,
-  imports: [CommonModule, CardComponent],
   templateUrl: './planets-page.component.html',
   styleUrls: ['./planets-page.component.scss']
 })

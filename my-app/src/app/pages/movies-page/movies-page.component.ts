@@ -8,8 +8,6 @@ import { extractId, FILMS_ID_REGEX } from '../../utils/swapi-url';
 
 @Component({
   selector: 'app-movies-page',
-  standalone: true,
-  imports: [CommonModule, CardComponent],
   templateUrl: './movies-page.component.html',
   styleUrls: ['./movies-page.component.scss']
 })

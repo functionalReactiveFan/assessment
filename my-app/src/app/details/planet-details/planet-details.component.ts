@@ -10,8 +10,6 @@ import { ApisService } from '../../services/apis.service';
 
 @Component({
   selector: 'app-planet-details',
-  standalone: true,
-  imports: [CommonModule, DetailsComponent],
   templateUrl: './planet-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

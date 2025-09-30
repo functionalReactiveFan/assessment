@@ -26,8 +26,6 @@ export interface DetailItem {
 
 @Component({
   selector: 'app-details',
-  standalone: true,
-  imports: [CommonModule, NgIf, NgForOf, AddFilmComponent, AddPlanetComponent],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

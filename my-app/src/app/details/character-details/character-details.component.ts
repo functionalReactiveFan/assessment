@@ -9,8 +9,6 @@ import { ApisService } from '../../services/apis.service';
 
 @Component({
   selector: 'app-character-details',
-  standalone: true,
-  imports: [CommonModule, DetailsComponent],
   templateUrl: './character-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

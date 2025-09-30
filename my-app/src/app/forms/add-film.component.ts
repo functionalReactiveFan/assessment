@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-film',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-film.component.html',
   styleUrls: ['./add-film-or-planet.component.scss']
 })
