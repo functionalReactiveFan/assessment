@@ -3,9 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges
+  OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
