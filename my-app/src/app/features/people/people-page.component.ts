@@ -23,6 +23,3 @@ export class PeoplePageComponent implements OnInit {
     return id ? `/people/${id}` : '/people/1';
   }
 }
-
-
-
