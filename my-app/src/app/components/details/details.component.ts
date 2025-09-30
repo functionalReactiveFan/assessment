@@ -75,6 +75,7 @@ export class DetailsComponent implements OnChanges, OnInit {
         const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
         const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
         const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+
         this.allCharacters = peopleBuffer
           .filter((character: Person) => this.peopleUrls.includes(character.url));
         this.renderedCharacters = this.allCharacters.slice(0, 3);
@@ -87,16 +88,18 @@ export class DetailsComponent implements OnChanges, OnInit {
           .map((vehicle: Vehicle) => vehicle.name);
         this.renderedVehicles = this.allVehicles.slice(0, 3);
 
-
-        this.renderedPlanets = this.allPlanets.slice(0, 2);
-        // For planet, we need to get the homeworld as a first resident from people / residents list
+        // For planet, we need to get the homeworld as a first resident from people / residents list, cause SWAPI does not provide all info
         this.renderedHomeworld = this.mode === 'planet'
           ? peopleBuffer.find((resident: Person) => resident.url === this.peopleUrls[0])
           : planetsBuffer.find((planet: Planet) => planet.url === this.homeworld);
 
-        // this.allPlanets = this.mode === 'character'
-        //   ? [this.renderedHomeworld]
-        //   : planetsBuffer.filter((planet: Planet) => this.planetsUrls.includes(planet.url));
+        // For character, we need to get the planets as a homeworld data, cause SWAPI does not provide all info
+        this.allPlanets = this.mode === 'character'
+          ? [this.renderedHomeworld]
+          : planetsBuffer.filter((planet: Planet) => this.planetsUrls.includes(planet.url));
+        this.renderedPlanets = this.allPlanets.slice(0, 2);
+
+        // To make sure that result data being rendered
         this.cdr.markForCheck();
       });
   }
