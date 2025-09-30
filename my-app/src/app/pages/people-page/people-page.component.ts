@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Person } from '../../models/person.model';
 import { ApisService } from '../../services/apis.service';
-import { CardComponent } from '../../components/card/card.component';
 import { extractId, PEOPLE_ID_REGEX } from '../../utils/swapi-url';
 
 @Component({

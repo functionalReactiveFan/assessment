@@ -1,12 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
 import {extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX} from '../../utils/swapi-url';
-import { AddCharacterComponent } from '../../forms/add-character.component';
-import {AddPlanetComponent} from "../../forms/add-planet.component";
 import {Starship} from "../../models/starship.model";
 import {Person} from "../../models/person.model";
 import {Vehicle} from "../../models/vehicle.model";

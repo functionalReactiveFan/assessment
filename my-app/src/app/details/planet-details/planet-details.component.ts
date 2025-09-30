@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { DetailsComponent } from '../../components/details/details.component';
 import { Planet } from '../../models/planet.model';
 
 import { ActivatedRoute } from '@angular/router';

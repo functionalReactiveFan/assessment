@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Movie } from '../../models/movie.model';
 import { ApisService } from '../../services/apis.service';
-import { CardComponent } from '../../components/card/card.component';
 import { extractId, FILMS_ID_REGEX } from '../../utils/swapi-url';
 
 @Component({

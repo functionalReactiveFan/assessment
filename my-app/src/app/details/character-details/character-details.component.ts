@@ -1,9 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Character } from "../../models/character.model";
-import { DetailsComponent } from "../../components/details/details.component";
 import { ActivatedRoute } from '@angular/router';
 import { ApisService } from '../../services/apis.service';
 

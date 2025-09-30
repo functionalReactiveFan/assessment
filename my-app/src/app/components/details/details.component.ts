@@ -7,11 +7,8 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { extractId, FILMS_ID_REGEX, PEOPLE_ID_REGEX, PLANETS_ID_REGEX } from '../../utils/swapi-url';
-import { AddFilmComponent } from "../../forms/add-film.component";
-import { AddPlanetComponent } from "../../forms/add-planet.component";
+import { extractId, PEOPLE_ID_REGEX, PLANETS_ID_REGEX, FILMS_ID_REGEX } from '../../utils/swapi-url';
 import { combineLatest } from "rxjs";
 import { ApisService } from "../../services/apis.service";
 import { Planet } from "../../models/planet.model";
