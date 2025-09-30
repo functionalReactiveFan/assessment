@@ -53,11 +53,7 @@ export class FilmDetailsComponent {
   showAddCharacterModal: boolean = false;
   showAddPlanetModal: boolean = false;
 
-  images: string[] = [
-    'https://placehold.co/600x400/000000/FFFFFF?text=Scene+1',
-    'https://placehold.co/600x400/000000/FFFFFF?text=Scene+2',
-    'https://placehold.co/600x400/000000/FFFFFF?text=Scene+3'
-  ];
+  images: string[] = [];
 
   currentImageIndex: number = 0;
   get currentImage(): string {
@@ -92,10 +88,12 @@ export class FilmDetailsComponent {
         releaseDate: film?.releaseDate || ''
       };
       this.synopsis = film?.openingCrawl || '';
+
       const charactersBuffer = Array.isArray(film?.characters) ? film.characters : [];
       const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
       const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
       const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+
       this.allCharacters = people
         .filter((character: Person) => charactersBuffer.includes(character.url));
       this.renderedCharacters = this.allCharacters.slice(0, 3);
