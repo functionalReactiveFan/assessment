@@ -7,7 +7,7 @@
         <strong>{{ line.label }}:</strong> {{ line.value }}
       </p>
     </div>
-    <a *ngIf="moreInfoHref" [href]="moreInfoHref" class="more-info">{{ moreInfoText }}</a>
+    <a *ngIf="moreInfoHref" [routerLink]="moreInfoHref" class="more-info">{{ moreInfoText }}</a>
   </div>
 </div>
 
