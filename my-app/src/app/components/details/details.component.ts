@@ -12,7 +12,7 @@ import {
   PLANETS_ID_REGEX,
   FILMS_ID_REGEX,
   MAX_CHARACTERS_CHIPS,
-  MAX_FILMS_CHIPS, MAX_PLANETS_CHIPS, MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS, IMAGE_PLACEHOLDER
+  MAX_FILMS_CHIPS, MAX_PLANETS_CHIPS, MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS, IMAGE_PLACEHOLDER, createMockImage
 } from '../../utils/helpers';
 import { combineLatest } from "rxjs";
 import { ApisService } from "../../services/apis.service";
@@ -110,9 +110,9 @@ export class DetailsComponent implements OnInit {
         this.renderedPlanets = this.allPlanets.slice(0, MAX_PLANETS_CHIPS);
 
         this.images = [
-          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 1')}`,
-          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 2')}`,
-          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 3')}`
+          createMockImage(this.title + ' 1'),
+          createMockImage(this.title + ' 2'),
+          createMockImage(this.title + ' 3'),
         ];
         this.currentImageIndex = 0;
 

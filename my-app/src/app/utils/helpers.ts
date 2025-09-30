@@ -1,4 +1,4 @@
-// Shared accross components
+// Shared helpers
 export const FILMS_ID_REGEX = /films\/(\d+)\/?$/;
 export const PEOPLE_ID_REGEX = /people\/(\d+)\/?$/;
 export const PLANETS_ID_REGEX = /planets\/(\d+)\/?$/;
@@ -10,6 +10,7 @@ export const MAX_PLANETS_CHIPS = 2;
 export const MAX_FILMS_CHIPS = 5;
 
 export const IMAGE_PLACEHOLDER = 'https://placehold.co/600x400/000000/FFFFFF?text=';
+export const createMockImage = (title: string) => IMAGE_PLACEHOLDER + encodeURIComponent(title);
 
 export function extractId(url: string, regex: RegExp): string | null {
   if (!url) return null;
