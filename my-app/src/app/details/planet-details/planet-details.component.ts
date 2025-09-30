@@ -28,7 +28,6 @@ export class PlanetDetailsComponent {
 
   private mapPlanet(p: any): Planet {
     const name= p?.name ?? '';
-    console.log('p?.residents', p?.residents)
     return {
       name,
       climate: p?.climate ?? '',
