@@ -28,6 +28,7 @@ export class PlanetDetailsComponent {
 
   private mapPlanet(p: any): Planet {
     const name= p?.name ?? '';
+    console.log('p?.residents', p?.residents)
     return {
       name,
       climate: p?.climate ?? '',
@@ -36,7 +37,7 @@ export class PlanetDetailsComponent {
       diameterKm: p?.diameter ?? '',
       gravity: p?.gravity ?? '',
       films: Array.isArray(p?.films) ? p.films : [],
-      people: Array.isArray(p?.people) ? p.people : [],
+      people: Array.isArray(p?.residents) ? p.residents : [],
       starships: Array.isArray(p?.starships) ? p.starships : [],
       vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
       imageUrl: `https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(name)}`,

@@ -1,5 +1,6 @@
 <ng-container *ngIf="planet$ | async as planet">
   <app-details
+    [mode]="'planet'"
     [title]="planet.name"
     subtitle="Planetdetails"
     [details]="[

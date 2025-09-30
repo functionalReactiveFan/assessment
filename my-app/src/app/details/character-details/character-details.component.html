@@ -1,5 +1,6 @@
 <ng-container *ngIf="character$ | async as character">
   <app-details
+    [mode]="'character'"
     [title]="character.name"
     subtitle="Characterdeatils"
     [details]="[
@@ -10,7 +11,7 @@
       { label: 'Geburtsjahr', value: character.details.birth_year },
       { label: 'Geschlecht', value: character.details.gender }
     ]"
-    [planet]="character.homeworld"
+    [homeworld]="character.homeworld"
     [filmsUrls]="character.films"
     [planetsUrls]="character.planets"
     [starshipsUrls]="character.starships"

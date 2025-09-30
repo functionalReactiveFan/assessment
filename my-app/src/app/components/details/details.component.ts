@@ -18,6 +18,7 @@ import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
 import { Person } from "../../models/person.model";
 import { Vehicle } from "../../models/vehicle.model";
+import {Character} from "../../models/character.model";
 
 export interface DetailItem {
   label: string;
@@ -34,9 +35,10 @@ export interface DetailItem {
 })
 export class DetailsComponent implements OnChanges, OnInit {
   @Input() title: string = '';
+  @Input() mode: string = '';
   @Input() subtitle: string = '';
   @Input() details: DetailItem[] = [];
-  @Input() planet?: string;
+  @Input() homeworld?: string = '';
   @Input() filmsUrls: string[] = [];
   @Input() planetsUrls: string[] = [];
   @Input() peopleUrls: string[] = [];
@@ -55,10 +57,12 @@ export class DetailsComponent implements OnChanges, OnInit {
   renderedStarships: string[] = [];
   allVehicles: string[] = [];
   renderedVehicles: string[] = [];
+  renderedHomeworld: string | undefined = '';
 
-  constructor(private router: Router, private apis: ApisService, private cdr: ChangeDetectorRef) {
-
-  }
+  constructor(
+    private router: Router,
+    private apis: ApisService,
+    private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     combineLatest(
@@ -67,27 +71,29 @@ export class DetailsComponent implements OnChanges, OnInit {
       this.apis.getPeople(),
       this.apis.getStarships())
       .subscribe(([planets, vehicles, people, starships])=> {
+        const peopleBuffer: Person[] = Array.isArray(people) ? people : [];
         const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
         const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
         const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
-        this.allCharacters = people
+        this.allCharacters = peopleBuffer
           .filter((character: Person) => this.peopleUrls.includes(character.url));
         this.renderedCharacters = this.allCharacters.slice(0, 3);
-        console.log('this.starshipsUrls',this.starshipsUrls);  // fix this maybe use other hook
-        console.log('starshipsBuffer', starshipsBuffer);
         this.allStarships = starshipsBuffer
           .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
           .map((starship: Starship) => starship.name);
-        console.log('this.allStarships',this.allStarships);
         this.renderedStarships = this.allStarships.slice(0, 3);
-        console.log('this.renderedStarships',this.renderedStarships);
         this.allVehicles = vehiclesBuffer
           .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
           .map((vehicle: Vehicle) => vehicle.name);
         this.renderedVehicles = this.allVehicles.slice(0, 3);
+
         this.allPlanets = planetsBuffer
           .filter((planet: Planet) => this.planetsUrls.includes(planet.url));
         this.renderedPlanets = this.allPlanets.slice(0, 2);
+        // For planet, we need to get the homeworld as a first resident from people / residents list
+        this.renderedHomeworld = this.mode === 'planet'
+          ? peopleBuffer.find((resident: Person) => resident.url === this.peopleUrls[0])?.name
+          : planetsBuffer.find((planet: Planet) => planet.url === this.homeworld)?.name;
         this.cdr.markForCheck();
       });
   }

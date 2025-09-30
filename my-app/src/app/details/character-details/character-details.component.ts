@@ -31,6 +31,7 @@ export class CharacterDetailsComponent {
   private mapCharacter(p: any): Character {
     const name= p?.name ?? '';
     console.log('p?.starships', p?.starships)
+    console.log('p?.planets', p?.planets)
     return {
       name,
       details: {

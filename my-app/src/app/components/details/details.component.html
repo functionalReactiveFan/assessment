@@ -16,9 +16,9 @@
         </ul>
       </section>
 
-      <section class="homeworld-section" *ngIf="planet">
+      <section class="homeworld-section" *ngIf="renderedHomeworld">
         <h2>Heimatplanet:</h2>
-        <div class="chip planet-chip">{{ planet }}</div>
+        <div class="chip">{{ renderedHomeworld }}</div>
       </section>
 
       <section class="films-section" *ngIf="filmsUrls?.length">
