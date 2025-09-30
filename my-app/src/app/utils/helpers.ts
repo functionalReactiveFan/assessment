@@ -9,6 +9,8 @@ export const MAX_VEHICLES_CHIPS = 3;
 export const MAX_PLANETS_CHIPS = 2;
 export const MAX_FILMS_CHIPS = 5;
 
+export const IMAGE_PLACEHOLDER = 'https://placehold.co/600x400/000000/FFFFFF?text=';
+
 export function extractId(url: string, regex: RegExp): string | null {
   if (!url) return null;
   const match = url.match(regex);

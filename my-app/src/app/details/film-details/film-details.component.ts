@@ -4,7 +4,7 @@ import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
 import {
-  extractId,
+  extractId, IMAGE_PLACEHOLDER,
   MAX_CHARACTERS_CHIPS, MAX_PLANETS_CHIPS,
   MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS,
   PEOPLE_ID_REGEX,
@@ -114,9 +114,9 @@ export class FilmDetailsComponent {
 
         // Since SWAPI does not provide images, we can emulate carousel placeholders
         this.images = [
-          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
-          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
-          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 3')}`
+          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 1')}`,
+          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 2')}`,
+          `${IMAGE_PLACEHOLDER}${encodeURIComponent(this.title + ' 3')}`
         ];
         this.currentImageIndex = 0;
 
