@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {combineLatest} from 'rxjs';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {combineLatest, Subscription} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApisService} from '../../services/apis.service';
@@ -33,7 +33,7 @@ interface Character {
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']
 })
-export class FilmDetailsComponent implements OnInit {
+export class FilmDetailsComponent implements OnInit, OnDestroy {
   // Header fields
   title: string = '';
   episodeTitle: string = '';
@@ -63,6 +63,8 @@ export class FilmDetailsComponent implements OnInit {
   images: string[] = [];
   currentImageIndex: number = 0;
 
+  initSubscription$: Subscription = new Subscription();
+
   get currentImage(): string {
     return this.images[this.currentImageIndex];
   }
@@ -73,8 +75,13 @@ export class FilmDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router) {}
 
+  ngOnDestroy(): void {
+    // To prevent memory leaks, we need to unsubscribe from the subscription when the component is destroyed
+    this.initSubscription$?.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.route.paramMap
+    this.initSubscription$ = this.route.paramMap
       .pipe(
         map(params => params.get('id')),
         switchMap(id =>

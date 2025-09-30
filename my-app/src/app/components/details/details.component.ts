@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
+  Input, OnDestroy,
   OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import {
   MAX_CHARACTERS_CHIPS,
   MAX_FILMS_CHIPS, MAX_PLANETS_CHIPS, MAX_STARSHIPS_CHIPS, MAX_VEHICLES_CHIPS, createMockImage
 } from '../../utils/helpers';
-import { combineLatest } from "rxjs";
+import {combineLatest, Subscription} from "rxjs";
 import { ApisService } from "../../services/apis.service";
 import { Planet } from "../../models/planet.model";
 import { Starship } from "../../models/starship.model";
@@ -32,7 +32,7 @@ export interface DetailItem {
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy {
   @Input() title: string = '';
   @Input() mode: string = '';
   @Input() subtitle: string = '';
@@ -61,6 +61,8 @@ export class DetailsComponent implements OnInit {
   images: string[] = [];
   currentImageIndex: number = 0;
 
+  initSubscription$: Subscription = new Subscription();
+
   get displayedFilmsUrls(): string[] {
     return this.filmsUrls.slice(0, MAX_FILMS_CHIPS);
   }
@@ -74,8 +76,13 @@ export class DetailsComponent implements OnInit {
     private apis: ApisService,
     private cdr: ChangeDetectorRef) {}
 
+  ngOnDestroy(): void {
+    // To prevent memory leaks, we need to unsubscribe from the subscription when the component is destroyed
+    this.initSubscription$?.unsubscribe();
+  }
+
   ngOnInit(): void {
-    combineLatest(
+    this.initSubscription$ = combineLatest(
       this.apis.getPlanets(),
       this.apis.getVehicles(),
       this.apis.getPeople(),
