@@ -54,8 +54,8 @@ export class FilmDetailsComponent {
   showAddPlanetModal: boolean = false;
 
   images: string[] = [];
-
   currentImageIndex: number = 0;
+
   get currentImage(): string {
     return this.images[this.currentImageIndex];
   }
@@ -79,44 +79,46 @@ export class FilmDetailsComponent {
             this.apis.getPeople(),
             this.apis.getStarships())
           ))
-        .subscribe(([film, planets, vehicles, people, starships]) => {
-      this.title = film?.title || '';
-      this.episodeTitle = film?.episodeId ? `Episode ${film.episodeId}` : '';
-      this.filmDetails = {
-        director: film?.director || '',
-        producers: Array.isArray(film?.producers) ? film.producers.join(', ') : '',
-        releaseDate: film?.releaseDate || ''
-      };
-      this.synopsis = film?.openingCrawl || '';
+      .subscribe(([film, planets, vehicles, people, starships]) => {
+        this.title = film?.title ?? '';
+        this.episodeTitle = film?.episodeId ? `Episode ${film.episodeId}` : '';
+        this.filmDetails = {
+          director: film?.director ?? '',
+          producers: Array.isArray(film?.producers) ? film.producers.join(', ') : '',
+          releaseDate: film?.releaseDate ?? ''
+        };
+        this.synopsis = film?.openingCrawl ?? '';
 
-      const charactersBuffer = Array.isArray(film?.characters) ? film.characters : [];
-      const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
-      const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
-      const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
+        const charactersBuffer = Array.isArray(film?.characters) ? film.characters : [];
+        const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
+        const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];
+        const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
 
-      this.allCharacters = people
-        .filter((character: Person) => charactersBuffer.includes(character.url));
-      this.renderedCharacters = this.allCharacters.slice(0, 3);
-      this.allStarships = starshipsBuffer
-        .filter((starship: Starship) => film?.starships?.includes(starship.url))
-        .map((starship: Starship) => starship.name);
-      this.renderedStarships = this.allStarships.slice(0, 3);
-      this.allVehicles = vehiclesBuffer
-        .filter((vehicle: Vehicle) => film?.vehicles?.includes(vehicle.url))
-        .map((vehicle: Vehicle) => vehicle.name);
-      this.renderedVehicles = this.allVehicles.slice(0, 3);
-      this.allPlanets = planetsBuffer
-        .filter((planet: Planet) => film?.planets?.includes(planet.url));
-      this.renderedPlanets = this.allPlanets.slice(0, 2);
+        this.allCharacters = people
+          .filter((character: Person) => charactersBuffer.includes(character.url));
+        this.renderedCharacters = this.allCharacters.slice(0, 3);
+        this.allStarships = starshipsBuffer
+          .filter((starship: Starship) => film?.starships?.includes(starship.url))
+          .map((starship: Starship) => starship.name);
+        this.renderedStarships = this.allStarships.slice(0, 3);
+        this.allVehicles = vehiclesBuffer
+          .filter((vehicle: Vehicle) => film?.vehicles?.includes(vehicle.url))
+          .map((vehicle: Vehicle) => vehicle.name);
+        this.renderedVehicles = this.allVehicles.slice(0, 3);
+        this.allPlanets = planetsBuffer
+          .filter((planet: Planet) => film?.planets?.includes(planet.url));
+        this.renderedPlanets = this.allPlanets.slice(0, 2);
 
-      // Since SWAPI does not provide images, we can emulate carousel placeholders
-      this.images = [
-        `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
-        `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
-        `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 3')}`
-      ];
-      this.currentImageIndex = 0;
-      this.cdr.markForCheck();
+        // Since SWAPI does not provide images, we can emulate carousel placeholders
+        this.images = [
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 3')}`
+        ];
+        this.currentImageIndex = 0;
+
+        // To make sure that result data being rendered
+        this.cdr.markForCheck();
     });
   }
 
