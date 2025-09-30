@@ -44,9 +44,9 @@ export class ApisService {
     const url = `${this.filmsEndpoint}${id}/`;
     const cachedMovies: Movie[] = this.moviesSubject.getValue();
     if (cachedMovies.length > 0) {
-      const cachedMovie = cachedMovies.find((movie: Movie) => movie.url === url);
-      if (cachedMovie) {
-        return of(cachedMovie);
+      const movie = cachedMovies.find((movie: Movie) => movie.url === url);
+      if (movie) {
+        return of(movie);
       }
     }
     return this.http.get<any>(url).pipe(map((film: any) => this.mapMovie(film)));
@@ -69,11 +69,16 @@ export class ApisService {
         }))
   }
 
-  getPersonById(id: number | string): Observable<Person> {
+  getPersonById(id: string): Observable<Person> {
     const url = `${this.peopleEndpoint}${id}/`;
-    return this.http.get<any>(url).pipe(
-      map((p: any) => this.mapPerson(p))
-    );
+    const cachedPeople: Person[] = this.peopleSubject.getValue();
+    if (cachedPeople.length > 0) {
+      const person = cachedPeople.find((person: Person) => person.url === url);
+      if (person) {
+        return of(person);
+      }
+    }
+    return this.http.get<any>(url).pipe(map((p: any) => this.mapPerson(p)));
   }
 
   // Planets
