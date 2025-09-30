@@ -1,22 +1,22 @@
-<ng-container *ngIf="character$ | async as character">
+<ng-container *ngIf="person$ | async as person">
   <app-details
     [mode]="'character'"
-    [title]="character.name"
+    [title]="person.name"
     subtitle="Characterdeatils"
     [details]="[
-      { label: 'Größe', value: character.details.height },
-      { label: 'Gewicht', value: character.details.weight },
-      { label: 'Haarfarbe', value: character.details.hair_color },
-      { label: 'Augenfarbe', value: character.details.eye_color },
-      { label: 'Geburtsjahr', value: character.details.birth_year },
-      { label: 'Geschlecht', value: character.details.gender }
+      { label: 'Größe', value: person.heightCm ? (person.heightCm + 'cm') : '' },
+      { label: 'Gewicht', value: person.massKg ? (person.massKg + 'kg') : '' },
+      { label: 'Haarfarbe', value: '' },
+      { label: 'Augenfarbe', value: '' },
+      { label: 'Geburtsjahr', value: person.birthYear },
+      { label: 'Geschlecht', value: person.gender }
     ]"
-    [homeworld]="character.homeworld"
-    [filmsUrls]="character.films"
-    [planetsUrls]="character.planets"
-    [starshipsUrls]="character.starships"
-    [vehiclesUrls]="character.vehicles"
-    [imageUrl]="character.imageUrl"
+    [homeworld]="person.homeworld"
+    [filmsUrls]="person.films"
+    [planetsUrls]="person.planets"
+    [starshipsUrls]="person.starships"
+    [vehiclesUrls]="person.vehicles"
+    [imageUrl]="person.imageUrl"
     [dotsCount]="3"
   ></app-details>
 </ng-container>

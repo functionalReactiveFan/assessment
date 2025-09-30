@@ -71,16 +71,16 @@ export class DetailsComponent implements OnChanges, OnInit {
         const planetsBuffer: Planet[] = Array.isArray(planets) ? planets : [];
 
         this.allCharacters = peopleBuffer
-          .filter((character: Person) => this.peopleUrls.includes(character.url));
+          .filter((character: Person) => this.peopleUrls?.includes(character.url));
         this.renderedCharacters = this.allCharacters.slice(0, 3);
         this.allStarships = starshipsBuffer
-          .filter((starship: Starship) => this.starshipsUrls.includes(starship.url))
+          .filter((starship: Starship) => this.starshipsUrls?.includes(starship.url))
           .map((starship: Starship) => starship.name);
         this.renderedStarships = this.allStarships.slice(0, 3);
         this.allVehicles = vehiclesBuffer
-          .filter((vehicle: Vehicle) => this.vehiclesUrls.includes(vehicle.url))
+          .filter((vehicle: Vehicle) => this.vehiclesUrls?.includes(vehicle.url))
           .map((vehicle: Vehicle) => vehicle.name);
-        this.renderedVehicles = this.allVehicles.slice(0, 3);
+        this.renderedVehicles = this.allVehicles?.slice(0, 3);
 
         // For planet, we need to get the homeworld as a first resident from people / residents list, cause SWAPI does not provide all info
         this.renderedHomeworld = this.mode === 'planet'

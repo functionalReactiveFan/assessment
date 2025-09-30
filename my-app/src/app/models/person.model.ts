@@ -8,6 +8,7 @@ export interface Person {
   starships: string[];
   vehicles: string[];
   massKg: string;
+  homeworld: string;
   imageUrl: string;
   imageAlt: string;
   url: string;

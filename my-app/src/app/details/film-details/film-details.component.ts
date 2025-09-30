@@ -85,13 +85,13 @@ export class FilmDetailsComponent {
           ))
         .subscribe(([film, planets, vehicles, people, starships]) => {
       this.title = film?.title || '';
-      this.episodeTitle = film?.episode_id ? `Episode ${film.episode_id}` : '';
+      this.episodeTitle = film?.episodeId ? `Episode ${film.episodeId}` : '';
       this.filmDetails = {
         director: film?.director || '',
-        producers: typeof film?.producer === 'string' ? film.producer : '',
-        releaseDate: film?.release_date || ''
+        producers: Array.isArray(film?.producers) ? film.producers.join(', ') : '',
+        releaseDate: film?.releaseDate || ''
       };
-      this.synopsis = film?.opening_crawl || '';
+      this.synopsis = film?.openingCrawl || '';
       const charactersBuffer = Array.isArray(film?.characters) ? film.characters : [];
       const starshipsBuffer: Starship[] = Array.isArray(starships) ? starships : [];
       const vehiclesBuffer: Vehicle[] = Array.isArray(vehicles) ? vehicles : [];

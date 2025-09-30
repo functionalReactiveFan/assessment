@@ -41,9 +41,11 @@ export class ApisService {
         }))
   }
 
-  getMovieById(id: number | string): Observable<any> {
+  getMovieById(id: number | string): Observable<Movie> {
     const url = `${this.filmsEndpoint}${id}/`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url).pipe(
+      map((film: any) => this.mapMovie(film))
+    );
   }
 
   // People
@@ -63,9 +65,11 @@ export class ApisService {
         }))
   }
 
-  getPersonById(id: number | string): Observable<any> {
+  getPersonById(id: number | string): Observable<Person> {
     const url = `${this.peopleEndpoint}${id}/`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url).pipe(
+      map((p: any) => this.mapPerson(p))
+    );
   }
 
   // Planets
@@ -85,9 +89,11 @@ export class ApisService {
         }))
   }
 
-  getPlanetById(id: number | string): Observable<any> {
+  getPlanetById(id: number | string): Observable<Planet> {
     const url = `${this.planetsEndpoint}${id}/`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url).pipe(
+      map((p: any) => this.mapPlanet(p))
+    );
   }
 
   // Starships
@@ -133,7 +139,13 @@ export class ApisService {
       director: film.director,
       producers: typeof film.producer === 'string' ? film.producer.split(',').map((p: string) => p.trim()) : [],
       releaseDate: film.release_date,
-      url: film.url
+      url: film.url,
+      episodeId: film.episode_id,
+      openingCrawl: film.opening_crawl,
+      characters: Array.isArray(film.characters) ? film.characters : [],
+      planets: Array.isArray(film.planets) ? film.planets : [],
+      starships: Array.isArray(film.starships) ? film.starships : [],
+      vehicles: Array.isArray(film.vehicles) ? film.vehicles : []
     };
   }
 
@@ -141,17 +153,18 @@ export class ApisService {
     const displayName = p?.name ?? '';
     return {
       name: displayName,
-      gender: p.gender,
-      birthYear: p.birth_year,
-      heightCm: p.height,
-      massKg: p.mass,
-      films: p.films,
-      planets: p.planets,
-      starships: p.starships,
-      vehicles: p.vehicles,
+      gender: p?.gender ?? '',
+      birthYear: p?.birth_year ?? '',
+      heightCm: p?.height ?? '',
+      massKg: p?.mass ?? '',
+      films: Array.isArray(p?.films) ? p.films : [],
+      planets: Array.isArray(p?.planets) ? p.planets : [],
+      starships: Array.isArray(p?.starships) ? p.starships : [],
+      vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
+      homeworld: p?.homeworld ?? '',
       imageUrl: `https://placehold.co/400x300/1a1a1a/ffffff?text=${encodeURIComponent(displayName)}`,
       imageAlt: displayName,
-      url: p.url
+      url: p?.url ?? ''
     };
   }
 
