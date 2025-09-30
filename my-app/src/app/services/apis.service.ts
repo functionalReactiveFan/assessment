@@ -98,11 +98,16 @@ export class ApisService {
         }))
   }
 
-  getPlanetById(id: number | string): Observable<Planet> {
+  getPlanetById(id: string): Observable<Planet> {
     const url = `${this.planetsEndpoint}${id}/`;
-    return this.http.get<any>(url).pipe(
-      map((p: any) => this.mapPlanet(p))
-    );
+    const cachedPlanets: Planet[] = this.planetsSubject.getValue();
+    if (cachedPlanets.length > 0) {
+      const planet = cachedPlanets.find((planet: Planet) => planet.url === url);
+      if (planet) {
+        return of(planet);
+      }
+    }
+    return this.http.get<any>(url).pipe(map((p: any) => this.mapPlanet(p)));
   }
 
   // Starships
