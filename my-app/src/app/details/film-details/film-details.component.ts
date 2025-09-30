@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {combineLatest} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -33,7 +33,7 @@ interface Character {
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.scss']
 })
-export class FilmDetailsComponent {
+export class FilmDetailsComponent implements OnInit {
   // Header fields
   title: string = '';
   episodeTitle: string = '';
@@ -71,7 +71,9 @@ export class FilmDetailsComponent {
     private route: ActivatedRoute,
     private apis: ApisService,
     private cdr: ChangeDetectorRef,
-    private router: Router) {
+    private router: Router) {}
+
+  ngOnInit(): void {
     this.route.paramMap
       .pipe(
         map(params => params.get('id')),
@@ -82,7 +84,7 @@ export class FilmDetailsComponent {
             this.apis.getVehicles(),
             this.apis.getPeople(),
             this.apis.getStarships())
-          ))
+        ))
       .subscribe(([film, planets, vehicles, people, starships]) => {
         this.title = film?.title ?? '';
         this.episodeTitle = film?.episodeId ? `Episode ${film.episodeId}` : '';
@@ -123,7 +125,7 @@ export class FilmDetailsComponent {
 
         // To make sure that result data being rendered
         this.cdr.markForCheck();
-    });
+      });
   }
 
   selectImage(index: number): void {

@@ -6,7 +6,7 @@ import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
 import { Starship } from "../models/starship.model";
 import { Vehicle } from "../models/vehicle.model";
-import {createMockImage} from "../utils/helpers";
+import { createMockImage } from "../utils/helpers";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
