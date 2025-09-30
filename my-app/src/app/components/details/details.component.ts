@@ -34,7 +34,7 @@ export interface DetailItem {
   styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailsComponent implements OnChanges, OnInit {
+export class DetailsComponent implements OnInit {
   @Input() title: string = '';
   @Input() mode: string = '';
   @Input() subtitle: string = '';
@@ -59,6 +59,17 @@ export class DetailsComponent implements OnChanges, OnInit {
   allVehicles: string[] = [];
   renderedVehicles: string[] = [];
   renderedHomeworld: any = {};
+
+  images: string[] = [];
+  currentImageIndex: number = 0;
+
+  get displayedFilmsUrls(): string[] {
+    return this.filmsUrls.slice(0, MAX_FILMS_CHIPS);
+  }
+
+  get currentImage(): string {
+    return this.images[this.currentImageIndex];
+  }
 
   constructor(
     private router: Router,
@@ -100,13 +111,22 @@ export class DetailsComponent implements OnChanges, OnInit {
           : planetsBuffer.filter((planet: Planet) => this.planetsUrls.includes(planet.url));
         this.renderedPlanets = this.allPlanets.slice(0, MAX_PLANETS_CHIPS);
 
+        this.images = [
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 1')}`,
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 2')}`,
+          `https://placehold.co/600x400/000000/FFFFFF?text=${encodeURIComponent(this.title + ' 3')}`
+        ];
+        this.currentImageIndex = 0;
+
         // To make sure that result data being rendered
         this.cdr.markForCheck();
       });
   }
 
-  get displayedFilmsUrls(): string[] {
-    return this.filmsUrls.slice(0, MAX_FILMS_CHIPS);
+  selectImage(index: number): void {
+    if (index >= 0 && index < this.images.length) {
+      this.currentImageIndex = index;
+    }
   }
 
   isFilmsMoreThanMax(): boolean {
@@ -125,43 +145,7 @@ export class DetailsComponent implements OnChanges, OnInit {
     return this.vehiclesUrls.length > MAX_VEHICLES_CHIPS;
   }
 
-  images: string[] = [];
-  currentImageIndex: number = 0;
-
-  get currentImage(): string {
-    return this.images[this.currentImageIndex];
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // Build images array whenever inputs change
-    const count = Math.max(1, Math.floor(this.dotsCount || 1));
-    const titleText = this.title || 'Image';
-
-    const images: string[] = [];
-
-    // Use provided imageUrl
-    if (this.imageUrl) {
-      images.push(this.imageUrl);
-    } else {
-      images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' 1')}`);
-    }
-
-    // Fill remaining images with placeholders based on the title
-    for (let i = images.length; i < count; i++) {
-      images.push(`https://placehold.co/500x350/20232A/FFFFFF?text=${encodeURIComponent(titleText + ' ' + (i + 1))}`);
-    }
-
-    this.images = images;
-    this.currentImageIndex = 0;
-  }
-
-  selectImage(index: number): void {
-    if (index >= 0 && index < this.images.length) {
-      this.currentImageIndex = index;
-    }
-  }
-
-  navigateToPlanet(url: string): void {
+  navigateToPlanet(url: any): void {
     const id = extractId(url, PLANETS_ID_REGEX);
     if (id) {
       this.router.navigate(['/planets', id]);
@@ -177,9 +161,13 @@ export class DetailsComponent implements OnChanges, OnInit {
 
   redirectTo(mode: string, url: string): void {
     // If the mode is 'planet', we need to navigate to the character detail page
-    if (mode === 'planet') this.navigateToCharacter(url);
+    if (mode === 'planet') {
+      this.navigateToCharacter(url);
+    }
     // If the mode is 'character', we need to navigate to the planet detail page
-    if (mode === 'character') this.navigateToPlanet(url);
+    if (mode === 'character') {
+      this.navigateToPlanet(url);
+    }
   }
 
   openAddFilmPopup(): void {

@@ -71,9 +71,6 @@ export class FilmDetailsComponent {
     private apis: ApisService,
     private cdr: ChangeDetectorRef,
     private router: Router) {
-    // Preload placeholder image
-    this.images[0] = 'https://placehold.co/600x400';
-
     this.route.paramMap
       .pipe(
         map(params => params.get('id')),
