@@ -6,6 +6,7 @@ import { Person } from '../models/person.model';
 import { Planet } from '../models/planet.model';
 import { Starship } from "../models/starship.model";
 import { Vehicle } from "../models/vehicle.model";
+import {createMockImage} from "../utils/helpers";
 
 @Injectable({ providedIn: 'root' })
 export class ApisService {
@@ -20,8 +21,6 @@ export class ApisService {
   private readonly planetsSubject = new BehaviorSubject<Planet[]>([]);
   private readonly starshipsSubject = new BehaviorSubject<Starship[]>([]);
   private readonly vehiclesSubject = new BehaviorSubject<Vehicle[]>([]);
-
-  private readonly imagesPlaceholder = 'https://placehold.co/400x300/000000/FFFFFF?text='
 
   constructor(private http: HttpClient) {}
 
@@ -148,11 +147,12 @@ export class ApisService {
 
   // Mappers
   private mapMovie(film: any): Movie {
+    const name = film?.title ?? '';
     return {
       // SWAPI does not provide images, so we'll use images placeholder
-      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(film.title)}`,
-      imageAlt: film?.title ?? '',
-      title: film?.title ?? '',
+      imageUrl: createMockImage(name),
+      imageAlt: name,
+      title: name,
       director: film?.director ?? '',
       producers: typeof film.producer === 'string' ? film.producer.split(',').map((p: string) => p.trim()) : [],
       releaseDate: film?.release_date ?? '',
@@ -181,7 +181,7 @@ export class ApisService {
       starships: Array.isArray(p?.starships) ? p.starships : [],
       vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
       homeworld: p?.homeworld ?? '',
-      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(displayName)}`,
+      imageUrl: createMockImage(displayName),
       imageAlt: displayName,
       url: p?.url ?? ''
     };
@@ -200,7 +200,7 @@ export class ApisService {
       people: Array.isArray(p?.residents) ? p.films : [],
       starships: Array.isArray(p?.starships) ? p.starships : [],
       vehicles: Array.isArray(p?.vehicles) ? p.vehicles : [],
-      imageUrl: `${this.imagesPlaceholder}${encodeURIComponent(displayName)}`,
+      imageUrl: createMockImage(displayName),
       imageAlt: displayName,
       url: p?.url
     };
